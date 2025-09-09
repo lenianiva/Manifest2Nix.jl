@@ -1,4 +1,4 @@
-# Fatou
+# Manifest2Nix.jl
 
 A Nix library for building Julia Projects
 
