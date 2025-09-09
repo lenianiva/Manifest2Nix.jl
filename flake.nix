@@ -1,5 +1,5 @@
 {
-  description = "Description for the project";
+  description = "A Nix library for building Julia Projects";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
