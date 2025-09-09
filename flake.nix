@@ -16,8 +16,13 @@
         pkgs,
         system,
         ...
-      }: {
+      }: let
+        lib-manifest = pkgs.callPackage lib/manifest.nix {};
+      in {
         formatter = pkgs.alejandra;
+        packages = {
+          lock-manifest = lib-manifest.lock-manifest;
+        };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
