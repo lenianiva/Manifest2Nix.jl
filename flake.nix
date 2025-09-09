@@ -18,6 +18,11 @@
         ...
       }: {
         formatter = pkgs.alejandra;
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            pre-commit
+          ];
+        };
       };
       flake = {
         templates = import ./templates;
