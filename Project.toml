@@ -1,4 +1,4 @@
-name = "Fatou"
+name = "Manifest2Nix"
 uuid = "55c00322-6feb-41de-aa1f-e2512edad3af"
 authors = ["Leni Aniva <a@leni.sh>"]
 version = "0.1.0"
