@@ -12,11 +12,13 @@
       // {
         inherit (project) name version;
         nativeBuildInputs = [julia];
+        JULIA_PKG_OFFLINE = "true";
+        JULIA_DEPOT_PATH = ".julia";
         buildPhase = ''
           mkdir .julia
           mkdir -p $out
-          JULIA_DEPOT_PATH=.julia julia --project -e "import Pkg; Pkg.precompile()"
-          cp -r .julia/compiled/${julia.version} $out/
+          julia --project -e "import Pkg; Pkg.precompile()"
+          cp -r $JULIA_DEPOT_PATH/compiled/${julia.version} $out/
         '';
       });
 }
