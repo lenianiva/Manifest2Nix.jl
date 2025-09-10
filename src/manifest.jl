@@ -1,6 +1,7 @@
+module Manifest
+
 import Pkg
 import TOML
-import ArgParse
 using Pkg.API: PackageInfo
 using Base: UUID, @kwdef
 
@@ -41,23 +42,4 @@ function load_dependencies(; path_output::Union{Some{String}, Nothing}=nothing)
     end
 end
 
-if abspath(PROGRAM_FILE) == @__FILE__
-    settings = ArgParse.ArgParseSettings()
-    @ArgParse.add_arg_table! settings begin
-        "-p" "--project"
-        help = "Root to project"
-        required = false
-        arg_type = String
-        default = pwd()
-        "-o", "--output"
-        help = "Output manifest file"
-        required = false
-        arg_type = String
-        default = nothing
-    end
-    config = ArgParse.parse_args(settings)
-
-    Pkg.Operations.with_temp_env(config["project"]) do
-        load_dependencies(path_output=get(config, "output", nothing))
-    end
 end

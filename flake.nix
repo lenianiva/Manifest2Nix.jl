@@ -25,7 +25,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
-            lib-manifest.lock-manifest
+            lib-manifest.manifest2nix
           ];
         };
       };

@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: {
-  lock-manifest = pkgs.writeShellApplication {
-    name = "lock-manifest";
+  manifest2nix = pkgs.writeShellApplication {
+    name = "manifest2nix";
     runtimeInputs = [pkgs.julia-bin];
     text = ''
-      ${pkgs.julia-bin}/bin/julia --project="$PWD" src/manifest.jl
+      ${pkgs.julia-bin}/bin/julia --project -e "using Manifest2Nix; main()" -- "$@"
     '';
   };
 }
