@@ -1,7 +1,11 @@
 rec {
   minimal = {
     path = ./minimal;
-    description = "Minimal Executable";
+    description = "Minimal Project with no dependencies";
   };
-  default = minimal;
+  simple = {
+    path = ./simple;
+    description = "Simple Project with one dependency";
+  };
+  default = simple;
 }
