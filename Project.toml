@@ -4,10 +4,12 @@ authors = ["Leni Aniva <a@leni.sh>"]
 version = "0.1.0"
 
 [deps]
+ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [compat]
+ArgParse = "1.2.0"
 JuliaFormatter = "2.1.6"
 Pkg = "1.11.0"
 TOML = "1.0.3"
