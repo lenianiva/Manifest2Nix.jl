@@ -14,12 +14,18 @@ using Base: UUID, SHA1, @kwdef
     rev::SHA1
 end
 
-function pin_package(context::Context, uuid::UUID, info::PackageInfo)::Union{PinnedPackage, Nothing}
+function pin_package(
+    context::Context,
+    uuid::UUID,
+    info::PackageInfo,
+)::Union{PinnedPackage,Nothing}
     if Pkg.Types.is_stdlib(uuid, VERSION)
         #@assert !haskey(context.registries[1], uuid)
         return nothing
     elseif info.is_tracking_path
-        error("Cannot pin a package $(info.name) [$uuid] tracking a path. Please supply the package explicitly with a derivation.")
+        error(
+            "Cannot pin a package $(info.name) [$uuid] tracking a path. Please supply the package explicitly with a derivation.",
+        )
     elseif info.is_tracking_registry
         pkg_entry = get(context.registries[1], uuid, nothing)
         if isnothing(pkg_entry)
@@ -32,14 +38,16 @@ function pin_package(context::Context, uuid::UUID, info::PackageInfo)::Union{Pin
         repo = info.git_source
         rev = info.git_revision
     else
-        error("Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo")
+        error(
+            "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
+        )
     end
     return PinnedPackage(
-        uuid=uuid,
-        version=info.version,
-        dependencies=collect(keys(info.dependencies)),
-        repo=repo,
-        rev=rev,
+        uuid = uuid,
+        version = info.version,
+        dependencies = collect(keys(info.dependencies)),
+        repo = repo,
+        rev = rev,
     )
 end
 
@@ -53,7 +61,7 @@ format(x::PinnedPackage) = Dict(
 )
 format(u::UUID) = string(u)
 
-function load_dependencies(context; path_output::Union{Some{String}, Nothing}=nothing)
+function load_dependencies(context; path_output::Union{Some{String},Nothing} = nothing)
     @assert length(context.registries) == 1
     dependencies = Pkg.dependencies(context.env)
     @info "Pinning $(length(dependencies)) dependencies"
@@ -79,6 +87,17 @@ function load_dependencies(context; path_output::Union{Some{String}, Nothing}=no
         writer(stdout)
     else
         open(writer, path_output, "w")
+    end
+end
+
+function main(args::Dict{String,Any})
+    path_project = args["project"]
+    Pkg.Operations.with_temp_env(path_project) do
+        @info "Creating context for project $path_project"
+        context = Pkg.Types.Context()
+
+        @info "Processing dependencies for project $(context.env.project.name)"
+        Manifest.load_dependencies(context, path_output = get(args, "output", nothing))
     end
 end
 

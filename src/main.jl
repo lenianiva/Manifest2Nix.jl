@@ -3,27 +3,37 @@ import ArgParse
 import Pkg
 
 function main()
-    settings = ArgParse.ArgParseSettings()
-    @ArgParse.add_arg_table! settings begin
-        "-p", "--project"
-            help = "Root to project"
-            required = false
-            arg_type = String
-            default = pwd()
-        "-o", "--output"
-            help = "Output manifest file"
-            required = false
-            arg_type = String
-            default = nothing
+    settings = ArgParse.ArgParseSettings(
+        description = "Manifest2Nix",
+        commands_are_required = true,
+        version = string(VERSION),
+        add_version = true,
+        add_help = true,
+    )
+    ArgParse.@add_arg_table! settings begin
+        "lock"
+        help = "Generate lock file"
+        action = :command
     end
-    config = ArgParse.parse_args(ARGS, settings)
+    ArgParse.@add_arg_table! settings["lock"] begin
+        "-p", "--project"
+        help = "Root to project"
+        required = false
+        arg_type = String
+        default = pwd()
+        "-o", "--output"
+        help = "Output manifest file"
+        required = false
+        arg_type = String
+        default = nothing
+    end
+    args = ArgParse.parse_args(ARGS, settings)
 
-    path_project = config["project"]
-    Pkg.Operations.with_temp_env(path_project) do
-        @info "Creating context for project $path_project"
-        context = Pkg.Types.Context()
+    command = args["%COMMAND%"]
+    if command == "lock"
+        Manifest.main(args["lock"])
+    else
+        error("Unknown command $command")
 
-        @info "Processing dependencies for project $(context.env.project.name)"
-        Manifest.load_dependencies(context, path_output=get(config, "output", nothing))
     end
 end
