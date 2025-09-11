@@ -3,43 +3,77 @@ module Manifest
 import Pkg
 import TOML
 using Pkg.API: PackageInfo
-using Base: UUID, @kwdef
+using Pkg.Types: Context
+using Base: UUID, SHA1, @kwdef
 
-@kwdef struct PinnedManifest
+@kwdef struct PinnedPackage
     uuid::UUID
+    version::VersionNumber
     dependencies::Vector{String}
-    is_tracking_registry::Bool
+    repo::String
+    rev::SHA1
 end
 
-function to_pinned_manifest(uuid::UUID, info::PackageInfo)::PinnedManifest
-    return PinnedManifest(
+function pin_package(context::Context, uuid::UUID, info::PackageInfo)::Union{PinnedPackage, Nothing}
+    if Pkg.Types.is_stdlib(uuid, VERSION)
+        #@assert !haskey(context.registries[1], uuid)
+        return nothing
+    elseif info.is_tracking_path
+        error("Cannot pin a package $(info.name) [$uuid] tracking a path. Please supply the package explicitly with a derivation.")
+    elseif info.is_tracking_registry
+        pkg_entry = get(context.registries[1], uuid, nothing)
+        if isnothing(pkg_entry)
+            error("Package $(info.name) [$uuid] is not present in any registry")
+        end
+        Pkg.Registry.init_package_info!(pkg_entry)
+        repo = pkg_entry.info.repo
+        rev = pkg_entry.info.version_info[info.version].git_tree_sha1
+    elseif info.is_tracking_repo
+        repo = info.git_source
+        rev = info.git_revision
+    else
+        error("Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo")
+    end
+    return PinnedPackage(
         uuid=uuid,
-        is_tracking_registry=info.is_tracking_registry,
+        version=info.version,
         dependencies=collect(keys(info.dependencies)),
+        repo=repo,
+        rev=rev,
     )
 end
 
 format(nothing) = "null"
-format(x::PinnedManifest) = Dict(
+format(x::PinnedPackage) = Dict(
     "uuid" => x.uuid,
-    "is_tracking_registry" => x.is_tracking_registry,
-    "dependencies" => x.dependencies
+    "version" => x.version,
+    "dependencies" => x.dependencies,
+    "repo" => x.repo,
+    "rev" => x.rev,
 )
 format(u::UUID) = string(u)
 
-function load_dependencies(; path_output::Union{Some{String}, Nothing}=nothing)
-    dependencies = Pkg.dependencies()
-    payload = Dict(
-        v.name => to_pinned_manifest(k, v)
-        for (k, v) in dependencies
-    )
-    project_info = Pkg.project()
+function load_dependencies(context; path_output::Union{Some{String}, Nothing}=nothing)
+    @assert length(context.registries) == 1
+    dependencies = Pkg.dependencies(context.env)
+    @info "Pinning $(length(dependencies)) dependencies"
+    pinned_dependencies = Dict()
+    for (uuid, info) in dependencies
+        pinned = pin_package(context, uuid, info)
+        if isnothing(pinned)
+            continue
+        end
+        pinned_dependencies[info.name] = pinned
+    end
+    project_info = Pkg.project(context.env)
+
     result = Dict(
-        "name" => project_info.name,
+        "name" => context.env.project.name,#project_info.name,
         "uuid" => project_info.uuid,
-        "deps" => payload,
+        "deps" => pinned_dependencies,
     )
 
+    @info "Generating Lock File"
     writer = io::IO -> TOML.print(format, io, result)
     if isnothing(path_output)
         writer(stdout)
