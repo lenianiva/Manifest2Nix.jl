@@ -16,8 +16,14 @@
         pkgs,
         system,
         ...
-      }: {
+      }: let
+        lib-compile = pkgs.callPackage lib/compile.nix {};
+      in {
         formatter = pkgs.alejandra;
+        packages = {
+          inherit (lib-compile) stdlib-depot;
+          minimal-lib = lib-compile.buildJuliaPackage {src = templates/minimal;};
+        };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
