@@ -1,4 +1,7 @@
-# Builds the main target of the current project.
+# Builds the current project's package
+#
+# This file cannot rely on any non-stdlib package since it needs to bootstrap
+# these packages in Nix in the first place.
 
 import Pkg
 
