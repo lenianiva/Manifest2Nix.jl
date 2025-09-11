@@ -20,6 +20,7 @@ function pin_package(
     info::PackageInfo,
 )::Union{PinnedPackage,Nothing}
     if Pkg.Types.is_stdlib(uuid, VERSION)
+        @info "Skipping stdlib package $(info.name) [$uuid]"
         #@assert !haskey(context.registries[1], uuid)
         return nothing
     elseif info.is_tracking_path
@@ -36,7 +37,7 @@ function pin_package(
         rev = pkg_entry.info.version_info[info.version].git_tree_sha1
     elseif info.is_tracking_repo
         repo = info.git_source
-        rev = info.git_revision
+        rev = info.git_tree_sha1
     else
         error(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
@@ -60,8 +61,14 @@ format(x::PinnedPackage) = Dict(
     "rev" => x.rev,
 )
 format(u::UUID) = string(u)
+format(other::SHA1) = string(other)
+format(other::VersionNumber) = string(other)
 
-function load_dependencies(context; path_output::Union{Some{String},Nothing} = nothing)
+function load_dependencies(
+    context;
+    path_project::String,
+    path_output::Union{String,Nothing} = nothing,
+)
     @assert length(context.registries) == 1
     dependencies = Pkg.dependencies(context.env)
     @info "Pinning $(length(dependencies)) dependencies"
@@ -84,6 +91,10 @@ function load_dependencies(context; path_output::Union{Some{String},Nothing} = n
     @info "Generating Lock File"
     writer = io::IO -> TOML.print(format, io, result)
     if isnothing(path_output)
+        path_output = "$path_project/Lock.toml"
+    end
+
+    if path_output == "-"
         writer(stdout)
     else
         open(writer, path_output, "w")
@@ -96,8 +107,14 @@ function main(args::Dict{String,Any})
         @info "Creating context for project $path_project"
         context = Pkg.Types.Context()
 
+        Pkg.instantiate()
+
         @info "Processing dependencies for project $(context.env.project.name)"
-        Manifest.load_dependencies(context, path_output = get(args, "output", nothing))
+        Manifest.load_dependencies(
+            context;
+            path_project = path_project,
+            path_output = get(args, "output", nothing),
+        )
     end
 end
 

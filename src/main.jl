@@ -22,7 +22,7 @@ function main()
         arg_type = String
         default = pwd()
         "-o", "--output"
-        help = "Output manifest file"
+        help = "Output Lock.toml file. Defaults to project_root/Lock.toml"
         required = false
         arg_type = String
         default = nothing
@@ -34,6 +34,5 @@ function main()
         Manifest.main(args["lock"])
     else
         error("Unknown command $command")
-
     end
 end
