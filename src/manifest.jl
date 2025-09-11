@@ -37,7 +37,7 @@ function pin_package(
         rev = pkg_entry.info.version_info[info.version].git_tree_sha1
     elseif info.is_tracking_repo
         repo = info.git_source
-        rev = info.git_tree_sha1
+        rev = info.git_revision
     else
         error(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",

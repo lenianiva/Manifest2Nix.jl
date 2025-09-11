@@ -21,9 +21,11 @@
         lib-compile = pkgs.callPackage lib/compile.nix {};
       in {
         formatter = pkgs.alejandra;
-        packages = {
+        packages = rec {
           inherit (lib-compile) stdlib-depot;
-          minimal-lib = lib-compile.buildJuliaPackage {src = templates/minimal;};
+          minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
+          minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
+          simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
         };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
