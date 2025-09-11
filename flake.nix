@@ -21,6 +21,7 @@
       in {
         formatter = pkgs.alejandra;
         packages = {
+          inherit (lib-compile) stdlib-depot;
           minimal-lib = lib-compile.buildJuliaPackage {src = templates/minimal;};
         };
         devShells.default = pkgs.mkShell {
