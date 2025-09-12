@@ -22,7 +22,6 @@
       in {
         formatter = pkgs.alejandra;
         packages = rec {
-          inherit (lib-compile) stdlib-depot;
           minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
           minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
           simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
@@ -32,6 +31,9 @@
             pre-commit
             lib-manifest.manifest2nix
           ];
+        };
+        checks = {
+          inherit (lib-compile) stdlib-depot;
         };
       };
       flake = {

@@ -22,12 +22,13 @@ in rec {
       mkdir -p $out
       JULIA_DEPOT_PATH=$out julia --project -e "import Pkg"
     '';
+  # `deps` here must be a list
   mkDepsDepot = deps:
     stdenv.mkDerivation {
       name = "deps";
       src = symlinkJoin {
         name = "deps";
-        paths = builtins.attrValues deps;
+        paths = deps;
       };
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
@@ -46,7 +47,7 @@ in rec {
       if deps == null
       then []
       else [(mkDepsDepot deps)];
-    input-depots = lib.strings.concatMapStrings (s: "${s}:") (deps-depot ++ depots);
+    input-depots = lib.strings.concatMapStrings (s: ":${s}") (deps-depot ++ depots);
   in
     stdenv.mkDerivation (args
       // {
@@ -54,14 +55,13 @@ in rec {
         nativeBuildInputs = [julia];
         JULIA_PKG_OFFLINE = "true";
         JULIA_PKG_SERVER = "";
-        JULIA_DEPOT_PATH = ".julia:${input-depots}";
+        JULIA_DEPOT_PATH = ".julia${input-depots}";
         JULIA_SSL_CA_ROOTS_PATH = cacert;
         buildPhase = ''
           mkdir -p .julia
           julia --project ${../src/compile.jl}
 
           mkdir -p $out
-          ls .julia
           cp -r .julia/compiled/v${abridged-version}/* $out/
         '';
       });
@@ -84,12 +84,16 @@ in rec {
           inherit rev;
           shallow = true;
         };
-        deps = lib.getAttrs dependencies allDeps;
+        deps = builtins.concatMap (name:
+          if builtins.hasAttr name allDeps
+          then [(builtins.getAttr name allDeps)]
+          else [])
+        dependencies;
       };
     allDeps = builtins.mapAttrs depToPackage lock.deps;
   in
     buildJuliaPackage (args
       // {
-        deps = allDeps;
+        deps = builtins.attrValues allDeps;
       });
 }
