@@ -78,13 +78,13 @@ in rec {
       dependencies,
       ...
     }:
-      buildJuliaPackageWithDeps {
+      buildJuliaPackage {
         src = builtins.fetchGit {
           url = repo;
           inherit rev;
           shallow = true;
         };
-        deps = lib.getAttrs (builtins.attrNames dependencies) allDeps;
+        deps = lib.getAttrs dependencies allDeps;
       };
     allDeps = builtins.mapAttrs depToPackage lock.deps;
   in

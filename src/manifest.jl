@@ -2,6 +2,7 @@ module Manifest
 
 import Pkg
 import TOML
+using Git: git
 using Pkg.API: PackageInfo
 using Pkg.Types: Context
 using Base: UUID, SHA1, @kwdef
@@ -11,7 +12,7 @@ using Base: UUID, SHA1, @kwdef
     version::VersionNumber
     dependencies::Vector{String}
     repo::String
-    rev::SHA1
+    rev::String
 end
 
 function pin_package(
@@ -34,10 +35,12 @@ function pin_package(
         end
         Pkg.Registry.init_package_info!(pkg_entry)
         repo = pkg_entry.info.repo
-        rev = pkg_entry.info.version_info[info.version].git_tree_sha1
+        rev_tag = readchomp(git(["ls-remote", repo, "v$(info.version)"]))
+        rev = split(rev_tag, "\t"; limit = 2)[1]
     elseif info.is_tracking_repo
         repo = info.git_source
         rev = info.git_revision
+        @assert rev isa string
     else
         error(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
@@ -61,7 +64,6 @@ format(x::PinnedPackage) = Dict(
     "rev" => x.rev,
 )
 format(u::UUID) = string(u)
-format(other::SHA1) = string(other)
 format(other::VersionNumber) = string(other)
 
 function load_dependencies(

@@ -6,12 +6,12 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     dependencies = []
     repo = "https://github.com/carlobaldassi/TextWrap.jl.git"
     uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
-    rev = "43044b737fa70bc12f6105061d3da38f881a3e3c"
+    rev = "6f26906125f8c651fb6d77bb1f83639daf74cffd"
     version = "1.0.2"
 
     [deps.ArgParse]
     dependencies = ["Logging", "TextWrap"]
     repo = "https://github.com/carlobaldassi/ArgParse.jl.git"
     uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
-    rev = "22cf435ac22956a7b45b0168abbc871176e7eecc"
+    rev = "725ce952e834ecd8c515dc3d07b9d80f56f38182"
     version = "1.2.0"
