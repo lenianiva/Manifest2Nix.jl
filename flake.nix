@@ -19,10 +19,13 @@
       }: let
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
         lib-compile = pkgs.callPackage lib/compile.nix {};
+        lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
+        julia-bin = lib-toolchain.fetchBinaryToolchain "1.11.6";
       in {
         formatter = pkgs.alejandra;
         packages = rec {
-          inherit (pkgs) julia julia-bin;
+          inherit (pkgs) julia;
+          inherit julia-bin;
           minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
           minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
           simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
@@ -30,6 +33,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
+            lib-toolchain.toolchain-fetch
             lib-manifest.manifest2nix
           ];
         };
