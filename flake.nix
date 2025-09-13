@@ -22,9 +22,11 @@
       in {
         formatter = pkgs.alejandra;
         packages = rec {
+          inherit (pkgs) julia julia-bin;
           minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
           minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
           simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
+          simple-jl-depot = (lib-compile.buildJuliaPackageWithDeps {src = templates/simple;}).deps-depot;
         };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
