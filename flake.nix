@@ -17,17 +17,24 @@
         system,
         ...
       }: let
+        lib-manifest = pkgs.callPackage lib/manifest.nix {};
         lib-compile = pkgs.callPackage lib/compile.nix {};
       in {
         formatter = pkgs.alejandra;
-        packages = {
-          inherit (lib-compile) stdlib-depot;
-          minimal-lib = lib-compile.buildJuliaPackage {src = templates/minimal;};
+        packages = rec {
+          inherit (pkgs) julia julia-bin;
+          minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
+          minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
+          simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
         };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
+            lib-manifest.manifest2nix
           ];
+        };
+        checks = {
+          inherit (lib-compile) stdlib-depot;
         };
       };
       flake = {

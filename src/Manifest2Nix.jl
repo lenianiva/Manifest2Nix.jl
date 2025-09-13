@@ -1,5 +1,9 @@
 module Manifest2Nix
 
-import Pkg
+include("manifest.jl")
+export Manifest
+
+include("main.jl")
+export main
 
 end
