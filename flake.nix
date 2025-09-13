@@ -8,6 +8,9 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
+      flake = {
+        templates = import ./templates;
+      };
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
         config,
@@ -23,9 +26,6 @@
         formatter = pkgs.alejandra;
         packages = rec {
           inherit (pkgs) julia julia-bin;
-          minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
-          minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
-          simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
         };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
@@ -33,12 +33,7 @@
             lib-manifest.manifest2nix
           ];
         };
-        checks = {
-          inherit (lib-compile) stdlib-depot;
-        };
-      };
-      flake = {
-        templates = import ./templates;
+        checks = (import test/checks.nix) {inherit pkgs lib-manifest lib-compile;};
       };
     };
 }
