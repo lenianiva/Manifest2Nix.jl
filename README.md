@@ -4,8 +4,16 @@ A Nix library for creating reproducible Julia builds.
 
 ## Usage
 
+### Overlay
+
+...
+
+### Package Building
+
 - `buildJuliaPackage`
 - `buildJuliaPackageWithDeps`
+
+### System Image Caching
 
 ## Contributing
 
