@@ -29,8 +29,7 @@ for target in "${!targets[@]}"; do
 	hash=$(jq -r '.hash' <<< "$prefetch")
 	printf "  $target = {\n"
 	printf "    url = \"$url\";\n"
-	# :7 strips the sha256- prefix
-	printf "    sha256 = \"${hash:7}\";\n"
+	printf "    hash = \"$hash\";\n"
 	printf "  };\n"
 done
 printf "};\n"
