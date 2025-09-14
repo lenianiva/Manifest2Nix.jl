@@ -6,10 +6,15 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {
+    self,
+    flake-parts,
+    ...
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
         templates = import ./templates;
+        mkLib = import ./lib/compile.nix;
       };
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
@@ -21,7 +26,7 @@
         ...
       }: let
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
-        lib-compile = pkgs.callPackage lib/compile.nix {};
+        lib-compile = pkgs.callPackage self.mkLib {};
       in {
         formatter = pkgs.alejandra;
         packages = rec {
