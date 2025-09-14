@@ -3,11 +3,14 @@
   lib-manifest,
   lib-compile,
   ...
-}: rec {
+}: let
+  minimal-jl = lib-compile.buildJuliaPackage {src = ../templates/minimal;};
+  simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
+in {
   inherit (lib-compile) stdlib-depot;
 
   # Ensure all the templates can build
-  minimal-jl = lib-compile.buildJuliaPackage {src = ../templates/minimal;};
+  minimal-jl = minimal-jl.compiled;
   minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
-  simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
+  simple-jl = simple-jl.compiled;
 }
