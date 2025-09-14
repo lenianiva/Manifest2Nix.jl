@@ -6,9 +6,19 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    flake-parts,
+    ...
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      flake =
+        (import lib/overlays.nix)
+        // {
+          templates = import ./templates;
+        };
       perSystem = {
         config,
         self',
@@ -20,12 +30,14 @@
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
         lib-compile = pkgs.callPackage lib/compile.nix {};
         lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
-        julia-bin = lib-toolchain.fetchBinaryToolchain "1.11.6";
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [(self.fromManifest ./Manifest.toml)];
+        };
       in {
         formatter = pkgs.alejandra;
         packages = rec {
           inherit (pkgs) julia;
-          inherit julia-bin;
           minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
           minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
           simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
@@ -40,9 +52,6 @@
         checks = {
           inherit (lib-compile) stdlib-depot;
         };
-      };
-      flake = {
-        templates = import ./templates;
       };
     };
 }
