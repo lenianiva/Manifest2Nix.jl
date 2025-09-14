@@ -25,7 +25,7 @@ declare -A targets=(
 printf "\"$version\" = {\n"
 for target in "${!targets[@]}"; do
 	url=${targets[$target]}
-	prefetch=$(nix --extra-experimental-features nix-command store prefetch-file --json --hash-type sha256 $url)
+	prefetch=$(nix --extra-experimental-features nix-command store prefetch-file --unpack --json --hash-type sha256 $url)
 	hash=$(jq -r '.hash' <<< "$prefetch")
 	printf "  $target = {\n"
 	printf "    url = \"$url\";\n"
