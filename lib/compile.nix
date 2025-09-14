@@ -98,7 +98,6 @@ in rec {
   createJuliaEnv = {
     src,
     load-path,
-    compiled,
     input-depots,
     ...
   }: let
