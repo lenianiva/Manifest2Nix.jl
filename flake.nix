@@ -8,14 +8,17 @@
 
   outputs = inputs @ {
     self,
+    nixpkgs,
     flake-parts,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      flake = {
-        templates = import ./templates;
-        mkLib = import ./lib/compile.nix;
-      };
+      flake =
+        (import lib/overlays.nix)
+        // {
+          templates = import ./templates;
+          mkLib = import ./lib/compile.nix;
+        };
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
         config,
@@ -27,14 +30,20 @@
       }: let
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
         lib-compile = pkgs.callPackage self.mkLib {};
+        lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [(self.fromManifest ./Manifest.toml)];
+        };
       in {
-        formatter = pkgs.alejandra;
         packages = rec {
           inherit (pkgs) julia julia-bin;
         };
+        formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
+            lib-toolchain.toolchain-fetch
             lib-manifest.manifest2nix
           ];
         };
