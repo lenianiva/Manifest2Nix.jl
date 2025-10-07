@@ -1,0 +1,451 @@
+name = "images"
+uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
+
+[deps]
+    [deps.PaddedViews]
+    dependencies = ["OffsetArrays"]
+    repo = "https://github.com/JuliaArrays/PaddedViews.jl.git"
+    uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
+    rev = ""
+    version = "0.5.12"
+
+    [deps.OffsetArrays]
+    dependencies = []
+    repo = "https://github.com/JuliaArrays/OffsetArrays.jl.git"
+    uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
+    rev = "9757255f76a717c68518765310c405c5ed955be8"
+    version = "1.17.0"
+
+    [deps.PNGFiles]
+    dependencies = ["OffsetArrays", "ImageCore", "Base64", "CEnum", "libpng_jll", "IndirectArrays"]
+    repo = "https://github.com/JuliaIO/PNGFiles.jl.git"
+    uuid = "f57f5aa1-a3ce-4bc8-8ab9-96f992907883"
+    rev = "dfe8a09f8fd543cda1405a8d89cb2073d8dd92ce"
+    version = "0.4.4"
+
+    [deps.OrderedCollections]
+    dependencies = []
+    repo = "https://github.com/JuliaCollections/OrderedCollections.jl.git"
+    uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+    rev = "bce1ae9e97e84d4e0689a46ea011fe7cdbb2a114"
+    version = "1.8.1"
+
+    [deps.OpenEXR_jll]
+    dependencies = ["JLLWrappers", "Imath_jll", "Zlib_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/OpenEXR_jll.jl.git"
+    uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
+    rev = ""
+    version = "3.2.4+0"
+
+    [deps.SIMD]
+    dependencies = ["PrecompileTools"]
+    repo = "https://github.com/eschnett/SIMD.jl.git"
+    uuid = "fdea26ae-647d-5447-a871-4b548cad5224"
+    rev = "806f33e8bfa9ecb4b42fb94c88321dd1c21f92bc"
+    version = "3.7.2"
+
+    [deps.IndirectArrays]
+    dependencies = []
+    repo = "https://github.com/JuliaArrays/IndirectArrays.jl.git"
+    uuid = "9b13fd28-a010-5f03-acff-a1bbcff69959"
+    rev = "1db2d784b7aeba614753c41d56c23ad2a014b145"
+    version = "1.0.0"
+
+    [deps.AxisArrays]
+    dependencies = ["Dates", "IterTools", "IntervalSets", "RangeArrays"]
+    repo = "https://github.com/JuliaArrays/AxisArrays.jl.git"
+    uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
+    rev = ""
+    version = "0.4.8"
+
+    [deps.ColorVectorSpace]
+    dependencies = ["Statistics", "ColorTypes", "LinearAlgebra", "TensorCore", "Requires", "FixedPointNumbers"]
+    repo = "https://github.com/JuliaGraphics/ColorVectorSpace.jl.git"
+    uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
+    rev = "f172ef174fa7c916647e8edcd811935275284bac"
+    version = "0.11.0"
+
+    [deps.CEnum]
+    dependencies = []
+    repo = "https://github.com/JuliaInterop/CEnum.jl.git"
+    uuid = "fa961155-64e5-5f13-b03f-caf6b980ea82"
+    rev = "853302626cb3fde941a9bf45d9a04455b14080a0"
+    version = "0.5.0"
+
+    [deps.DataStructures]
+    dependencies = ["OrderedCollections"]
+    repo = "https://github.com/JuliaCollections/DataStructures.jl.git"
+    uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+    rev = "464742955008f79add81c09366b5cdd82a4a5d7f"
+    version = "0.19.1"
+
+    [deps.Netpbm]
+    dependencies = ["FileIO", "ImageCore", "ImageMetadata"]
+    repo = "https://github.com/JuliaIO/Netpbm.jl.git"
+    uuid = "f09324ee-3d7c-5217-9330-fc30815ba969"
+    rev = ""
+    version = "1.1.1"
+
+    [deps.XZ_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/XZ_jll.jl.git"
+    uuid = "ffd25f8a-64ca-5728-b0f7-c24cf3aae800"
+    rev = ""
+    version = "5.8.1+0"
+
+    [deps.Requires]
+    dependencies = ["UUIDs"]
+    repo = "https://github.com/JuliaPackaging/Requires.jl.git"
+    uuid = "ae029012-a4dd-5104-9daa-d747884805df"
+    rev = ""
+    version = "1.3.1"
+
+    [deps.Zstd_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Zstd_jll.jl.git"
+    uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
+    rev = ""
+    version = "1.5.7+1"
+
+    [deps.OpenEXR]
+    dependencies = ["FileIO", "OpenEXR_jll", "Colors"]
+    repo = "https://github.com/twadleigh/OpenEXR.jl.git"
+    uuid = "52e1d378-f018-4a11-a4be-720524705ac7"
+    rev = "e53c3488a7971f95f69d99bb4b9b925815c8b859"
+    version = "0.3.3"
+
+    [deps.Libglvnd_jll]
+    dependencies = ["JLLWrappers", "Xorg_libXext_jll", "Xorg_libX11_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Libglvnd_jll.jl.git"
+    uuid = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
+    rev = ""
+    version = "1.7.1+1"
+
+    [deps.Xorg_libxcb_jll]
+    dependencies = ["JLLWrappers", "Xorg_libXau_jll", "Libdl", "Artifacts", "Xorg_libXdmcp_jll"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libxcb_jll.jl.git"
+    uuid = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
+    rev = ""
+    version = "1.17.1+0"
+
+    [deps.Xorg_libXau_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXau_jll.jl.git"
+    uuid = "0c0b7dd1-d40b-584c-a123-a41640f87eec"
+    rev = ""
+    version = "1.0.13+0"
+
+    [deps.FixedPointNumbers]
+    dependencies = ["Statistics"]
+    repo = "https://github.com/JuliaMath/FixedPointNumbers.jl.git"
+    uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
+    rev = "64791e2242b8aba5b58195787d5dc19dcad5ae21"
+    version = "0.8.5"
+
+    [deps.Giflib_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Giflib_jll.jl.git"
+    uuid = "59f7168a-df46-5410-90c8-f2779963d0ec"
+    rev = ""
+    version = "5.2.3+0"
+
+    [deps.JLLWrappers]
+    dependencies = ["Preferences", "Artifacts"]
+    repo = "https://github.com/JuliaPackaging/JLLWrappers.jl.git"
+    uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
+    rev = "d02f37311935f85374ba11759f79c143eb8c87c4"
+    version = "1.7.1"
+
+    [deps.ColorTypes]
+    dependencies = ["Random", "FixedPointNumbers"]
+    repo = "https://github.com/JuliaGraphics/ColorTypes.jl.git"
+    uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
+    rev = "a174e84b5e2547d492ef26a1b0a2165dfdd9fc8a"
+    version = "0.12.1"
+
+    [deps.ProgressMeter]
+    dependencies = ["Printf", "Distributed"]
+    repo = "https://github.com/timholy/ProgressMeter.jl.git"
+    uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
+    rev = "2cdedb5e127e266addf66e34cb14fd0340f05aa4"
+    version = "1.11.0"
+
+    [deps.FileIO]
+    dependencies = ["Pkg", "UUIDs", "Requires"]
+    repo = "https://github.com/JuliaIO/FileIO.jl.git"
+    uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+    rev = "56059b48a585867297bda424bb5f946acb0d81eb"
+    version = "1.17.1"
+
+    [deps.ImageCore]
+    dependencies = ["OffsetArrays", "PrecompileTools", "ColorVectorSpace", "MosaicViews", "MappedArrays", "Colors", "PaddedViews", "Reexport", "FixedPointNumbers"]
+    repo = "https://github.com/JuliaImages/ImageCore.jl.git"
+    uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
+    rev = "b47604894a9ca7fc56de287565df34eb9e8a6821"
+    version = "0.10.5"
+
+    [deps.Imath_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Imath_jll.jl.git"
+    uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
+    rev = ""
+    version = "3.1.11+0"
+
+    [deps.ImageAxes]
+    dependencies = ["ImageCore", "AxisArrays", "ImageBase", "Reexport", "SimpleTraits"]
+    repo = "https://github.com/JuliaImages/ImageAxes.jl.git"
+    uuid = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
+    rev = "98c4a2497c189759ac5f105bf0cd620c1b1a506d"
+    version = "0.6.12"
+
+    [deps.Xorg_libXext_jll]
+    dependencies = ["JLLWrappers", "Xorg_libX11_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXext_jll.jl.git"
+    uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
+    rev = ""
+    version = "1.3.7+0"
+
+    [deps.TiffImages]
+    dependencies = ["UUIDs", "Inflate", "FixedPointNumbers", "OffsetArrays", "PrecompileTools", "IndirectArrays", "SIMD", "DataStructures", "ColorTypes", "PkgVersion", "Mmap", "DocStringExtensions", "ProgressMeter", "FileIO"]
+    repo = "https://github.com/tlnagy/TiffImages.jl.git"
+    uuid = "731e570b-9d59-4bfa-96dc-6df516fadf69"
+    rev = "d754f5f80c8212b4d2435624f7ec6b829d0cdc10"
+    version = "0.11.6"
+
+    [deps.StackViews]
+    dependencies = ["OffsetArrays"]
+    repo = "https://github.com/JuliaArrays/StackViews.jl.git"
+    uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
+    rev = "70e8b5337a7f4068c27057421b3859d0e7ddf2ac"
+    version = "0.1.2"
+
+    [deps.WebP]
+    dependencies = ["FileIO", "ImageCore", "ColorTypes", "CEnum", "libwebp_jll", "FixedPointNumbers"]
+    repo = "https://github.com/stemann/WebP.jl.git"
+    uuid = "e3aaa7dc-3e4b-44e0-be63-ffb868ccd7c1"
+    rev = "cce9180e53c55a3fadcabd50f2773f52ff1d0785"
+    version = "0.1.3"
+
+    [deps.Inflate]
+    dependencies = []
+    repo = "https://github.com/GunnarFarneback/Inflate.jl.git"
+    uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
+    rev = "02eb75b601ccbc7db12702e89437c3cdbc712ae2"
+    version = "0.1.5"
+
+    [deps.SimpleTraits]
+    dependencies = ["InteractiveUtils", "MacroTools"]
+    repo = "https://github.com/mauro3/SimpleTraits.jl.git"
+    uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
+    rev = "26c6b7b5fcdde260d9772805808c780d0d4b891b"
+    version = "0.9.5"
+
+    [deps.Xorg_xtrans_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_xtrans_jll.jl.git"
+    uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
+    rev = ""
+    version = "1.6.0+0"
+
+    [deps.PrecompileTools]
+    dependencies = ["Preferences"]
+    repo = "https://github.com/JuliaLang/PrecompileTools.jl.git"
+    uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+    rev = "d908a7319eac010e43371cef1b8c3e19c34a1595"
+    version = "1.2.1"
+
+    [deps.libwebp_jll]
+    dependencies = ["JLLWrappers", "JpegTurbo_jll", "Libglvnd_jll", "libpng_jll", "Libdl", "Libtiff_jll", "Artifacts", "Giflib_jll"]
+    repo = "https://github.com/JuliaBinaryWrappers/libwebp_jll.jl.git"
+    uuid = "c5f90fcd-3b7e-5836-afba-fc50a0988cb2"
+    rev = ""
+    version = "1.6.0+0"
+
+    [deps.Xorg_libX11_jll]
+    dependencies = ["JLLWrappers", "Xorg_libxcb_jll", "Xorg_xtrans_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libX11_jll.jl.git"
+    uuid = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
+    rev = ""
+    version = "1.8.12+0"
+
+    [deps.DocStringExtensions]
+    dependencies = []
+    repo = "https://github.com/JuliaDocs/DocStringExtensions.jl.git"
+    uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+    rev = "6780df1baa57b3ba6e970b9475794254ce14aa3b"
+    version = "0.9.5"
+
+    [deps.Preferences]
+    dependencies = ["TOML"]
+    repo = "https://github.com/JuliaPackaging/Preferences.jl.git"
+    uuid = "21216c6a-2e73-6563-6e65-726566657250"
+    rev = "bbd37f7bc9984d4794d0f4cd1f8bcadbefe274e5"
+    version = "1.5.0"
+
+    [deps.Sixel]
+    dependencies = ["FileIO", "Dates", "ImageCore", "OffsetArrays", "REPL", "libsixel_jll", "IndirectArrays"]
+    repo = "https://github.com/JuliaIO/Sixel.jl.git"
+    uuid = "45858cf5-a6b0-47a3-bbea-62219f50df47"
+    rev = "a3917a9477698c831d7a7b839561937721d59abf"
+    version = "0.1.5"
+
+    [deps.RangeArrays]
+    dependencies = []
+    repo = "https://github.com/JuliaArrays/RangeArrays.jl.git"
+    uuid = "b3c3ace0-ae52-54e7-9d0b-2c1406fd6b9d"
+    rev = "6e56839f085e4feaca7df5199e3967620a679aa0"
+    version = "0.3.2"
+
+    [deps.TensorCore]
+    dependencies = ["LinearAlgebra"]
+    repo = "https://github.com/JuliaMath/TensorCore.jl.git"
+    uuid = "62fd8b95-f654-4bbd-a8a5-9c27f68ccd50"
+    rev = "2fd2692476468d08b8cb4caf54b4555c3a4b725a"
+    version = "0.1.1"
+
+    [deps.Reexport]
+    dependencies = []
+    repo = "https://github.com/simonster/Reexport.jl.git"
+    uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+    rev = "f0d5b25255bcdb365b8c0ac289d1059f602cf32b"
+    version = "1.2.2"
+
+    [deps.Statistics]
+    dependencies = ["LinearAlgebra"]
+    repo = "https://github.com/JuliaStats/Statistics.jl.git"
+    uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+    rev = "d8597a8306475611e6e8d6f6f35b0344dcc7319b"
+    version = "1.11.1"
+
+    [deps.IntervalSets]
+    dependencies = []
+    repo = "https://github.com/JuliaMath/IntervalSets.jl.git"
+    uuid = "8197267c-284f-5f27-9208-e0e47529a953"
+    rev = "d33bbc9a845fc2735498ab8f7e6cd6124ce49838"
+    version = "0.7.11"
+
+    [deps.QOI]
+    dependencies = ["FileIO", "ColorTypes", "FixedPointNumbers"]
+    repo = "https://github.com/KristofferC/QOI.jl.git"
+    uuid = "4b34888f-f399-49d4-9bb3-47ed5cae4e65"
+    rev = "24ca6d1bce4c1e13d55aa8f383978e21fd3e3c99"
+    version = "1.0.1"
+
+    [deps.libsixel_jll]
+    dependencies = ["JLLWrappers", "JpegTurbo_jll", "libpng_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/libsixel_jll.jl.git"
+    uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
+    rev = ""
+    version = "1.10.5+0"
+
+    [deps.JpegTurbo_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/JpegTurbo_jll.jl.git"
+    uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
+    rev = ""
+    version = "3.1.3+0"
+
+    [deps.IterTools]
+    dependencies = []
+    repo = "https://github.com/JuliaCollections/IterTools.jl.git"
+    uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
+    rev = "076aa1e1f1c1d962e68d54932a2e7ee839656540"
+    version = "1.10.0"
+
+    [deps.MosaicViews]
+    dependencies = ["OffsetArrays", "StackViews", "MappedArrays", "PaddedViews"]
+    repo = "https://github.com/JuliaArrays/MosaicViews.jl.git"
+    uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
+    rev = ""
+    version = "0.3.4"
+
+    [deps.Libtiff_jll]
+    dependencies = ["JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Zlib_jll", "Libdl", "XZ_jll", "Artifacts", "Zstd_jll"]
+    repo = "https://github.com/JuliaBinaryWrappers/Libtiff_jll.jl.git"
+    uuid = "89763e89-9b03-5906-acba-b20f662cd828"
+    rev = ""
+    version = "4.7.2+0"
+
+    [deps.MappedArrays]
+    dependencies = []
+    repo = "https://github.com/JuliaArrays/MappedArrays.jl.git"
+    uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
+    rev = ""
+    version = "0.4.2"
+
+    [deps.ImageMetadata]
+    dependencies = ["ImageCore", "AxisArrays", "ImageAxes", "ImageBase"]
+    repo = "https://github.com/JuliaImages/ImageMetadata.jl.git"
+    uuid = "bc367c6b-8a6b-528e-b4bd-a4b897500b49"
+    rev = "c38248aa086bc3d2223459559b4f1a6dfb1699c1"
+    version = "0.9.10"
+
+    [deps.LERC_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/LERC_jll.jl.git"
+    uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
+    rev = ""
+    version = "4.0.1+0"
+
+    [deps.PkgVersion]
+    dependencies = ["Pkg"]
+    repo = "https://github.com/KlausC/PkgVersion.jl.git"
+    uuid = "eebad327-c553-4316-9ea0-9fa01ccd7688"
+    rev = "c923a1752d9bb4d010ef4b949cfe45d3854e5721"
+    version = "0.3.3"
+
+    [deps.ImageIO]
+    dependencies = ["QOI", "UUIDs", "WebP", "PNGFiles", "IndirectArrays", "Netpbm", "FileIO", "Sixel", "JpegTurbo", "TiffImages", "LazyModules", "OpenEXR"]
+    repo = "https://github.com/JuliaIO/ImageIO.jl.git"
+    uuid = "82e4d734-157c-48bb-816b-45c225c6df19"
+    rev = "f0bb534b86893069c45510cd0d19574e4896779a"
+    version = "0.6.9"
+
+    [deps.ImageBase]
+    dependencies = ["ImageCore", "Reexport"]
+    repo = "https://github.com/JuliaImages/ImageBase.jl.git"
+    uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
+    rev = "86cece2c37980ab34b8d31d88d659066f0356287"
+    version = "0.1.7"
+
+    [deps.Colors]
+    dependencies = ["ColorTypes", "Reexport", "FixedPointNumbers"]
+    repo = "https://github.com/JuliaGraphics/Colors.jl.git"
+    uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
+    rev = "7949c6369ec12071677262d279fe9434cbc77127"
+    version = "0.13.1"
+
+    [deps.MacroTools]
+    dependencies = []
+    repo = "https://github.com/FluxML/MacroTools.jl.git"
+    uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
+    rev = "35d15d81615e7595498dadf9c903ca87b1552579"
+    version = "0.5.16"
+
+    [deps.JpegTurbo]
+    dependencies = ["FileIO", "ImageCore", "JpegTurbo_jll", "CEnum", "TOML"]
+    repo = "https://github.com/JuliaIO/JpegTurbo.jl.git"
+    uuid = "b835a17e-a41a-41e7-81f0-2f016b05efe0"
+    rev = ""
+    version = "0.1.6"
+
+    [deps.libpng_jll]
+    dependencies = ["JLLWrappers", "Zlib_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/libpng_jll.jl.git"
+    uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
+    rev = ""
+    version = "1.6.50+0"
+
+    [deps.LazyModules]
+    dependencies = []
+    repo = "https://github.com/johnnychen94/LazyModules.jl.git"
+    uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
+    rev = "1c5b09abab714a72b4c54dca52eb076e6d569cce"
+    version = "0.3.1"
+
+    [deps.Xorg_libXdmcp_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXdmcp_jll.jl.git"
+    uuid = "a3789734-cfe1-5b06-b2d0-1dd0d9d62d05"
+    rev = ""
+    version = "1.1.6+0"

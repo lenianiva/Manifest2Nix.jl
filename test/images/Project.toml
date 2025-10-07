@@ -1,0 +1,12 @@
+name = "images"
+uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
+authors = ["Leni Aniva <a@leni.sh>"]
+version = "0.1.0"
+
+[deps]
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
+
+[compat]
+FileIO = "1.17.1"
+ImageIO = "0.6.9"
