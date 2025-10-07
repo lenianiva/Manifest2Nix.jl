@@ -6,7 +6,15 @@ A Nix library for creating reproducible Julia builds.
 
 ### Overlay
 
-...
+Before building any Julia library, there first has to be a Julia toolchain. Generate a toolchain via one of 4 methods:
+
+1. `pkgs` comes with a default `julia` package. It may work or it may not work.
+2. Use the provided `self.fromJuliaBin` overlay, which uses the `julia-bin`
+   package.
+3. Use the `self.fromVersion version` overlay, e.g. `manifest2nix.fromVersion
+   "1.11"`.
+4. Use the `self.fromManifest path` overlay, which reads the version from a
+   `Manifest.toml` file.
 
 ### Package Building
 
