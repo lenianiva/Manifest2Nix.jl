@@ -17,4 +17,5 @@ in {
 
   # Check individual cases
   artefact-jl = artefact-jl.compiled;
+  artefact-jl-artefact = lib-compile.generateArtifactFile "${./artefact}/Artifacts.toml";
 }

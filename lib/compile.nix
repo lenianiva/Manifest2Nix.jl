@@ -7,6 +7,8 @@
   runCommand,
   symlinkJoin,
   cacert,
+  fetchurl,
+  zstd,
   ...
 }: let
   julia = pkgs.julia-bin;
@@ -38,6 +40,73 @@ in rec {
         ln -s $src/ $out/compiled/v${abridged-version}
       '';
     };
+  # This dictionary matches against targets in the `Artifact.toml` file.
+  artifactProperties = let
+    p = stdenv.hostPlatform;
+  in {
+    arch =
+      if p.isAarch
+      then "aarch64"
+      else "x86_64";
+    os =
+      if p.isDarwin
+      then p.darwinPlatform
+      else "linux";
+    libc =
+      if p.isMusl
+      then "musl"
+      else "libc";
+  };
+  filterPlatformDependentArtifact = artifact:
+    if builtins.isList artifact
+    then let
+      candidates = builtins.filter (art: lib.matchAttrs (builtins.intersectAttrs art artifactProperties) art) artifact;
+    in (
+      if candidates == []
+      then null
+      else builtins.head candidates
+    )
+    else artifact;
+  generateArtifactFile = artifactsPath: let
+    artifacts = builtins.fromTOML (builtins.readFile artifactsPath);
+    remap = name: candidates: let
+      artifact = filterPlatformDependentArtifact candidates;
+    in
+      if artifact == null
+      then {}
+      else let
+        key = artifact.git-tree-sha1;
+        # Julia will try the downloads in order until one succeeds. Nix cannot
+        # do this.
+        download = builtins.head artifact.download;
+        src = fetchurl {
+          #inherit name;
+          inherit (download) url sha256;
+        };
+        result =
+          stdenv.mkDerivation
+          {
+            inherit name src;
+            version = key;
+            # Set this to prevent nix from guessing the source root
+            sourceRoot = ".";
+            nativeBuildInputs = [zstd];
+            installPhase = ''
+              mkdir -p $out/${key}/
+              mv ./* $out/${key}/
+            '';
+          };
+      in {
+        "${key}" = result;
+      };
+    mapping = lib.attrsets.concatMapAttrs remap artifacts;
+    overrides = pkgs.writers.writeTOML "Artifacts.toml" mapping;
+  in
+    symlinkJoin {
+      name = "artifacts";
+      paths = builtins.attrValues mapping;
+    };
+  #overrides;
   # Builds a Julia package
   buildJuliaPackage = args @ {
     src,
@@ -52,11 +121,29 @@ in rec {
       name = "deps";
       paths = builtins.map (dep: dep.load-path) deps;
     };
+    artifact-path = "${src}/Artifacts.toml";
+    artifacts-depot =
+      if lib.pathExists artifact-path
+      then [
+        (stdenv.mkDerivation
+          {
+            name = "artifact-depot";
+            inherit src;
+            phases = ["unpackPhase" "installPhase"];
+            installPhase = ''
+              #mkdir -p $out/artifacts/
+              #ln -s ${generateArtifactFile artifact-path} $out/artifacts/Overrides.toml
+              mkdir -p $out/
+              ln -s ${generateArtifactFile artifact-path} $out/artifacts
+            '';
+          })
+      ]
+      else [];
     deps-depot =
       if deps == []
       then []
       else [(mkDepsDepot deps)];
-    input-depots = deps-depot ++ depots;
+    input-depots = artifacts-depot ++ deps-depot ++ depots;
     # This leaves a trailing : for the system depot
     input-depots-paths = lib.strings.concatMapStrings (s: "${s}:") input-depots;
   in {
@@ -80,8 +167,6 @@ in rec {
       JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
       buildPhase = ''
         mkdir -p .julia
-        mkdir -p .julia/packages/TextWrap/
-        mkdir -p .julia/packages/ArgParse/
 
         if [ ! -f Manifest.toml ]; then
           ln -s ${lib.defaultTo "no-parent-manifest" parent-manifest} Manifest.toml
@@ -137,7 +222,8 @@ in rec {
 
     allDeps = builtins.mapAttrs depToPackage lock.deps;
   in
-    buildJuliaPackage (args
+    {artifacts = generateArtifactFile "${src}/Artifacts.toml";}
+    // buildJuliaPackage (args
       // {
         deps = builtins.attrValues allDeps;
       });
