@@ -13,12 +13,13 @@
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       flake =
         (import lib/overlays.nix)
         // {
           templates = import ./templates;
+          mkLib = import ./lib/compile.nix;
         };
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
         config,
         self',
@@ -28,20 +29,17 @@
         ...
       }: let
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
-        lib-compile = pkgs.callPackage lib/compile.nix {};
+        lib-compile = pkgs.callPackage self.mkLib {};
         lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
         pkgs = import nixpkgs {
           inherit system;
           overlays = [(self.fromManifest ./Manifest.toml)];
         };
       in {
-        formatter = pkgs.alejandra;
         packages = rec {
-          inherit (pkgs) julia;
-          minimal-jl = lib-compile.buildJuliaPackage {src = templates/minimal;};
-          minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
-          simple-jl = lib-compile.buildJuliaPackageWithDeps {src = templates/simple;};
+          inherit (pkgs) julia julia-bin;
         };
+        formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             pre-commit
@@ -49,9 +47,7 @@
             lib-manifest.manifest2nix
           ];
         };
-        checks = {
-          inherit (lib-compile) stdlib-depot;
-        };
+        checks = (import test/checks.nix) {inherit pkgs lib-manifest lib-compile;};
       };
     };
 }

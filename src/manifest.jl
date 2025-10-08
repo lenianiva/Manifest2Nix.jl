@@ -5,7 +5,7 @@ import TOML
 using Git: git
 using Pkg.API: PackageInfo
 using Pkg.Types: Context
-using Base: UUID, SHA1, @kwdef
+using Base: UUID, SHA1, Filesystem, @kwdef
 
 @kwdef struct PinnedPackage
     uuid::UUID
@@ -18,7 +18,8 @@ end
 function pin_package(
     context::Context,
     uuid::UUID,
-    info::PackageInfo,
+    info::PackageInfo;
+    temp_dir::String,
 )::Union{PinnedPackage,Nothing}
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "Skipping stdlib package $(info.name) [$uuid]"
@@ -35,11 +36,39 @@ function pin_package(
         end
         Pkg.Registry.init_package_info!(pkg_entry)
         repo = pkg_entry.info.repo
+        @info "Processing package $(info.name) [$uuid] (tracking registry repo $repo)"
+        if info.tree_hash == ""
+            error("Package does not have a tree hash")
+        end
         rev_tag = readchomp(git(["ls-remote", repo, "v$(info.version)"]))
         rev = split(rev_tag, "\t"; limit = 2)[1]
+        if rev == ""
+            # Tag doesn't exist. Try tree hash
+
+            # Clone the repository
+            run(
+                `$git clone --quiet --filter=blob:none --no-checkout $repo $temp_dir/$(info.name)`,
+            )
+            rev_tag = readchomp(
+                pipeline(
+                    Cmd(`$git log --pretty=raw`, dir = "$temp_dir/$(info.name)"),
+                    `grep -B 1 $(info.tree_hash)`,
+                    `head -1`,
+                ),
+            )
+            rev = split(rev_tag, " "; limit = 2)[2]
+        end
+        if rev == ""
+            error(
+                "Could not determine revision using either tag or tree hash $(info.version)",
+            )
+        end
     elseif info.is_tracking_repo
         repo = info.git_source
         rev = info.git_revision
+        if rev == ""
+            error("Package $(info.name) [$uuid] (tracking repo) has an empty revision")
+        end
         @assert rev isa string
     else
         error(
@@ -74,9 +103,10 @@ function load_dependencies(
     @assert length(context.registries) == 1
     dependencies = Pkg.dependencies(context.env)
     @info "Pinning $(length(dependencies)) dependencies"
+    temp_dir = Filesystem.mktempdir()
     pinned_dependencies = Dict()
     for (uuid, info) in dependencies
-        pinned = pin_package(context, uuid, info)
+        pinned = pin_package(context, uuid, info; temp_dir)
         if isnothing(pinned)
             continue
         end
@@ -106,6 +136,7 @@ end
 function main(args::Dict{String,Any})
     path_project = args["project"]
     Pkg.Operations.with_temp_env(path_project) do
+        Pkg.API.instantiate()
         @info "Creating context for project $path_project"
         context = Pkg.Types.Context()
 

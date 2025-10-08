@@ -1,0 +1,10 @@
+name = "artefact"
+uuid = "b3010fde-e16b-4104-b589-ea69ade89a2a"
+authors = ["Leni Aniva <a@leni.sh>"]
+version = "0.1.0"
+
+[deps]
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+
+[compat]
+Pkg = "1.11.0"
