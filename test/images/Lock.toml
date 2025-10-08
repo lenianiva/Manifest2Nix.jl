@@ -6,7 +6,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["OffsetArrays"]
     repo = "https://github.com/JuliaArrays/PaddedViews.jl.git"
     uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
-    rev = ""
+    rev = "d6df23aef698381758b094811f8a10fff0b65e87"
     version = "0.5.12"
 
     [deps.OffsetArrays]
@@ -34,7 +34,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Imath_jll", "Zlib_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/OpenEXR_jll.jl.git"
     uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-    rev = ""
+    rev = "ff0d27339b84a265808bf52036cadf6a7f0652f1"
     version = "3.2.4+0"
 
     [deps.SIMD]
@@ -55,7 +55,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["Dates", "IterTools", "IntervalSets", "RangeArrays"]
     repo = "https://github.com/JuliaArrays/AxisArrays.jl.git"
     uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
-    rev = ""
+    rev = "91eeb428585894e4e0fc053676093a679d6ab778"
     version = "0.4.8"
 
     [deps.ColorVectorSpace]
@@ -83,28 +83,28 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["FileIO", "ImageCore", "ImageMetadata"]
     repo = "https://github.com/JuliaIO/Netpbm.jl.git"
     uuid = "f09324ee-3d7c-5217-9330-fc30815ba969"
-    rev = ""
+    rev = "1c30cc989236143643c5ef7adb1111d50a9546c8"
     version = "1.1.1"
 
     [deps.XZ_jll]
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/XZ_jll.jl.git"
     uuid = "ffd25f8a-64ca-5728-b0f7-c24cf3aae800"
-    rev = ""
+    rev = "0cb480a2799429dd7131794ca5e8a628575d1c2e"
     version = "5.8.1+0"
 
     [deps.Requires]
     dependencies = ["UUIDs"]
     repo = "https://github.com/JuliaPackaging/Requires.jl.git"
     uuid = "ae029012-a4dd-5104-9daa-d747884805df"
-    rev = ""
+    rev = "491be21d7009c59bd7b1a40337dcc5b7f0b74b64"
     version = "1.3.1"
 
     [deps.Zstd_jll]
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Zstd_jll.jl.git"
     uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
-    rev = ""
+    rev = "122db41df7859c7b07285861de4446b6ddf09233"
     version = "1.5.7+1"
 
     [deps.OpenEXR]
@@ -118,21 +118,21 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Xorg_libXext_jll", "Xorg_libX11_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Libglvnd_jll.jl.git"
     uuid = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
-    rev = ""
+    rev = "eeffaa35f2551df4706c8e9d9313afb4fa5596f6"
     version = "1.7.1+1"
 
     [deps.Xorg_libxcb_jll]
     dependencies = ["JLLWrappers", "Xorg_libXau_jll", "Libdl", "Artifacts", "Xorg_libXdmcp_jll"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_libxcb_jll.jl.git"
     uuid = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
-    rev = ""
+    rev = "d2c19a5726aef1fd82e08d98de8e7db877bbb8c9"
     version = "1.17.1+0"
 
     [deps.Xorg_libXau_jll]
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXau_jll.jl.git"
     uuid = "0c0b7dd1-d40b-584c-a123-a41640f87eec"
-    rev = ""
+    rev = "43651114321db521dea6ae4aaaf4f50df5ed8725"
     version = "1.0.13+0"
 
     [deps.FixedPointNumbers]
@@ -146,7 +146,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Giflib_jll.jl.git"
     uuid = "59f7168a-df46-5410-90c8-f2779963d0ec"
-    rev = ""
+    rev = "61c0f659d2e3e1d0f9c04655a7531d7f15746126"
     version = "5.2.3+0"
 
     [deps.JLLWrappers]
@@ -188,7 +188,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Imath_jll.jl.git"
     uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-    rev = ""
+    rev = "d68760624b4cec94cb082eba2b14dea5f3f9a9f1"
     version = "3.1.11+0"
 
     [deps.ImageAxes]
@@ -202,7 +202,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Xorg_libX11_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXext_jll.jl.git"
     uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
-    rev = ""
+    rev = "5bf2adb88a1ad57e398a04e3ec40468e1867429f"
     version = "1.3.7+0"
 
     [deps.TiffImages]
@@ -244,7 +244,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_xtrans_jll.jl.git"
     uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
-    rev = ""
+    rev = "bfa98c51b1ed7c337b6a35b2795a0bfa6d201960"
     version = "1.6.0+0"
 
     [deps.PrecompileTools]
@@ -258,14 +258,14 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "JpegTurbo_jll", "Libglvnd_jll", "libpng_jll", "Libdl", "Libtiff_jll", "Artifacts", "Giflib_jll"]
     repo = "https://github.com/JuliaBinaryWrappers/libwebp_jll.jl.git"
     uuid = "c5f90fcd-3b7e-5836-afba-fc50a0988cb2"
-    rev = ""
+    rev = "cce49f398327b2b497abf1b920fc44b64d2663f6"
     version = "1.6.0+0"
 
     [deps.Xorg_libX11_jll]
     dependencies = ["JLLWrappers", "Xorg_libxcb_jll", "Xorg_xtrans_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_libX11_jll.jl.git"
     uuid = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
-    rev = ""
+    rev = "614df91ccf6c8574121353a6cc26b632c3a505c4"
     version = "1.8.12+0"
 
     [deps.DocStringExtensions]
@@ -335,14 +335,14 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "JpegTurbo_jll", "libpng_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/libsixel_jll.jl.git"
     uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-    rev = ""
+    rev = "e25d4f7156104b445f7ac21e5d991907c40116b2"
     version = "1.10.5+0"
 
     [deps.JpegTurbo_jll]
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/JpegTurbo_jll.jl.git"
     uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
-    rev = ""
+    rev = "f26c7493a62442dd8eeed8a40dd8a90fe1804bc6"
     version = "3.1.3+0"
 
     [deps.IterTools]
@@ -356,21 +356,21 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["OffsetArrays", "StackViews", "MappedArrays", "PaddedViews"]
     repo = "https://github.com/JuliaArrays/MosaicViews.jl.git"
     uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
-    rev = ""
+    rev = "7bb84dfb82532d0322220dff84825a3626700ac5"
     version = "0.3.4"
 
     [deps.Libtiff_jll]
     dependencies = ["JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Zlib_jll", "Libdl", "XZ_jll", "Artifacts", "Zstd_jll"]
     repo = "https://github.com/JuliaBinaryWrappers/Libtiff_jll.jl.git"
     uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-    rev = ""
+    rev = "e342ec147d235b238108fb0e1d0532555e5749b5"
     version = "4.7.2+0"
 
     [deps.MappedArrays]
     dependencies = []
     repo = "https://github.com/JuliaArrays/MappedArrays.jl.git"
     uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
-    rev = ""
+    rev = "9b1842e57ee3d64714561fa10a8cd2433c0c6a77"
     version = "0.4.2"
 
     [deps.ImageMetadata]
@@ -384,7 +384,7 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/LERC_jll.jl.git"
     uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
-    rev = ""
+    rev = "4ce70d079466ee973ee9d37ef3ff44f31caac8c7"
     version = "4.0.1+0"
 
     [deps.PkgVersion]
@@ -426,14 +426,14 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["FileIO", "ImageCore", "JpegTurbo_jll", "CEnum", "TOML"]
     repo = "https://github.com/JuliaIO/JpegTurbo.jl.git"
     uuid = "b835a17e-a41a-41e7-81f0-2f016b05efe0"
-    rev = ""
+    rev = "98e5958c832804fbd1441a6fbe50e344c9ce1006"
     version = "0.1.6"
 
     [deps.libpng_jll]
     dependencies = ["JLLWrappers", "Zlib_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/libpng_jll.jl.git"
     uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
-    rev = ""
+    rev = "cef4226d190171c533b49c9eb17c3a2e0aace363"
     version = "1.6.50+0"
 
     [deps.LazyModules]
@@ -447,5 +447,5 @@ uuid = "0084eb82-b3cd-46ad-99fe-fd2b924b919f"
     dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Xorg_libXdmcp_jll.jl.git"
     uuid = "a3789734-cfe1-5b06-b2d0-1dd0d9d62d05"
-    rev = ""
+    rev = "e8ce5b8383605be6ea3ae25dc9ec3b4dc1b895b6"
     version = "1.1.6+0"

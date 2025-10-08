@@ -81,7 +81,8 @@ in rec {
         download = builtins.head artifact.download;
         src = fetchurl {
           #inherit name;
-          inherit (download) url sha256;
+          inherit (download) url;
+          hash = "sha256:${download.sha256}";
         };
         result =
           stdenv.mkDerivation
