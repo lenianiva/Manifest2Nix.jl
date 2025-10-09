@@ -24,17 +24,17 @@
         config,
         self',
         inputs',
-        pkgs,
         system,
         ...
       }: let
-        lib-manifest = pkgs.callPackage lib/manifest.nix {};
-        lib-compile = pkgs.callPackage self.mkLib {};
-        lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
         pkgs = import nixpkgs {
           inherit system;
           overlays = [(self.fromManifest ./Manifest.toml)];
+          #overlays = [self.fromJuliaBin];
         };
+        lib-manifest = pkgs.callPackage lib/manifest.nix {};
+        lib-compile = pkgs.callPackage self.mkLib {};
+        lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
       in {
         packages = rec {
           inherit (pkgs) julia julia-bin;

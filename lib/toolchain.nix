@@ -23,7 +23,6 @@
     mkDerivation = args @ {nativeBuildInputs ? [], ...}:
       stdenv.mkDerivation (args
         // {
-          phases = ["unpackPhase" "installPhase"];
           nativeBuildInputs =
             nativeBuildInputs
             ++ lib.optional stdenv.isDarwin fixDarwinDylibNames
@@ -37,7 +36,7 @@
       src = tarball;
       installPhase = ''
         mkdir -p $out/
-        cp -r . $out/
+        mv ./* $out/
       '';
     };
 }

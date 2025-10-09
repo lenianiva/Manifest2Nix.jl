@@ -20,7 +20,7 @@ in rec {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
       JULIA_SSL_CA_ROOTS_PATH = cacert;
-      buildInputs = [julia];
+      nativeBuildInputs = [julia];
     } ''
       mkdir -p $out
       JULIA_DEPOT_PATH=$out julia --project -e "import Pkg"
@@ -30,7 +30,7 @@ in rec {
     # Collect all requisite artifacts
     artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
     artifacts-join =
-      if artifacts != []
+      if artifacts != {}
       then
         symlinkJoin {
           name = "artifacts";
@@ -68,10 +68,10 @@ in rec {
       if p.isDarwin
       then p.darwinPlatform
       else "linux";
-    libc =
-      if p.isMusl
-      then "musl"
-      else "libc";
+    #libc =
+    #  if p.isMusl
+    #  then "musl"
+    #  else "libc";
   };
   filterPlatformDependentArtifact = artifact:
     if builtins.isList artifact
@@ -172,9 +172,8 @@ in rec {
       then "julia --project ${writeText "pre-exec.jl" pre-exec}"
       else "";
   in {
-    inherit (args) deps;
     inherit (project) name version;
-    inherit src artifacts input-depots;
+    inherit src deps artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
       inherit (project) name;
