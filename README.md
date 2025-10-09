@@ -27,7 +27,12 @@ m2nlib = pkgs.callPackage manifest2nix.mkLib {}
 
 In `m2nlib`, some functions are available for building Julia packages:
 
-- `manifest2nix`
+- `manifest2nix`: Tool for creating the `Lock.toml`. To create a `Lock.toml`
+  file, execute at the root of a Julia project
+
+```sh
+manifest2nix lock --project .
+```
 - `buildJuliaPackage { src, depots, deps }`: Builds a Julia package with
   explicit dependencies.
 - `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml" }`: Build a
@@ -36,7 +41,7 @@ In `m2nlib`, some functions are available for building Julia packages:
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createJuliaEnv package`: Given a Julia package, create a environment in which
+- `createPackageEnv package`: Given a Julia package, create a environment in which
   Julia can run and see the precompiled version of the given package.
 
 ### System Image Caching
