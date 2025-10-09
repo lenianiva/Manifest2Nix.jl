@@ -1,6 +1,12 @@
 # Manifest2Nix.jl
 
-A Nix library for creating reproducible Julia builds.
+A Nix library for creating offline and reproducible Julia builds.
+
+Julia uses a [Ahead-Of-Time](https://docs.julialang.org/en/v1/devdocs/aot/)
+compilation system. This means Julia generates native code for functions that it
+can compile, while it still needs access to the source code in order to compile
+just-in-time. Manifest2Nix is designed to take advantage of this system by
+precompiling as much code as possible.
 
 ## Usage
 
