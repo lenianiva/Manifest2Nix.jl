@@ -209,7 +209,6 @@ in rec {
     name,
     deps,
     load-path,
-    input-depots,
     ...
   }: let
     packages = [self] ++ self.deps;
@@ -219,7 +218,7 @@ in rec {
     };
   in {
     JULIA_LOAD_PATH = "${load-path}:";
-    JULIA_DEPOT_PATH = ".julia:${mkDepsDepot packages}";
+    JULIA_DEPOT_PATH = ".julia:${mkDepsDepot packages}:${stdlib-depot}";
   };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = args @ {
@@ -238,7 +237,7 @@ in rec {
     flatDeps =
       lib.mapAttrs (
         key: {dependencies, ...}:
-          lib.unique (dependencies
+          lib.uniqueStrings (dependencies
             ++ (builtins.concatMap (k:
               if builtins.hasAttr k flatDeps
               then builtins.getAttr k flatDeps
