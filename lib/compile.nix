@@ -68,10 +68,8 @@ in rec {
       if p.isDarwin
       then p.darwinPlatform
       else "linux";
-    #libc =
-    #  if p.isMusl
-    #  then "musl"
-    #  else "libc";
+    inherit (p) libc;
+    cxxstring_abi = "cxx11";
   };
   filterPlatformDependentArtifact = artifact:
     if builtins.isList artifact
@@ -250,12 +248,14 @@ in rec {
       lock.deps;
     # Trim a parent manifest to contain only relevant parts in a dependency list
     trimManifest = {
+      name,
       depsNames,
       manifest,
     }:
       pkgs.writers.writeTOML "Manifest.toml"
       (
         lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: true) manifest.deps)
+        #lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
       );
 
     depToPackage = name: {
@@ -272,12 +272,12 @@ in rec {
           inherit rev;
           shallow = true;
         };
-        deps = builtins.concatMap (name:
-          if builtins.hasAttr name allDeps
-          then [allDeps.${name}]
+        deps = builtins.concatMap (dep:
+          if builtins.hasAttr dep allDeps
+          then [allDeps.${dep}]
           else [])
         depsNames;
-        root-manifest = trimManifest {inherit depsNames manifest;};
+        root-manifest = trimManifest {inherit name depsNames manifest;};
         pre-exec =
           if (name == project.name)
           then pre-exec
