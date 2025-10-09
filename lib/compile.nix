@@ -128,7 +128,7 @@ in rec {
     depots ? [stdlib-depot],
     deps ? [],
     # Parent manifest file
-    parent-manifest ? null,
+    root-manifest ? null,
     pre-exec ? "",
     ...
   }: let
@@ -195,7 +195,7 @@ in rec {
         mkdir -p .julia
 
         if [ ! -f Manifest.toml ]; then
-          ln -s ${lib.defaultTo "no-parent-manifest" parent-manifest} Manifest.toml
+          ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
         fi
 
         julia --project ${../src/compile.jl}
@@ -278,7 +278,7 @@ in rec {
           then [allDeps.${name}]
           else [])
         depsNames;
-        parent-manifest = trimManifest {inherit depsNames manifest;};
+        root-manifest = trimManifest {inherit depsNames manifest;};
         pre-exec =
           if (name == project.name)
           then pre-exec
