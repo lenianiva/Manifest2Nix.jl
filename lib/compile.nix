@@ -26,7 +26,18 @@ in rec {
       JULIA_DEPOT_PATH=$out julia --project -e "import Pkg"
     '';
   # Given a list of Julia packages, pack them into one depot
-  mkDepsDepot = deps:
+  mkDepsDepot = deps: let
+    # Collect all requisite artifacts
+    artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
+    artifacts-join =
+      if artifacts != []
+      then
+        symlinkJoin {
+          name = "artifacts";
+          paths = builtins.attrValues artifacts;
+        }
+      else "";
+  in
     stdenv.mkDerivation
     {
       name = "deps";
@@ -37,6 +48,11 @@ in rec {
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
         mkdir -p $out/compiled/
+        ${
+          if artifacts-join != ""
+          then "ln -s ${artifacts-join} $out/artifacts"
+          else ""
+        }
         ln -s $src/ $out/compiled/v${abridged-version}
       '';
     };
@@ -67,7 +83,7 @@ in rec {
       else builtins.head candidates
     )
     else artifact;
-  generateArtifactFile = artifactsPath: let
+  collectArtifacts = artifactsPath: let
     artifacts = builtins.fromTOML (builtins.readFile artifactsPath);
     remap = name: candidates: let
       artifact = filterPlatformDependentArtifact candidates;
@@ -100,14 +116,12 @@ in rec {
       in {
         "${key}" = result;
       };
-    mapping = lib.attrsets.concatMapAttrs remap artifacts;
-    overrides = pkgs.writers.writeTOML "Artifacts.toml" mapping;
   in
-    symlinkJoin {
-      name = "artifacts";
-      paths = builtins.attrValues mapping;
-    };
-  #overrides;
+    lib.attrsets.concatMapAttrs remap artifacts;
+  #symlinkJoin {
+  #  name = "artifacts";
+  #  paths = builtins.attrValues mapping;
+  #};
   # Builds a Julia package
   buildJuliaPackage = args @ {
     src,
@@ -123,8 +137,12 @@ in rec {
       paths = builtins.map (dep: dep.load-path) deps;
     };
     artifact-path = "${src}/Artifacts.toml";
-    artifacts-depot =
+    artifacts =
       if lib.pathExists artifact-path
+      then collectArtifacts artifact-path
+      else {};
+    artifacts-depot =
+      if artifacts != {}
       then [
         (stdenv.mkDerivation
           {
@@ -132,10 +150,11 @@ in rec {
             inherit src;
             phases = ["unpackPhase" "installPhase"];
             installPhase = ''
-              #mkdir -p $out/artifacts/
-              #ln -s ${generateArtifactFile artifact-path} $out/artifacts/Overrides.toml
               mkdir -p $out/
-              ln -s ${generateArtifactFile artifact-path} $out/artifacts
+              ln -s ${symlinkJoin {
+                name = "artifacts";
+                paths = builtins.attrValues artifacts;
+              }} $out/artifacts
             '';
           })
       ]
@@ -148,8 +167,9 @@ in rec {
     # This leaves a trailing : for the system depot
     input-depots-paths = lib.strings.concatMapStrings (s: "${s}:") input-depots;
   in {
+    inherit (args) deps;
     inherit (project) name version;
-    inherit src input-depots;
+    inherit src artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
       inherit (project) name;
@@ -200,12 +220,38 @@ in rec {
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
+    # FIXME: Handle different parent manifest paths
+    manifest = builtins.fromTOML (builtins.readFile "${src}/Manifest.toml");
+    # Flatten the dependency tree
+    flatDeps =
+      lib.mapAttrs (
+        key: {dependencies, ...}:
+          lib.unique (dependencies
+            ++ (builtins.concatMap (k:
+              if builtins.hasAttr k flatDeps
+              then builtins.getAttr k flatDeps
+              else [])
+            dependencies))
+      )
+      lock.deps;
+    # Trim a parent manifest to contain only relevant parts in a dependency list
+    trimManifest = {
+      depsNames,
+      manifest,
+    }:
+      pkgs.writers.writeTOML "Manifest.toml"
+      (
+        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: true) manifest.deps)
+      );
+
     depToPackage = name: {
       repo,
       rev,
       dependencies,
       ...
-    }:
+    }: let
+      depsNames = builtins.getAttr name flatDeps;
+    in
       buildJuliaPackage {
         src = builtins.fetchGit {
           url = repo;
@@ -216,15 +262,13 @@ in rec {
           if builtins.hasAttr name allDeps
           then [allDeps.${name}]
           else [])
-        dependencies;
-        # FIXME: Handle different parent manfiest
-        parent-manifest = "${src}/Manifest.toml";
+        depsNames;
+        parent-manifest = trimManifest {inherit depsNames manifest;};
       };
 
     allDeps = builtins.mapAttrs depToPackage lock.deps;
   in
-    {artifacts = generateArtifactFile "${src}/Artifacts.toml";}
-    // buildJuliaPackage (args
+    buildJuliaPackage (args
       // {
         deps = builtins.attrValues allDeps;
       });

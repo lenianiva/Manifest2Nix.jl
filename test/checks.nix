@@ -8,7 +8,8 @@
   simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
   artefact-jl = lib-compile.buildJuliaPackageWithDeps {src = ./artefact;};
   # Integration tests
-  #images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
+  self-jl = lib-compile.buildJuliaPackageWithDeps {src = ../.;};
+  images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
 in {
   inherit (lib-compile) stdlib-depot;
 
@@ -18,6 +19,7 @@ in {
   simple-jl = simple-jl.compiled;
 
   artefact-jl = artefact-jl.compiled;
-  artefact-jl-artefact = lib-compile.generateArtifactFile "${./artefact}/Artifacts.toml";
-  #images-jl = images-jl.compiled;
+
+  self-jl = self-jl.compiled;
+  images-jl = images-jl.compiled;
 }
