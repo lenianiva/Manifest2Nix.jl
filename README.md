@@ -39,15 +39,16 @@ In `m2nlib`, some functions are available for building Julia packages:
 ```sh
 manifest2nix lock --project .
 ```
-- `buildJuliaPackage { src, depots, deps }`: Builds a Julia package with
-  explicit dependencies.
-- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml" }`: Build a
-  Julia package along with dependencies.
+- `buildJuliaPackage { src, depots, deps, pre-exec ? "" }`: Builds a Julia package with
+  explicit dependencies. If `pre-exec` is not null, it will run in Julia after
+  precompilation to force Julia to generate more compiled code.
+- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ? "" }`:
+Build a Julia package along with dependencies.
 - `stdlib-depot`: A Julia depot containing a precompiled version of Julia
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createPackageEnv package`: Given a Julia package, create a environment in which
+- `createPackageEnv package`: Given a Julia package, create an environment in which
   Julia can run and see the precompiled version of the given package.
 
 ### System Image Caching

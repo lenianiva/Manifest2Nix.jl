@@ -116,10 +116,6 @@ in rec {
       };
   in
     lib.attrsets.concatMapAttrs remap artifacts;
-  #symlinkJoin {
-  #  name = "artifacts";
-  #  paths = builtins.attrValues mapping;
-  #};
   # Builds a Julia package
   buildJuliaPackage = args @ {
     src,
