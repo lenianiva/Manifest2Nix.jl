@@ -10,6 +10,10 @@ precompiling as much code as possible.
 
 ## Usage
 
+``` sh
+nix flake new --template git+https://codeberg.org/aniva/Manifest2Nix.jl.git ./minimal
+```
+
 ### Overlay
 
 Before building any Julia library, there first has to be a Julia toolchain. Generate a toolchain via one of 4 methods:
@@ -28,7 +32,7 @@ Once there is a fixed Julia version available as `pkgs.julia`, create the
 `manifest2nix` library by calling the `mkLib` function:
 
 ```nix
-m2nlib = pkgs.callPackage manifest2nix.mkLib {}
+m2nlib = manifest2nix.mkLib pkgs
 ```
 
 In `m2nlib`, some functions are available for building Julia packages:

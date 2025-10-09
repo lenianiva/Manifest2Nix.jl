@@ -17,7 +17,7 @@
         (import lib/overlays.nix)
         // {
           templates = import ./templates;
-          mkLib = import ./lib/compile.nix;
+          mkLib = pkgs: (pkgs.callPackage ./lib/compile.nix {}) // (pkgs.callPackage ./lib/manifest.nix {});
         };
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
       perSystem = {
@@ -33,7 +33,7 @@
           #overlays = [self.fromJuliaBin];
         };
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
-        lib-compile = pkgs.callPackage self.mkLib {};
+        lib-compile = self.mkLib pkgs;
         lib-toolchain = pkgs.callPackage lib/toolchain.nix {};
       in {
         packages = rec {
