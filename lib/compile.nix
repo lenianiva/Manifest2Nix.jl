@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  #julia ? pkgs.julia-bin,
+  julia,
   stdenv,
   runCommand,
   symlinkJoin,
   cacert,
   fetchurl,
   zstd,
+  writeText,
   ...
 }: let
-  julia = pkgs.julia-bin;
   abridged-version = "${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
 in rec {
   # This depot contains a cached version of stdlib
@@ -129,6 +129,7 @@ in rec {
     deps ? [],
     # Parent manifest file
     parent-manifest ? null,
+    pre-exec ? "",
     ...
   }: let
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
@@ -166,6 +167,10 @@ in rec {
     input-depots = artifacts-depot ++ deps-depot ++ depots;
     # This leaves a trailing : for the system depot
     input-depots-paths = lib.strings.concatMapStrings (s: "${s}:") input-depots;
+    pre-exec-command =
+      if pre-exec != ""
+      then "julia --project ${writeText "pre-exec.jl" pre-exec}"
+      else "";
   in {
     inherit (args) deps;
     inherit (project) name version;
@@ -194,6 +199,7 @@ in rec {
         fi
 
         julia --project ${../src/compile.jl}
+        ${pre-exec-command}
 
         mkdir -p $out
         cp -r .julia/compiled/v${abridged-version}/* $out/
@@ -201,27 +207,36 @@ in rec {
     };
   };
   # Given a built Julia package, create an environment for running code
-  createJuliaEnv = {
+  createPackageEnv = self @ {
     src,
+    name,
+    deps,
     load-path,
     input-depots,
     ...
   }: let
-    input-depots-str = lib.strings.concatMapStrings (s: "${s}:") input-depots;
+    packages = [self] ++ self.deps;
+    load-path = symlinkJoin {
+      name = "${name}-deps";
+      paths = builtins.map (dep: dep.load-path) packages;
+    };
   in {
-    JULIA_LOAD_PATH = "${src}:${load-path}";
-    JULIA_DEPOT_PATH = input-depots-str;
+    JULIA_LOAD_PATH = "${load-path}:";
+    JULIA_DEPOT_PATH = ".julia:${mkDepsDepot packages}";
   };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = args @ {
     src,
     lockFile ? "${src}/Lock.toml",
+    pre-exec ? "",
     ...
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
     # FIXME: Handle different parent manifest paths
+    project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
     manifest = builtins.fromTOML (builtins.readFile "${src}/Manifest.toml");
+
     # Flatten the dependency tree
     flatDeps =
       lib.mapAttrs (
@@ -264,6 +279,10 @@ in rec {
           else [])
         depsNames;
         parent-manifest = trimManifest {inherit depsNames manifest;};
+        pre-exec =
+          if (name == project.name)
+          then pre-exec
+          else "";
       };
 
     allDeps = builtins.mapAttrs depToPackage lock.deps;
