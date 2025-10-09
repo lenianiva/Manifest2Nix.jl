@@ -10,6 +10,10 @@ precompiling as much code as possible.
 
 ## Usage
 
+``` sh
+nix flake new --template git+https://codeberg.org/aniva/Manifest2Nix.jl.git ./minimal
+```
+
 ### Overlay
 
 Before building any Julia library, there first has to be a Julia toolchain. Generate a toolchain via one of 4 methods:
