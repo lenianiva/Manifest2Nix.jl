@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib-manifest,
   lib-compile,
   ...
 }: let

@@ -28,7 +28,7 @@
         };
 
         inherit (pkgs) julia;
-        m2nlib = pkgs.callPackage manifest2nix.mkLib {};
+        m2nlib = manifest2nix.mkLib pkgs;
         package = m2nlib.buildJuliaPackage {src = ./.;};
       in {
         packages = rec {
@@ -40,9 +40,9 @@
             '';
         };
 
-        devShells.default =
-          pkgs.mkShell {
-          };
+        devShells.default = pkgs.mkShell {
+          packages = [m2nlib.manifest2nix];
+        };
       };
     };
 }
