@@ -42,6 +42,7 @@
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            julia
             pre-commit
             lib-toolchain.toolchain-fetch
             lib-manifest.manifest2nix
