@@ -1,0 +1,73 @@
+name = "Manifest2Nix"
+uuid = "55c00322-6feb-41de-aa1f-e2512edad3af"
+
+[deps]
+    [deps.JLLWrappers]
+    dependencies = ["Preferences", "Artifacts"]
+    repo = "https://github.com/JuliaPackaging/JLLWrappers.jl.git"
+    uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
+    rev = "d02f37311935f85374ba11759f79c143eb8c87c4"
+    version = "1.7.1"
+
+    [deps.Git_LFS_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Git_LFS_jll.jl.git"
+    uuid = "020c3dae-16b3-5ae5-87b3-4cb189e250b2"
+    rev = "8222985f15812c324413507817ca550f08d6c3b6"
+    version = "3.7.0+0"
+
+    [deps.Git]
+    dependencies = ["JLLWrappers", "Git_LFS_jll", "Git_jll", "OpenSSH_jll"]
+    repo = "https://github.com/JuliaVersionControl/Git.jl.git"
+    uuid = "d7ba0133-e1db-5d97-8f8c-041e4b3a1eb2"
+    rev = "eb038049fdc4fc7da8410d3e8d5af5bfbe235248"
+    version = "1.5.0"
+
+    [deps.Libiconv_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Libiconv_jll.jl.git"
+    uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
+    rev = "656e11243e06999992da7c3871aa406ce380daa0"
+    version = "1.18.0+0"
+
+    [deps.TextWrap]
+    dependencies = []
+    repo = "https://github.com/carlobaldassi/TextWrap.jl.git"
+    uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
+    rev = "6f26906125f8c651fb6d77bb1f83639daf74cffd"
+    version = "1.0.2"
+
+    [deps.Git_jll]
+    dependencies = ["JLLWrappers", "LibCURL_jll", "OpenSSL_jll", "Zlib_jll", "PCRE2_jll", "Libdl", "Expat_jll", "Artifacts", "Libiconv_jll"]
+    repo = "https://github.com/JuliaBinaryWrappers/Git_jll.jl.git"
+    uuid = "f8c6e375-362e-5223-8a59-34ff63f689eb"
+    rev = "ef1929709b2e473d1846087019430d91c3df422d"
+    version = "2.51.1+0"
+
+    [deps.Preferences]
+    dependencies = ["TOML"]
+    repo = "https://github.com/JuliaPackaging/Preferences.jl.git"
+    uuid = "21216c6a-2e73-6563-6e65-726566657250"
+    rev = "bbd37f7bc9984d4794d0f4cd1f8bcadbefe274e5"
+    version = "1.5.0"
+
+    [deps.OpenSSH_jll]
+    dependencies = ["JLLWrappers", "OpenSSL_jll", "Zlib_jll", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/OpenSSH_jll.jl.git"
+    uuid = "9bd350c2-7e96-507f-8002-3f2e150b4e1b"
+    rev = "7b165f6c1a63d5e16e69db235792111a5736ed3e"
+    version = "10.1.1+0"
+
+    [deps.Expat_jll]
+    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
+    repo = "https://github.com/JuliaBinaryWrappers/Expat_jll.jl.git"
+    uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
+    rev = "2e57e5e2ac1fb341ef24ec567e29234f1a6f8985"
+    version = "2.7.1+0"
+
+    [deps.ArgParse]
+    dependencies = ["Logging", "TextWrap"]
+    repo = "https://github.com/carlobaldassi/ArgParse.jl.git"
+    uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+    rev = "725ce952e834ecd8c515dc3d07b9d80f56f38182"
+    version = "1.2.0"

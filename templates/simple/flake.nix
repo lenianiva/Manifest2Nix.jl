@@ -1,5 +1,5 @@
 {
-  description = "Minimal Julia Project";
+  description = "Simple Julia Project";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -29,14 +29,14 @@
 
         inherit (pkgs) julia;
         m2nlib = manifest2nix.mkLib pkgs;
-        package = m2nlib.buildJuliaPackage {src = ./.;};
+        package = m2nlib.buildJuliaPackageWithDeps {src = ./.;};
       in {
         packages = rec {
           default =
             pkgs.runCommand "mystery"
             (m2nlib.createPackageEnv package)
             ''
-              ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
+              ${julia}/bin/julia -e "println(1)" > $out
             '';
         };
 

@@ -1,14 +1,18 @@
 {
   pkgs,
   lib-compile,
-  ...
 }: let
   inherit (pkgs) julia;
   minimal-jl = lib-compile.buildJuliaPackage {src = ../templates/minimal;};
   simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
   artefact-jl = lib-compile.buildJuliaPackageWithDeps {src = ./artefact;};
   # Integration tests
-  self-jl = lib-compile.buildJuliaPackageWithDeps {src = ../.;};
+  version-dir = ../version + "/${pkgs.lib.versions.major julia.version}.${pkgs.lib.versions.minor julia.version}";
+  self-jl = lib-compile.buildJuliaPackageWithDeps {
+    src = ../.;
+    manifestFile = "${version-dir}/Manifest.toml";
+    lockFile = "${version-dir}/Lock.toml";
+  };
   images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
 in {
   inherit (pkgs) julia;
