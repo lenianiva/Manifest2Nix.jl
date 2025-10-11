@@ -48,7 +48,7 @@
             lib-manifest.manifest2nix
           ];
         };
-        checks = (import test/checks.nix) {inherit pkgs lib-compile;};
+        checks = ((import test/checks.nix) {inherit pkgs lib-compile;}) // ((import test/version.nix) {inherit nixpkgs system;});
       };
     };
 }
