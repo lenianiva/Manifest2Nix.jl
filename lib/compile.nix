@@ -124,7 +124,7 @@ in rec {
     # Parent manifest file
     root-manifest ? null,
     pre-exec ? "",
-    ...
+    nativeBuildInputs ? [],
   }: let
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
     load-path = symlinkJoin {
@@ -181,9 +181,10 @@ in rec {
     compiled = stdenv.mkDerivation {
       inherit (args) src;
       inherit (project) name version;
-      nativeBuildInputs = [julia];
+      nativeBuildInputs = [julia] ++ nativeBuildInputs;
       JULIA_LOAD_PATH = "${load-path}:";
       JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
+      JULIA_SSL_CA_ROOTS_PATH = cacert;
       buildPhase = ''
         mkdir -p .julia
 
@@ -215,13 +216,15 @@ in rec {
   in {
     JULIA_LOAD_PATH = "${load-path}:";
     JULIA_DEPOT_PATH = ".julia:${mkDepsDepot packages}:${stdlib-depot}";
+    JULIA_SSL_CA_ROOTS_PATH = cacert;
   };
   # Create a Julia package from a dependency file
-  buildJuliaPackageWithDeps = args @ {
+  buildJuliaPackageWithDeps = {
     src,
     lockFile ? "${src}/Lock.toml",
     manifestFile ? "${src}/Manifest.toml",
     pre-exec ? "",
+    nativeBuildInputs ? [],
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -277,13 +280,14 @@ in rec {
           if (name == project.name)
           then pre-exec
           else "";
+        inherit nativeBuildInputs;
       };
 
     allDeps = builtins.mapAttrs depToPackage lock.deps;
   in
-    buildJuliaPackage (args
-      // {
-        deps = builtins.attrValues allDeps;
-        root-manifest = manifestFile;
-      });
+    buildJuliaPackage {
+      inherit src nativeBuildInputs;
+      deps = builtins.attrValues allDeps;
+      root-manifest = manifestFile;
+    };
 }
