@@ -29,7 +29,7 @@
       }: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [(self.fromManifest ./Manifest.toml)];
+          overlays = [(self.fromVersion "1.12.0")];
           #overlays = [self.fromJuliaBin];
         };
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
@@ -45,10 +45,10 @@
             julia
             pre-commit
             lib-toolchain.toolchain-fetch
-            lib-manifest.manifest2nix
+            #lib-manifest.manifest2nix
           ];
         };
-        checks = (import test/checks.nix) {inherit pkgs lib-manifest lib-compile;};
+        checks = (import test/checks.nix) {inherit pkgs lib-compile;};
       };
     };
 }

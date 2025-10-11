@@ -220,14 +220,14 @@ in rec {
   buildJuliaPackageWithDeps = args @ {
     src,
     lockFile ? "${src}/Lock.toml",
+    manifestFile ? "${src}/Manifest.toml",
     pre-exec ? "",
-    ...
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
     # FIXME: Handle different parent manifest paths
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
-    manifest = builtins.fromTOML (builtins.readFile "${src}/Manifest.toml");
+    manifest = builtins.fromTOML (builtins.readFile manifestFile);
 
     # Flatten the dependency tree
     flatDeps =
@@ -284,5 +284,6 @@ in rec {
     buildJuliaPackage (args
       // {
         deps = builtins.attrValues allDeps;
+        root-manifest = manifestFile;
       });
 }
