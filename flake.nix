@@ -45,7 +45,7 @@
             julia
             pre-commit
             lib-toolchain.toolchain-fetch
-            #lib-manifest.manifest2nix
+            lib-manifest.manifest2nix
           ];
         };
         checks = (import test/checks.nix) {inherit pkgs lib-compile;};

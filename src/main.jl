@@ -26,6 +26,9 @@ function main()
         required = false
         arg_type = String
         default = nothing
+        "--up"
+        help = "Update packages prior to locking"
+        action = :store_true
     end
     args = ArgParse.parse_args(ARGS, settings)
 

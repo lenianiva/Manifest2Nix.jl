@@ -136,9 +136,11 @@ end
 function main(args::Dict{String,Any})
     path_project = args["project"]
     Pkg.Operations.with_temp_env(path_project) do
-        Pkg.API.instantiate()
         @info "Creating context for project $path_project"
         context = Pkg.Types.Context()
+        if args["up"]
+            Pkg.API.up(context)
+        end
 
         Pkg.instantiate()
 

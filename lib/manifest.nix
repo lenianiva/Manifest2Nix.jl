@@ -17,7 +17,7 @@
     ];
   };
 
-  version-dir = ../vresion + "/${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
+  version-dir = ../version + "/${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
 
   self = lib-compile.buildJuliaPackageWithDeps {
     inherit src;

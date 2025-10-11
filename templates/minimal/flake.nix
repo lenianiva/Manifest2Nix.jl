@@ -41,7 +41,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          packages = [m2nlib.manifest2nix];
+          packages = [julia m2nlib.manifest2nix];
         };
       };
     };
