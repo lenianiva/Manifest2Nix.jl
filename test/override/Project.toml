@@ -1,0 +1,7 @@
+name = "Override"
+uuid = "50844a0e-b00b-440b-a496-1fd27e480955"
+version = "0.1.0"
+authors = ["Leni Aniva <a@leni.sh>"]
+
+[deps]
+Artefact = "b3010fde-e16b-4104-b589-ea69ade89a2a"

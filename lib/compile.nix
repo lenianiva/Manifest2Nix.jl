@@ -225,6 +225,7 @@ in rec {
     manifestFile ? "${src}/Manifest.toml",
     pre-exec ? "",
     nativeBuildInputs ? [],
+    override ? {},
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -283,7 +284,11 @@ in rec {
         inherit nativeBuildInputs;
       };
 
-    allDeps = builtins.mapAttrs depToPackage lock.deps;
+    allDeps = builtins.mapAttrs (name: info:
+      if builtins.hasAttr name override
+      then builtins.getAttr name override
+      else depToPackage name info)
+    lock.deps;
   in
     buildJuliaPackage {
       inherit src nativeBuildInputs;
