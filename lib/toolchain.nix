@@ -34,6 +34,7 @@
       name = "julia";
       inherit version;
       src = tarball;
+      dontFixup = stdenv.isDarwin;
       installPhase = ''
         mkdir -p $out/
         mv ./* $out/
