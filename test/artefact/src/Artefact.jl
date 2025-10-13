@@ -1,4 +1,4 @@
-module artefact
+module Artefact
 
 using Pkg.Artifacts
 
@@ -7,4 +7,4 @@ open(joinpath(rootpath, "bin", "socrates")) do file
     println(read(file, String))
 end
 
-end # module artefact
+end # module Artefact

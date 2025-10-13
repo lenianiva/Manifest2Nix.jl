@@ -11,8 +11,8 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     uuid::UUID
     version::VersionNumber
     dependencies::Vector{String}
-    repo::String
-    rev::String
+    repo::Union{Nothing,String}
+    rev::Union{Nothing,String}
 end
 
 function pin_package(
@@ -23,12 +23,11 @@ function pin_package(
 )::Union{PinnedPackage,Nothing}
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "Skipping stdlib package $(info.name) [$uuid]"
-        #@assert !haskey(context.registries[1], uuid)
         return nothing
     elseif info.is_tracking_path
-        error(
-            "Cannot pin a package $(info.name) [$uuid] tracking a path. Please supply the package explicitly with a derivation.",
-        )
+        repo = info.git_source
+        rev = info.git_revision
+        @warn "A package $(info.name) [$uuid] is tracking a path. Please supply the package explicitly with a derivation."
     elseif info.is_tracking_registry
         pkg_entry = get(context.registries[1], uuid, nothing)
         if isnothing(pkg_entry)

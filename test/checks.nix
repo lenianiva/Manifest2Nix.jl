@@ -6,6 +6,14 @@
   minimal-jl = lib-compile.buildJuliaPackage {src = ../templates/minimal;};
   simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
   artefact-jl = lib-compile.buildJuliaPackageWithDeps {src = ./artefact;};
+  override-jl-direct = lib-compile.buildJuliaPackageWithDeps {
+    src = ./override;
+    override = {Artefact = artefact-jl;};
+  };
+  override-jl-src = lib-compile.buildJuliaPackageWithDeps {
+    src = ./override;
+    override = {Artefact = ./artefact;};
+  };
   # Integration tests
   version-dir = ../version + "/${pkgs.lib.versions.major julia.version}.${pkgs.lib.versions.minor julia.version}";
   self-jl = lib-compile.buildJuliaPackageWithDeps {
@@ -36,6 +44,8 @@ in {
   simple-jl = simple-jl.compiled;
 
   artefact-jl = artefact-jl.compiled;
+  override-jl-direct = override-jl-direct.compiled;
+  override-jl-src = override-jl-src.compiled;
 
   self-jl = self-jl.compiled;
   images-jl = images-jl.compiled;

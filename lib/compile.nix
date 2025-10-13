@@ -225,6 +225,7 @@ in rec {
     manifestFile ? "${src}/Manifest.toml",
     pre-exec ? "",
     nativeBuildInputs ? [],
+    override ? {},
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -260,16 +261,18 @@ in rec {
       repo,
       rev,
       dependencies,
+      src ? null, # Optionally override the source path to ignore repo and rev
       ...
     }: let
       depsNames = builtins.getAttr name flatDeps;
+      fetched = builtins.fetchGit {
+        url = repo;
+        inherit rev;
+        shallow = true;
+      };
     in
       buildJuliaPackage {
-        src = builtins.fetchGit {
-          url = repo;
-          inherit rev;
-          shallow = true;
-        };
+        src = lib.defaultTo fetched src;
         deps = builtins.concatMap (dep:
           if builtins.hasAttr dep allDeps
           then [allDeps.${dep}]
@@ -283,7 +286,17 @@ in rec {
         inherit nativeBuildInputs;
       };
 
-    allDeps = builtins.mapAttrs depToPackage lock.deps;
+    allDeps = builtins.mapAttrs (name: info:
+      if builtins.hasAttr name override
+      then
+        (let
+          o = builtins.getAttr name override;
+        in
+          if builtins.isAttrs o
+          then o
+          else depToPackage name (info // {src = o;}))
+      else depToPackage name info)
+    lock.deps;
   in
     buildJuliaPackage {
       inherit src nativeBuildInputs;
