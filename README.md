@@ -16,13 +16,14 @@ nix flake new --template git+https://codeberg.org/aniva/Manifest2Nix.jl.git ./mi
 
 ### Overlay
 
-Before building any Julia library, there first has to be a Julia toolchain. Generate a toolchain via one of 4 methods:
+Before building any Julia library, there first has to be a Julia toolchain.
+Generate a toolchain via one of 4 methods:
 
 1. `pkgs` comes with a default `julia` package. It may work or it may not work.
 2. Use the provided `self.fromJuliaBin` overlay, which uses the `julia-bin`
    package.
 3. Use the `self.fromVersion version` overlay, e.g. `manifest2nix.fromVersion
-   "1.11"`.
+   "1.11.7"`.
 4. Use the `self.fromManifest path` overlay, which reads the version from a
    `Manifest.toml` file.
 
@@ -41,21 +42,24 @@ In `m2nlib`, some functions are available for building Julia packages:
   file, execute at the root of a Julia project
 
 ```sh
-manifest2nix lock --project .
+manifest2nix lock [--up] --project .
 ```
+
 - `buildJuliaPackage { src, depots, deps, pre-exec ? "" }`: Builds a Julia package with
   explicit dependencies. If `pre-exec` is not null, it will run in Julia after
   precompilation to force Julia to generate more compiled code.
-- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ? "" }`:
-Build a Julia package along with dependencies.
+- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ? "", override ? {} }`:
+  Build a Julia package along with dependencies. If there are any path-tracking
+  dependencies, they must be fed in as overrides. e.g. `override = { Artefact =
+  ./artefact; }`. The targets of overrides can be either paths to sources or built
+  Julia packages.
 - `stdlib-depot`: A Julia depot containing a precompiled version of Julia
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createPackageEnv package`: Given a Julia package, create an environment in which
-  Julia can run and see the precompiled version of the given package.
-
-### System Image Caching
+- `createPackageEnv package`: Given a Julia package, create an environment (i.e.
+  set of variables) in which Julia can run and see the precompiled version of
+  the given package.
 
 ## Contributing
 
