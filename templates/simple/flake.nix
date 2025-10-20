@@ -30,13 +30,18 @@
         inherit (pkgs) julia;
         m2nlib = manifest2nix.mkLib pkgs;
         package = m2nlib.buildJuliaPackageWithDeps {src = ./.;};
+
+        bernoulli-jl = builtins.path {
+          path = script/bernoulli.jl;
+          name = "bernoulli.jl";
+        };
       in {
         packages = rec {
           default =
-            pkgs.runCommand "mystery"
+            pkgs.runCommand "bernoulli"
             (m2nlib.createEnv {inherit package;})
             ''
-              ${julia}/bin/julia -e "println(1)" > $out
+              ${julia}/bin/julia ${bernoulli-jl} > $out
             '';
         };
 
