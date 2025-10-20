@@ -42,6 +42,22 @@ in {
   };
   minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
   simple-jl = simple-jl.compiled;
+  simple-jl-script = let
+    script = builtins.path {
+      path = ../templates/simple/script/bernoulli.jl;
+      name = "bernoulli.jl";
+    };
+  in
+    pkgs.testers.testEqualContents {
+      assertion = "Execute script";
+      expected = pkgs.writeText "expected" "1.0480426577669817";
+      actual =
+        pkgs.runCommand "actual"
+        (lib-compile.createPackageEnv simple-jl)
+        ''
+          ${julia}/bin/julia ${script} > $out
+        '';
+    };
 
   artefact-jl = artefact-jl.compiled;
   override-jl-direct = override-jl-direct.compiled;
