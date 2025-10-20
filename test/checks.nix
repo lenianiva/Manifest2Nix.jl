@@ -47,15 +47,24 @@ in {
       path = ../templates/simple/script/normal.jl;
       name = "normal.jl";
     };
+    workingDepot = ".julia";
   in
     pkgs.testers.testEqualContents {
       assertion = "Execute script";
       expected = pkgs.writeText "expected" "1.0480426577669817";
       actual =
         pkgs.runCommand "actual"
-        (lib-compile.createEnv {package = simple-jl;})
+        (lib-compile.createEnv {
+          package = simple-jl;
+          inherit workingDepot;
+        })
         ''
+          mkdir ${workingDepot}
           ${julia}/bin/julia ${script} > $out
+          ls .julia
+          if [ ! -z "$( ls -A ${workingDepot} )" ]; then
+            exit 1
+          fi
         '';
     };
 
