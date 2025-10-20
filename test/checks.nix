@@ -35,7 +35,10 @@ in {
     expected = pkgs.writeText "expected" "Minimal";
     actual =
       pkgs.runCommand "actual"
-      (lib-compile.createEnv {package = minimal-jl;})
+      (lib-compile.createEnv {
+        package = minimal-jl;
+        workingDepot = ".julia";
+      })
       ''
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
       '';
