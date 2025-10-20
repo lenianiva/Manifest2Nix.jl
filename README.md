@@ -58,9 +58,12 @@ manifest2nix lock [--up] --project .
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createEnv { package, workingDepot }`: Given a Julia package, create an environment (i.e.
-  set of variables) in which Julia can run and see the precompiled version of
-  the given package.
+- `createEnv { package, workingDepot ? "" }`: Given a Julia package, create an
+  environment (i.e.  set of variables) in which Julia can run and see the
+  precompiled version of the given package. By default, the working depot here is
+  the default path to the system depot. However, if this environment is then
+  used in a Nix build, then `workingDepot` must be set to a writable path e.g.
+  `.julia`. Not doing so can cause compilation failures.
 
 ## Contributing
 
