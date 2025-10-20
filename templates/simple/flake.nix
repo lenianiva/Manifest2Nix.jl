@@ -31,17 +31,17 @@
         m2nlib = manifest2nix.mkLib pkgs;
         package = m2nlib.buildJuliaPackageWithDeps {src = ./.;};
 
-        bernoulli-jl = builtins.path {
-          path = script/bernoulli.jl;
-          name = "bernoulli.jl";
+        normal-jl = builtins.path {
+          path = script/normal.jl;
+          name = "normal.jl";
         };
       in {
         packages = rec {
           default =
-            pkgs.runCommand "bernoulli"
+            pkgs.runCommand "normal"
             (m2nlib.createEnv {inherit package;})
             ''
-              ${julia}/bin/julia ${bernoulli-jl} > $out
+              ${julia}/bin/julia ${normal-jl} > $out
             '';
         };
 

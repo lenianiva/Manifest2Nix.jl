@@ -44,8 +44,8 @@ in {
   simple-jl = simple-jl.compiled;
   simple-jl-script = let
     script = builtins.path {
-      path = ../templates/simple/script/bernoulli.jl;
-      name = "bernoulli.jl";
+      path = ../templates/simple/script/normal.jl;
+      name = "normal.jl";
     };
   in
     pkgs.testers.testEqualContents {
