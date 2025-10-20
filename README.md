@@ -45,19 +45,20 @@ In `m2nlib`, some functions are available for building Julia packages:
 manifest2nix lock [--up] --project .
 ```
 
-- `buildJuliaPackage { src, depots, deps, pre-exec ? "" }`: Builds a Julia package with
-  explicit dependencies. If `pre-exec` is not null, it will run in Julia after
-  precompilation to force Julia to generate more compiled code.
-- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ? "", override ? {} }`:
+- `buildJuliaPackage { src, depots, deps, pre-exec ? "", env ? {} }`: Builds a
+  Julia package with explicit dependencies. If `pre-exec` is not null, it will
+  run in Julia after precompilation to force Julia to generate more compiled
+  code. Set `env` for environment variables.
+- `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ? "", override ? {}, env ? {} }`:
   Build a Julia package along with dependencies. If there are any path-tracking
   dependencies, they must be fed in as overrides. e.g. `override = { Artefact =
   ./artefact; }`. The targets of overrides can be either paths to sources or built
-  Julia packages.
+  Julia packages. Set `env` to provide environment variables.
 - `stdlib-depot`: A Julia depot containing a precompiled version of Julia
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createPackageEnv package`: Given a Julia package, create an environment (i.e.
+- `createEnv { package, workingDepot }`: Given a Julia package, create an environment (i.e.
   set of variables) in which Julia can run and see the precompiled version of
   the given package.
 

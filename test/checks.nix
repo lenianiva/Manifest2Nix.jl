@@ -35,13 +35,38 @@ in {
     expected = pkgs.writeText "expected" "Minimal";
     actual =
       pkgs.runCommand "actual"
-      (lib-compile.createPackageEnv minimal-jl)
+      (lib-compile.createEnv {package = minimal-jl;})
       ''
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
       '';
   };
   minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
   simple-jl = simple-jl.compiled;
+  simple-jl-script = let
+    script = builtins.path {
+      path = ../templates/simple/script/normal.jl;
+      name = "normal.jl";
+    };
+    workingDepot = ".julia";
+  in
+    pkgs.testers.testEqualContents {
+      assertion = "Execute script";
+      expected = pkgs.writeText "expected" "1.0480426577669817";
+      actual =
+        pkgs.runCommand "actual"
+        (lib-compile.createEnv {
+          package = simple-jl;
+          inherit workingDepot;
+        })
+        ''
+          mkdir ${workingDepot}
+          ${julia}/bin/julia ${script} > $out
+          ls .julia
+          if [ ! -z "$( ls -A ${workingDepot} )" ]; then
+            exit 1
+          fi
+        '';
+    };
 
   artefact-jl = artefact-jl.compiled;
   override-jl-direct = override-jl-direct.compiled;

@@ -29,7 +29,7 @@ in {
   manifest2nix = pkgs.writeShellApplication {
     name = "manifest2nix";
     runtimeInputs = [julia];
-    runtimeEnv = lib-compile.createPackageEnv self;
+    runtimeEnv = lib-compile.createEnv {package = self;};
     text = ''
       ${julia}/bin/julia -e "using Manifest2Nix; main()" -- "$@"
     '';

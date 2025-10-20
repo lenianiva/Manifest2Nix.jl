@@ -1,10 +1,12 @@
 name = "simple"
 uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
-authors = ["Leni Aniva <a@leni.sh>"]
 version = "0.1.0"
+authors = ["Leni Aniva <a@leni.sh>"]
 
 [deps]
 ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 ArgParse = "1.2.0"
+Random = "1.11.0"

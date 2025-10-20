@@ -30,13 +30,18 @@
         inherit (pkgs) julia;
         m2nlib = manifest2nix.mkLib pkgs;
         package = m2nlib.buildJuliaPackageWithDeps {src = ./.;};
+
+        normal-jl = builtins.path {
+          path = script/normal.jl;
+          name = "normal.jl";
+        };
       in {
         packages = rec {
           default =
-            pkgs.runCommand "mystery"
-            (m2nlib.createPackageEnv package)
+            pkgs.runCommand "normal"
+            (m2nlib.createEnv {inherit package;})
             ''
-              ${julia}/bin/julia -e "println(1)" > $out
+              ${julia}/bin/julia ${normal-jl} > $out
             '';
         };
 
