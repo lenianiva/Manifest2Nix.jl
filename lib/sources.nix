@@ -53,4 +53,22 @@
       hash = "sha256-GgZVxv1JFIIWOYocVlWEYf2Mjt3rDgbkKrtU2Gb+cBw=";
     };
   };
+  "1.12.1" = {
+    aarch64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/aarch64/1.12/julia-1.12.1-linux-aarch64.tar.gz";
+      hash = "sha256-Mn8KrKnJS+dUeUoypk7frgB7vMYFbDhq7mkAIxXWknc=";
+    };
+    x86_64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/x64/1.12/julia-1.12.1-linux-x86_64.tar.gz";
+      hash = "sha256-RhnL6xZmLHYres6nngoWBX5NfotFaZ9gZfuAvzUmb0k=";
+    };
+    x86_64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/x64/1.12/julia-1.12.1-mac64.tar.gz";
+      hash = "sha256-ENNBD94nFAZaFyoLpqCaCmWTiDRVwkEK80Yyr6neZq0=";
+    };
+    aarch64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/aarch64/1.12/julia-1.12.1-macaarch64.tar.gz";
+      hash = "sha256-G9zuj2VrFcLF37IJe9gj+H95EnaBD+h/VnART8nhV7Y=";
+    };
+  };
 }
