@@ -125,6 +125,7 @@ in rec {
     root-manifest ? null,
     pre-exec ? "",
     nativeBuildInputs ? [],
+    env ? {},
   }: let
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
     load-path = symlinkJoin {
@@ -178,27 +179,28 @@ in rec {
         cp -r ${src} $out/${name}
       '';
     };
-    compiled = stdenv.mkDerivation {
-      inherit (args) src;
-      inherit (project) name version;
-      nativeBuildInputs = [julia] ++ nativeBuildInputs;
-      JULIA_LOAD_PATH = "${load-path}:";
-      JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
-      JULIA_SSL_CA_ROOTS_PATH = cacert;
-      buildPhase = ''
-        mkdir -p .julia
+    compiled = stdenv.mkDerivation ({
+        inherit (args) src;
+        inherit (project) name version;
+        nativeBuildInputs = [julia] ++ nativeBuildInputs;
+        JULIA_LOAD_PATH = "${load-path}:";
+        JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
+        JULIA_SSL_CA_ROOTS_PATH = cacert;
+        buildPhase = ''
+          mkdir -p .julia
 
-        if [ ! -f Manifest.toml ]; then
-          ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
-        fi
+          if [ ! -f Manifest.toml ]; then
+            ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
+          fi
 
-        julia --project ${../src/compile.jl}
-        ${pre-exec-command}
+          julia --project ${../src/compile.jl}
+          ${pre-exec-command}
 
-        mkdir -p $out
-        cp -r .julia/compiled/v${abridged-version}/* $out/
-      '';
-    };
+          mkdir -p $out
+          cp -r .julia/compiled/v${abridged-version}/* $out/
+        '';
+      }
+      // env);
   };
   # Given a built Julia package, create an environment for running code
   createEnv = {
@@ -224,6 +226,7 @@ in rec {
     pre-exec ? "",
     nativeBuildInputs ? [],
     override ? {},
+    env ? {},
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -270,6 +273,7 @@ in rec {
       };
     in
       buildJuliaPackage {
+        inherit env;
         src = lib.defaultTo fetched src;
         deps = builtins.concatMap (dep:
           if builtins.hasAttr dep allDeps
