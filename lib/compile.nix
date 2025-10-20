@@ -201,21 +201,19 @@ in rec {
     };
   };
   # Given a built Julia package, create an environment for running code
-  createPackageEnv = self @ {
-    src,
-    name,
-    deps,
-    load-path,
-    ...
+  createEnv = {
+    package,
+    workingDepot ? "",
   }: let
-    packages = [self] ++ self.deps;
+    inherit (package) deps name;
+    packages = [package] ++ deps;
     load-path = symlinkJoin {
       name = "${name}-deps";
       paths = builtins.map (dep: dep.load-path) packages;
     };
   in {
     JULIA_LOAD_PATH = "${load-path}:";
-    JULIA_DEPOT_PATH = ".julia:${mkDepsDepot packages}:${stdlib-depot}";
+    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot packages}:${stdlib-depot}";
     JULIA_SSL_CA_ROOTS_PATH = cacert;
   };
   # Create a Julia package from a dependency file

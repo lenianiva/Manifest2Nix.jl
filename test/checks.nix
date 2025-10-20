@@ -35,7 +35,7 @@ in {
     expected = pkgs.writeText "expected" "Minimal";
     actual =
       pkgs.runCommand "actual"
-      (lib-compile.createPackageEnv minimal-jl)
+      (lib-compile.createEnv {package = minimal-jl;})
       ''
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
       '';
@@ -53,7 +53,7 @@ in {
       expected = pkgs.writeText "expected" "1.0480426577669817";
       actual =
         pkgs.runCommand "actual"
-        (lib-compile.createPackageEnv simple-jl)
+        (lib-compile.createEnv {package = simple-jl;})
         ''
           ${julia}/bin/julia ${script} > $out
         '';

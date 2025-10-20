@@ -57,7 +57,7 @@ manifest2nix lock [--up] --project .
   standard libraries.
 - `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
   all of them.
-- `createPackageEnv package`: Given a Julia package, create an environment (i.e.
+- `createEnv { package, workingDepot }`: Given a Julia package, create an environment (i.e.
   set of variables) in which Julia can run and see the precompiled version of
   the given package.
 

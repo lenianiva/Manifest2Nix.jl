@@ -34,7 +34,7 @@
         packages = rec {
           default =
             pkgs.runCommand "mystery"
-            (m2nlib.createPackageEnv package)
+            (m2nlib.createEnv {inherit package;})
             ''
               ${julia}/bin/julia -e "println(1)" > $out
             '';
