@@ -238,7 +238,7 @@ in rec {
     flatDeps =
       lib.mapAttrs (
         key: {dependencies, ...}:
-          lib.uniqueStrings (dependencies
+          lib.lists.unique (dependencies
             ++ (builtins.concatMap (k:
               if builtins.hasAttr k flatDeps
               then builtins.getAttr k flatDeps
