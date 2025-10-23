@@ -79,8 +79,12 @@ A Julia package has these attributes:
   now this is just a copy of `src`
 - `.artifacts`: An attrset of all downloaded artifacts.
 
+## Troubleshooting
 
-
+If the SSL certificate in `nixpkgs` is too old, it may cause registry fetch
+failures during package updates. This will manifest as "the identity of the
+server ... could not be verified." In which case, update using Julia itself, or
+update `nixpkgs`.
 
 ## Contributing
 
@@ -89,3 +93,9 @@ Use the provided flake `devShell`, and install pre-commit hooks:
 ``` sh
 pre-commit install --install-hooks
 ```
+
+### Updates
+
+When there is a new Julia version, execute `toolchain-fetch $VERSION` to
+generate Nix attributes. Add these attributes to `sources.nix`. For minor
+version updates, add a new Manifest/Lock pair to `version/`.
