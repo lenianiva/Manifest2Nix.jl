@@ -13,13 +13,14 @@
   ...
 }: let
   abridged-version = "${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
+  JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 in rec {
   # This depot contains a cached version of stdlib
   stdlib-depot =
     runCommand "julia-stdlib" {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
-      JULIA_SSL_CA_ROOTS_PATH = cacert;
+      inherit JULIA_SSL_CA_ROOTS_PATH;
       nativeBuildInputs = [julia];
     } ''
       mkdir -p $out
@@ -188,10 +189,11 @@ in rec {
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
         inherit name version;
+        dontInstall = true;
         nativeBuildInputs = [julia] ++ nativeBuildInputs;
         JULIA_LOAD_PATH = "${load-path}:";
         JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
-        JULIA_SSL_CA_ROOTS_PATH = cacert;
+        inherit JULIA_SSL_CA_ROOTS_PATH;
         buildPhase = ''
           mkdir -p .julia
 
@@ -231,7 +233,7 @@ in rec {
       inherit name;
       deps = packages;
     }}:${stdlib-depot}";
-    JULIA_SSL_CA_ROOTS_PATH = cacert;
+    inherit JULIA_SSL_CA_ROOTS_PATH;
   };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = {
