@@ -62,6 +62,6 @@ if abspath(PROGRAM_FILE) == @__FILE__
     @info "Building ..."
     uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
     create_build_paths(context, uuids)
-    #Pkg.API.build(context, pkgs; verbose = true)
+    Pkg.API.build(context, pkgs; verbose = true)
     #Pkg.Operations.build_versions(context, uuids; verbose = true)
 end

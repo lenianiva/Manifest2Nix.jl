@@ -44,7 +44,10 @@ in {
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
       '';
   };
-  minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
+  minimal-jl-depot = lib-compile.mkDepsDepot {
+    name = "mini";
+    deps = [minimal-jl];
+  };
   simple-jl = simple-jl.compiled;
   simple-jl-script = let
     script = builtins.path {

@@ -13,6 +13,7 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     dependencies::Vector{String}
     repo::Union{Nothing,String}
     rev::Union{Nothing,String}
+    subdir::Union{Nothing,String}
 end
 
 function pin_package(
@@ -21,6 +22,7 @@ function pin_package(
     info::PackageInfo;
     temp_dir::String,
 )::Union{PinnedPackage,Nothing}
+    subdir = nothing
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "Skipping stdlib package $(info.name) [$uuid]"
         return nothing
@@ -42,12 +44,12 @@ function pin_package(
         rev_tag = readchomp(git(["ls-remote", repo, "v$(info.version)"]))
         # Heuristic of just using the tag. works most of the time
         rev = split(rev_tag, "\t"; limit = 2)[1]
-        if endswith(info.name, "_jll")
-            # hack for auto generated JLLs
-            name = chopsuffix(info.name, "_jll")
-            rev_tag = readchomp(git(["ls-remote", repo, "$name-v$(info.version)"]))
-            rev = split(rev_tag, "\t"; limit = 2)[1]
-        end
+        #if endswith(info.name, "_jll")
+        #    # hack for auto generated JLLs
+        #    name = chopsuffix(info.name, "_jll")
+        #    rev_tag = readchomp(git(["ls-remote", repo, "$name-v$(info.version)"]))
+        #    rev = split(rev_tag, "\t"; limit = 2)[1]
+        #end
 
         # Tag doesn't exist. Try tree hash
 
@@ -58,7 +60,7 @@ function pin_package(
             if isnothing(subdir)
                 rev_tag = readchomp(
                     pipeline(
-                        Cmd(`$git log --pretty=raw`, dir = repo_dir),
+                        Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
                         `grep -B 1 $(info.tree_hash)`,
                         `head -1`,
                     ),
@@ -102,6 +104,7 @@ function pin_package(
         dependencies = collect(keys(info.dependencies)),
         repo = repo,
         rev = rev,
+        subdir = subdir,
     )
 end
 
@@ -112,6 +115,7 @@ format(x::PinnedPackage) = Dict(
     "dependencies" => x.dependencies,
     "repo" => x.repo,
     "rev" => x.rev,
+    "subdir" => x.subdir,
 )
 format(u::UUID) = string(u)
 format(other::VersionNumber) = string(other)

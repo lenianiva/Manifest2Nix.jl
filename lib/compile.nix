@@ -26,7 +26,10 @@ in rec {
       JULIA_DEPOT_PATH=$out julia --project -e "import Pkg"
     '';
   # Given a list of Julia packages, pack them into one depot
-  mkDepsDepot = deps: let
+  mkDepsDepot = {
+    name,
+    deps,
+  }: let
     # Collect all requisite artifacts
     artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
     artifacts-join =
@@ -40,9 +43,9 @@ in rec {
   in
     stdenv.mkDerivation
     {
-      name = "deps";
+      name = "${name}-deps";
       src = symlinkJoin {
-        name = "deps";
+        name = "${name}-compiled";
         paths = builtins.map (dep: dep.compiled) deps;
       };
       phases = ["unpackPhase" "installPhase"];
@@ -132,7 +135,7 @@ in rec {
     name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
     version = args.version or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).version;
     load-path = symlinkJoin {
-      name = "deps";
+      name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) deps;
     };
     artifact-path = "${src}/Artifacts.toml";
@@ -161,7 +164,7 @@ in rec {
     deps-depot =
       if deps == []
       then []
-      else [(mkDepsDepot deps)];
+      else [(mkDepsDepot {inherit name deps;})];
     input-depots = artifacts-depot ++ deps-depot ++ depots;
     # This leaves a trailing : for the system depot
     input-depots-paths = lib.strings.concatMapStrings (s: "${s}:") input-depots;
@@ -192,7 +195,7 @@ in rec {
         buildPhase = ''
           mkdir -p .julia
 
-          echo $JULIA_LOAD_PATH
+          echo "Load Path: $JULIA_LOAD_PATH"
 
           if [ ! -f Manifest.toml ]; then
             ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
@@ -212,18 +215,22 @@ in rec {
   };
   # Given a built Julia package, create an environment for running code
   createEnv = {
+    name ? null,
     package,
     workingDepot ? "",
   }: let
     inherit (package) deps name;
     packages = [package] ++ deps;
     load-path = symlinkJoin {
-      name = "${name}-deps";
+      name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) packages;
     };
   in {
     JULIA_LOAD_PATH = "${load-path}:";
-    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot packages}:${stdlib-depot}";
+    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
+      inherit name;
+      deps = packages;
+    }}:${stdlib-depot}";
     JULIA_SSL_CA_ROOTS_PATH = cacert;
   };
   # Create a Julia package from a dependency file
@@ -270,6 +277,7 @@ in rec {
       version,
       repo,
       rev,
+      subdir ? "",
       dependencies,
       src ? null, # Optionally override the source path to ignore repo and rev
       ...
@@ -283,7 +291,10 @@ in rec {
     in
       buildJuliaPackage {
         inherit name version env;
-        src = lib.defaultTo fetched src;
+        src =
+          if builtins.isNull src
+          then "${fetched}/${subdir}"
+          else src;
         deps = builtins.concatMap (dep:
           if builtins.hasAttr dep allDeps
           then [allDeps.${dep}]

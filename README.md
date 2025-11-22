@@ -61,8 +61,8 @@ manifest2nix lock [--up] --project .
   environment variables.
 - `stdlib-depot`: A Julia depot containing a precompiled version of Julia
   standard libraries.
-- `mkDepsDepot deps`: Given a list of Julia packages, create a depot containing
-  all of them. This depot can be cached to speed up compilation.
+- `mkDepsDepot { name, deps }`: Given a list of Julia packages, create a depot
+  containing all of them. This depot can be cached to speed up compilation.
 - `createEnv { package, workingDepot ? "" }`: Given a Julia package, create an
   environment (i.e.  set of variables) in which Julia can run and see the
   precompiled version of the given package. By default, the working depot here is
