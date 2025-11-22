@@ -118,6 +118,8 @@ in rec {
     lib.attrsets.concatMapAttrs remap artifacts;
   # Builds a Julia package
   buildJuliaPackage = args @ {
+    name ? null,
+    version ? null,
     src,
     depots ? [stdlib-depot],
     deps ? [],
@@ -127,7 +129,8 @@ in rec {
     nativeBuildInputs ? [],
     env ? {},
   }: let
-    project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
+    name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
+    version = args.version or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).version;
     load-path = symlinkJoin {
       name = "deps";
       paths = builtins.map (dep: dep.load-path) deps;
@@ -167,21 +170,21 @@ in rec {
       then "julia --project ${writeText "pre-exec.jl" pre-exec}"
       else "";
   in {
-    inherit (project) name version;
+    inherit name version;
     inherit src deps artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
-      inherit (project) name;
+      inherit name;
       inherit src;
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
         mkdir $out
-        cp -r ${src} $out/${name}
+        ln -s ${src} $out/${name}
       '';
     };
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
-        inherit (project) name version;
+        inherit name version;
         nativeBuildInputs = [julia] ++ nativeBuildInputs;
         JULIA_LOAD_PATH = "${load-path}:";
         JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
@@ -189,15 +192,20 @@ in rec {
         buildPhase = ''
           mkdir -p .julia
 
+          echo $JULIA_LOAD_PATH
+
           if [ ! -f Manifest.toml ]; then
             ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
           fi
 
-          julia --project ${../src/compile.jl}
-          ${pre-exec-command}
-
           mkdir -p $out
-          cp -r .julia/compiled/v${abridged-version}/* $out/
+
+          if [ -f Project.toml ]; then
+            julia --project ${../src/compile.jl}
+            ${pre-exec-command}
+
+            mv .julia/compiled/v${abridged-version}/* $out/
+          fi
         '';
       }
       // env);
@@ -246,7 +254,7 @@ in rec {
             dependencies))
       )
       lock.deps;
-    # Trim a parent manifest to contain only relevant parts in a dependency list
+    # FIXME: Trim a parent manifest to contain only relevant parts in a dependency list
     trimManifest = {
       name,
       depsNames,
@@ -259,6 +267,7 @@ in rec {
       );
 
     depToPackage = name: {
+      version,
       repo,
       rev,
       dependencies,
@@ -273,7 +282,7 @@ in rec {
       };
     in
       buildJuliaPackage {
-        inherit env;
+        inherit name version env;
         src = lib.defaultTo fetched src;
         deps = builtins.concatMap (dep:
           if builtins.hasAttr dep allDeps

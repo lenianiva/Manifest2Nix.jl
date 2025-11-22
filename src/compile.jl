@@ -42,12 +42,10 @@ if abspath(PROGRAM_FILE) == @__FILE__
     Pkg.Operations.prune_manifest(context.env)
 
     for (uuid, entry) in context.env.manifest
-        @info "Trying to find dependency $(entry.name) [$uuid] ..."
         #@info "Slug: $(Base.version_slug(entry.uuid, entry.tree_hash))"
         #@info "Path: $(entry.path)"
         if Base.locate_package(Base.PkgId(uuid, entry.name)) === nothing
-            @error "Package $(entry.name) is not installed"
-            exit(1)
+            @info "Cannot locate $(entry.name) [$uuid]"
         end
     end
 
@@ -64,6 +62,6 @@ if abspath(PROGRAM_FILE) == @__FILE__
     @info "Building ..."
     uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
     create_build_paths(context, uuids)
-    Pkg.API.build(context, pkgs; verbose = true)
+    #Pkg.API.build(context, pkgs; verbose = true)
     #Pkg.Operations.build_versions(context, uuids; verbose = true)
 end

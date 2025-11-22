@@ -22,6 +22,7 @@
     lockFile = "${version-dir}/Lock.toml";
   };
   images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
+  graphnn-jl = lib-compile.buildJuliaPackageWithDeps {src = ./graphnn;};
 in {
   inherit (pkgs) julia;
   julia-version = pkgs.testers.testVersion {package = julia;};
@@ -77,4 +78,5 @@ in {
 
   self-jl = self-jl.compiled;
   images-jl = images-jl.compiled;
+  graphnn-jl = graphnn-jl.compiled;
 }

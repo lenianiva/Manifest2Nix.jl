@@ -105,7 +105,7 @@ function pin_package(
     )
 end
 
-format(nothing) = "null"
+format(nothing) = ""
 format(x::PinnedPackage) = Dict(
     "uuid" => x.uuid,
     "version" => x.version,
