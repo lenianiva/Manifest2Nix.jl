@@ -96,6 +96,6 @@ pre-commit install --install-hooks
 
 ### Updates
 
-When there is a new Julia version, execute `toolchain-fetch $VERSION` to
-generate Nix attributes. Add these attributes to `sources.nix`. For minor
+When there is a new Julia version, execute `nix run .#toolchain-fetch $VERSION`
+to generate Nix attributes. Add these attributes to `sources.nix`. For minor
 version updates, add a new Manifest/Lock pair to `version/`.
