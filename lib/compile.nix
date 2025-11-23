@@ -74,6 +74,7 @@ in rec {
       else "linux";
     inherit (p) libc;
     cxxstring_abi = "cxx11";
+    libgfortran_version = "5.0.0";
   };
   filterPlatformDependentArtifact = artifact:
     if builtins.isList artifact
