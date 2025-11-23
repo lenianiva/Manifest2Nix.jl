@@ -124,6 +124,7 @@ in rec {
   buildJuliaPackage = args @ {
     name ? null,
     version ? null,
+    uuid ? "",
     src,
     depots ? [stdlib-depot],
     deps ? [],
@@ -173,6 +174,12 @@ in rec {
       if pre-exec != ""
       then "julia --project ${writeText "pre-exec.jl" pre-exec}"
       else "";
+    # A compatibility shim for Julia packages without a `Project.toml` file.
+    project-toml =
+      pkgs.writers.writeTOML "Project.toml"
+      {
+        inherit name version uuid;
+      };
   in {
     inherit name version;
     inherit src deps artifacts input-depots;
@@ -181,10 +188,17 @@ in rec {
       inherit name;
       inherit src;
       phases = ["unpackPhase" "installPhase"];
-      installPhase = ''
-        mkdir $out
-        ln -s ${src} $out/${name}
-      '';
+      installPhase =
+        if (lib.pathExists "${src}/Project.toml") || (lib.pathExists "${src}/JuliaProject.toml")
+        then ''
+          mkdir -p $out
+          ln -s ${src} $out/${name}
+        ''
+        else ''
+          mkdir -p $out/${name}
+          ln -s ${src}/* $out/${name}/
+          ln -s ${project-toml} $out/${name}/Project.toml
+        '';
     };
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
@@ -279,6 +293,7 @@ in rec {
       version,
       repo,
       rev,
+      uuid,
       subdir ? "",
       dependencies,
       src ? null, # Optionally override the source path to ignore repo and rev
@@ -292,7 +307,7 @@ in rec {
       };
     in
       buildJuliaPackage {
-        inherit name version env;
+        inherit name uuid version env;
         src =
           if builtins.isNull src
           then "${fetched}/${subdir}"
