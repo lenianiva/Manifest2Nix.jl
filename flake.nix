@@ -38,14 +38,14 @@
       in {
         packages = rec {
           inherit (pkgs) julia julia-bin;
+          inherit (lib-toolchain) toolchain-fetch;
+          inherit (lib-manifest) manifest2nix;
         };
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             julia
             pre-commit
-            lib-toolchain.toolchain-fetch
-            lib-manifest.manifest2nix
           ];
         };
         checks = ((import test/checks.nix) {inherit pkgs lib-compile;}) // ((import test/version.nix) {inherit nixpkgs system;});
