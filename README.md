@@ -2,10 +2,10 @@
 
 A Nix library for creating offline and reproducible Julia builds.
 
-Julia uses a [Ahead-Of-Time](https://docs.julialang.org/en/v1/devdocs/aot/)
+Julia uses an [Ahead-Of-Time](https://docs.julialang.org/en/v1/devdocs/aot/)
 compilation system. This means Julia generates native code for functions that it
 can compile, while it still needs access to the source code in order to compile
-just-in-time. Manifest2Nix is designed to take advantage of this system by
+just-in-time. Manifest2Nix.jl is designed to take advantage of this system by
 precompiling as much code as possible.
 
 ## Usage
@@ -73,11 +73,15 @@ manifest2nix lock [--up] --project .
 ### Caching
 
 A Julia package has these attributes:
-- `.compiled`: Compiled binary code. Cache this in Nix to shorten the
+- `.compiled`: Precompiled binary code. Cache this in Nix to shorten the
   compilation of downstream packages.
-- `.load-path`: A special derivation for making load paths in Julia depots. For
-  now this is just a copy of `src`
-- `.artifacts`: An attrset of all downloaded artifacts.
+- `.load-path`: A special derivation for making load paths. Each package
+  `$PACKAGE`'s `load-path` is a derivation containing a single directory
+  `$PACKAGE` which includes the project's source code. In most cases this is a
+  direct link to the project's source directory. For legacy packages without a
+  `Project.toml`, there will be a synthetic `Project.toml` file so Julia can
+  find the package.
+- `.artifacts`: An attribute set of all downloaded artifacts.
 
 ## Troubleshooting
 
