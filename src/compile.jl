@@ -45,7 +45,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
         #@info "Slug: $(Base.version_slug(entry.uuid, entry.tree_hash))"
         #@info "Path: $(entry.path)"
         if Base.locate_package(Base.PkgId(uuid, entry.name)) === nothing
-            @info "Cannot locate $(entry.name) [$uuid]"
+            @error "Cannot locate $(entry.name) [$uuid]"
         end
     end
 

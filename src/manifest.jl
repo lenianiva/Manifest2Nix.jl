@@ -37,50 +37,37 @@ function pin_package(
         end
         Pkg.Registry.init_package_info!(pkg_entry)
         repo = pkg_entry.info.repo
+        subdir = pkg_entry.info.subdir
         @info "Processing package $(info.name) [$uuid] (tracking registry repo $repo)"
         if info.tree_hash == ""
             error("Package does not have a tree hash")
         end
-        rev_tag = readchomp(git(["ls-remote", repo, "v$(info.version)"]))
-        # Heuristic of just using the tag. works most of the time
-        rev = split(rev_tag, "\t"; limit = 2)[1]
-        #if endswith(info.name, "_jll")
-        #    # hack for auto generated JLLs
-        #    name = chopsuffix(info.name, "_jll")
-        #    rev_tag = readchomp(git(["ls-remote", repo, "$name-v$(info.version)"]))
-        #    rev = split(rev_tag, "\t"; limit = 2)[1]
-        #end
 
-        # Tag doesn't exist. Try tree hash
+        # Calculate revision from tree hash
 
-        if rev == ""
-            subdir = pkg_entry.info.subdir
-            repo_dir = "$temp_dir/$(info.name)"
-            run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
-            if isnothing(subdir)
-                rev_tag = readchomp(
-                    pipeline(
-                        Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
-                        `grep -B 1 $(info.tree_hash)`,
-                        `head -1`,
-                    ),
-                )
-                rev = split(rev_tag, " "; limit = 2)[2]
-            else
-                all_commits =
-                    split(readchomp(Cmd(`$git rev-list HEAD`, dir = repo_dir)), "\n")
-                # Find commit with hash
-                for commit_hash in all_commits
-                    hash = readchomp(
-                        Cmd(`$git rev-parse $commit_hash:$subdir`, dir = repo_dir),
-                    )
-                    if hash == info.tree_hash
-                        rev = commit_hash
-                        break
-                    end
+        repo_dir = "$temp_dir/$(info.name)"
+        run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
+        if isnothing(subdir)
+            rev_tag = readchomp(
+                pipeline(
+                    Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
+                    `grep -B 1 $(info.tree_hash)`,
+                    `head -1`,
+                ),
+            )
+            rev = split(rev_tag, " "; limit = 2)[2]
+        else
+            all_commits = split(readchomp(Cmd(`$git rev-list HEAD`, dir = repo_dir)), "\n")
+            # Find commit with hash
+            for commit_hash in all_commits
+                hash = readchomp(Cmd(`$git rev-parse $commit_hash:$subdir`, dir = repo_dir))
+                if hash == info.tree_hash
+                    rev = commit_hash
+                    break
                 end
             end
         end
+
         if rev == ""
             error(
                 "Could not determine revision using either tag or tree hash $(info.version)",
