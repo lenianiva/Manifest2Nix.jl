@@ -13,20 +13,24 @@
   ...
 }: let
   abridged-version = "${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
+  JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 in rec {
   # This depot contains a cached version of stdlib
   stdlib-depot =
     runCommand "julia-stdlib" {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
-      JULIA_SSL_CA_ROOTS_PATH = cacert;
+      inherit JULIA_SSL_CA_ROOTS_PATH;
       nativeBuildInputs = [julia];
     } ''
       mkdir -p $out
       JULIA_DEPOT_PATH=$out julia --project -e "import Pkg"
     '';
   # Given a list of Julia packages, pack them into one depot
-  mkDepsDepot = deps: let
+  mkDepsDepot = {
+    name,
+    deps,
+  }: let
     # Collect all requisite artifacts
     artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
     artifacts-join =
@@ -40,9 +44,9 @@ in rec {
   in
     stdenv.mkDerivation
     {
-      name = "deps";
+      name = "${name}-deps";
       src = symlinkJoin {
-        name = "deps";
+        name = "${name}-compiled";
         paths = builtins.map (dep: dep.compiled) deps;
       };
       phases = ["unpackPhase" "installPhase"];
@@ -70,6 +74,7 @@ in rec {
       else "linux";
     inherit (p) libc;
     cxxstring_abi = "cxx11";
+    libgfortran_version = "5.0.0";
   };
   filterPlatformDependentArtifact = artifact:
     if builtins.isList artifact
@@ -118,6 +123,9 @@ in rec {
     lib.attrsets.concatMapAttrs remap artifacts;
   # Builds a Julia package
   buildJuliaPackage = args @ {
+    name ? null,
+    version ? null,
+    uuid ? "",
     src,
     depots ? [stdlib-depot],
     deps ? [],
@@ -127,9 +135,10 @@ in rec {
     nativeBuildInputs ? [],
     env ? {},
   }: let
-    project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
+    name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
+    version = args.version or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).version;
     load-path = symlinkJoin {
-      name = "deps";
+      name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) deps;
     };
     artifact-path = "${src}/Artifacts.toml";
@@ -158,7 +167,7 @@ in rec {
     deps-depot =
       if deps == []
       then []
-      else [(mkDepsDepot deps)];
+      else [(mkDepsDepot {inherit name deps;})];
     input-depots = artifacts-depot ++ deps-depot ++ depots;
     # This leaves a trailing : for the system depot
     input-depots-paths = lib.strings.concatMapStrings (s: "${s}:") input-depots;
@@ -166,57 +175,80 @@ in rec {
       if pre-exec != ""
       then "julia --project ${writeText "pre-exec.jl" pre-exec}"
       else "";
+    # A compatibility shim for Julia packages without a `Project.toml` file.
+    project-toml =
+      pkgs.writers.writeTOML "Project.toml"
+      {
+        inherit name version uuid;
+      };
   in {
-    inherit (project) name version;
+    inherit name version;
     inherit src deps artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
-      inherit (project) name;
+      inherit name;
       inherit src;
       phases = ["unpackPhase" "installPhase"];
-      installPhase = ''
-        mkdir $out
-        cp -r ${src} $out/${name}
-      '';
+      installPhase =
+        if (lib.pathExists "${src}/Project.toml") || (lib.pathExists "${src}/JuliaProject.toml")
+        then ''
+          mkdir -p $out
+          ln -s ${src} $out/${name}
+        ''
+        else ''
+          mkdir -p $out/${name}
+          ln -s ${src}/* $out/${name}/
+          ln -s ${project-toml} $out/${name}/Project.toml
+        '';
     };
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
-        inherit (project) name version;
+        inherit name version;
+        dontInstall = true;
         nativeBuildInputs = [julia] ++ nativeBuildInputs;
         JULIA_LOAD_PATH = "${load-path}:";
         JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
-        JULIA_SSL_CA_ROOTS_PATH = cacert;
+        inherit JULIA_SSL_CA_ROOTS_PATH;
         buildPhase = ''
           mkdir -p .julia
+
+          echo "Load Path: $JULIA_LOAD_PATH"
 
           if [ ! -f Manifest.toml ]; then
             ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
           fi
 
-          julia --project ${../src/compile.jl}
-          ${pre-exec-command}
-
           mkdir -p $out
-          cp -r .julia/compiled/v${abridged-version}/* $out/
+
+          if [ -f Project.toml ]; then
+            julia --project ${../src/compile.jl}
+            ${pre-exec-command}
+
+            mv .julia/compiled/v${abridged-version}/* $out/
+          fi
         '';
       }
       // env);
   };
   # Given a built Julia package, create an environment for running code
   createEnv = {
+    name ? null,
     package,
     workingDepot ? "",
   }: let
     inherit (package) deps name;
     packages = [package] ++ deps;
     load-path = symlinkJoin {
-      name = "${name}-deps";
+      name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) packages;
     };
   in {
     JULIA_LOAD_PATH = "${load-path}:";
-    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot packages}:${stdlib-depot}";
-    JULIA_SSL_CA_ROOTS_PATH = cacert;
+    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
+      inherit name;
+      deps = packages;
+    }}:${stdlib-depot}";
+    inherit JULIA_SSL_CA_ROOTS_PATH;
   };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = {
@@ -246,7 +278,7 @@ in rec {
             dependencies))
       )
       lock.deps;
-    # Trim a parent manifest to contain only relevant parts in a dependency list
+    # FIXME: Trim a parent manifest to contain only relevant parts in a dependency list
     trimManifest = {
       name,
       depsNames,
@@ -259,8 +291,11 @@ in rec {
       );
 
     depToPackage = name: {
+      version,
       repo,
       rev,
+      uuid,
+      subdir ? "",
       dependencies,
       src ? null, # Optionally override the source path to ignore repo and rev
       ...
@@ -273,8 +308,11 @@ in rec {
       };
     in
       buildJuliaPackage {
-        inherit env;
-        src = lib.defaultTo fetched src;
+        inherit name uuid version env;
+        src =
+          if builtins.isNull src
+          then "${fetched}/${subdir}"
+          else src;
         deps = builtins.concatMap (dep:
           if builtins.hasAttr dep allDeps
           then [allDeps.${dep}]

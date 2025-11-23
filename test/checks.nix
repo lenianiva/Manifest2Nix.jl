@@ -22,6 +22,7 @@
     lockFile = "${version-dir}/Lock.toml";
   };
   images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
+  graphnn-jl = lib-compile.buildJuliaPackageWithDeps {src = ./graphnn;};
 in {
   inherit (pkgs) julia;
   julia-version = pkgs.testers.testVersion {package = julia;};
@@ -43,7 +44,10 @@ in {
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
       '';
   };
-  minimal-jl-depot = lib-compile.mkDepsDepot [minimal-jl];
+  minimal-jl-depot = lib-compile.mkDepsDepot {
+    name = "mini";
+    deps = [minimal-jl];
+  };
   simple-jl = simple-jl.compiled;
   simple-jl-script = let
     script = builtins.path {
@@ -77,4 +81,5 @@ in {
 
   self-jl = self-jl.compiled;
   images-jl = images-jl.compiled;
+  graphnn-jl = graphnn-jl.compiled;
 }

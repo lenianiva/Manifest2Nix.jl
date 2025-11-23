@@ -42,12 +42,10 @@ if abspath(PROGRAM_FILE) == @__FILE__
     Pkg.Operations.prune_manifest(context.env)
 
     for (uuid, entry) in context.env.manifest
-        @info "Trying to find dependency $(entry.name) [$uuid] ..."
         #@info "Slug: $(Base.version_slug(entry.uuid, entry.tree_hash))"
         #@info "Path: $(entry.path)"
         if Base.locate_package(Base.PkgId(uuid, entry.name)) === nothing
-            @error "Package $(entry.name) is not installed"
-            exit(1)
+            @error "Cannot locate $(entry.name) [$uuid]"
         end
     end
 

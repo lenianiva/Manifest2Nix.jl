@@ -13,6 +13,7 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     dependencies::Vector{String}
     repo::Union{Nothing,String}
     rev::Union{Nothing,String}
+    subdir::Union{Nothing,String}
 end
 
 function pin_package(
@@ -21,6 +22,7 @@ function pin_package(
     info::PackageInfo;
     temp_dir::String,
 )::Union{PinnedPackage,Nothing}
+    subdir = nothing
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "Skipping stdlib package $(info.name) [$uuid]"
         return nothing
@@ -35,28 +37,37 @@ function pin_package(
         end
         Pkg.Registry.init_package_info!(pkg_entry)
         repo = pkg_entry.info.repo
+        subdir = pkg_entry.info.subdir
         @info "Processing package $(info.name) [$uuid] (tracking registry repo $repo)"
         if info.tree_hash == ""
             error("Package does not have a tree hash")
         end
-        rev_tag = readchomp(git(["ls-remote", repo, "v$(info.version)"]))
-        rev = split(rev_tag, "\t"; limit = 2)[1]
-        if rev == ""
-            # Tag doesn't exist. Try tree hash
 
-            # Clone the repository
-            run(
-                `$git clone --quiet --filter=blob:none --no-checkout $repo $temp_dir/$(info.name)`,
-            )
+        # Calculate revision from tree hash
+
+        repo_dir = "$temp_dir/$(info.name)"
+        run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
+        if isnothing(subdir)
             rev_tag = readchomp(
                 pipeline(
-                    Cmd(`$git log --pretty=raw`, dir = "$temp_dir/$(info.name)"),
+                    Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
                     `grep -B 1 $(info.tree_hash)`,
                     `head -1`,
                 ),
             )
             rev = split(rev_tag, " "; limit = 2)[2]
+        else
+            all_commits = split(readchomp(Cmd(`$git rev-list HEAD`, dir = repo_dir)), "\n")
+            # Find commit with hash
+            for commit_hash in all_commits
+                hash = readchomp(Cmd(`$git rev-parse $commit_hash:$subdir`, dir = repo_dir))
+                if hash == info.tree_hash
+                    rev = commit_hash
+                    break
+                end
+            end
         end
+
         if rev == ""
             error(
                 "Could not determine revision using either tag or tree hash $(info.version)",
@@ -80,16 +91,18 @@ function pin_package(
         dependencies = collect(keys(info.dependencies)),
         repo = repo,
         rev = rev,
+        subdir = subdir,
     )
 end
 
-format(nothing) = "null"
+format(nothing) = ""
 format(x::PinnedPackage) = Dict(
     "uuid" => x.uuid,
     "version" => x.version,
     "dependencies" => x.dependencies,
     "repo" => x.repo,
     "rev" => x.rev,
+    "subdir" => x.subdir,
 )
 format(u::UUID) = string(u)
 format(other::VersionNumber) = string(other)
