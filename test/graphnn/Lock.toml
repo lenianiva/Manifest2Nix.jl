@@ -2,1194 +2,1562 @@ name = "Minimal"
 uuid = "50844a0e-b00b-440b-a496-1fd27e480955"
 
 [deps]
-    [deps.LazyModules]
-    dependencies = []
-    repo = "https://github.com/johnnychen94/LazyModules.jl.git"
-    subdir = ""
-    uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
-    rev = "942c339998e58d2b8b29cc984207c433009daff9"
-    version = "0.3.1"
-
-    [deps.Accessors]
-    dependencies = ["Dates", "ConstructionBase", "CompositionsBase", "InverseFunctions", "MacroTools"]
-    repo = "https://github.com/JuliaObjects/Accessors.jl.git"
-    subdir = ""
-    uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
-    rev = "bd9151366236a4b012683619d430b81105deb057"
-    version = "0.1.42"
-
-    [deps.PaddedViews]
-    dependencies = ["OffsetArrays"]
-    repo = "https://github.com/JuliaArrays/PaddedViews.jl.git"
-    subdir = ""
-    uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
-    rev = "d6df23aef698381758b094811f8a10fff0b65e87"
-    version = "0.5.12"
-
     [deps.DefineSingletons]
-    dependencies = []
     repo = "https://github.com/tkf/DefineSingletons.jl.git"
     subdir = ""
     uuid = "244e2a9f-e319-4986-a169-4d1fe445cd52"
     rev = "4e251a9b8d93b74762a52ca4defb5274765707d6"
+    hash = "sha256-QtIxLGaUOAE2yfh6gA+OksbjHZ2zvog6huHERRMxQQ8="
     version = "0.1.2"
 
     [deps.TableTraits]
-    dependencies = ["IteratorInterfaceExtensions"]
     repo = "https://github.com/queryverse/TableTraits.jl.git"
     subdir = ""
     uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
     rev = "511e0b6133a95692f3e084a03b81d4eca15947e4"
+    hash = "sha256-hKuGrmcOTiyoV8QyOUt1K7otbC0oKSwckqZyMIxYWiM="
     version = "1.0.1"
 
-    [deps.OffsetArrays]
-    dependencies = []
-    repo = "https://github.com/JuliaArrays/OffsetArrays.jl.git"
-    subdir = ""
-    uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-    rev = "fad142db4eaaf42d5680b85613be6178acd2c9e2"
-    version = "1.17.0"
-
-    [deps.HTTP]
-    dependencies = ["URIs", "Random", "UUIDs", "PrecompileTools", "LoggingExtras", "CodecZlib", "ConcurrentUtilities", "Base64", "ExceptionUnwrapping", "MbedTLS", "OpenSSL", "Dates", "NetworkOptions", "Sockets", "Logging", "SimpleBufferStream"]
-    repo = "https://github.com/JuliaWeb/HTTP.jl.git"
-    subdir = ""
-    uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-    rev = "e7feb99bf1d4165c7e3e28171eefeb7652ec2773"
-    version = "1.10.19"
-
-    [deps.ConstructionBase]
-    dependencies = []
-    repo = "https://github.com/JuliaObjects/ConstructionBase.jl.git"
-    subdir = ""
-    uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-    rev = "51da6157bc705212b39f29ad5e7c66168015fba5"
-    version = "1.6.0"
-
-    [deps.OrderedCollections]
-    dependencies = []
-    repo = "https://github.com/JuliaCollections/OrderedCollections.jl.git"
-    subdir = ""
-    uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
-    rev = "5ec176442763e9b6e5247a47dc6a8e7d1f678201"
-    version = "1.8.1"
-
-    [deps.InvertedIndices]
-    dependencies = []
-    repo = "https://github.com/JuliaData/InvertedIndices.jl.git"
-    subdir = ""
-    uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
-    rev = "1253c4465cdc5bdca01b8166d65ae3fc663cf2f6"
-    version = "1.3.1"
-
-    [deps.MLDatasets]
-    dependencies = ["CSV", "Statistics", "MLUtils", "JSON3", "FixedPointNumbers", "DelimitedFiles", "Chemfiles", "ImageShow", "NPZ", "MAT", "HDF5", "Tables", "SparseArrays", "GZip", "Pickle", "FileIO", "Glob", "JLD2", "DataFrames", "LazyModules", "Printf", "DataDeps", "Requires"]
-    repo = "https://github.com/JuliaML/MLDatasets.jl.git"
-    subdir = ""
-    uuid = "eb30cadb-4394-5ae3-aed4-317e484a6458"
-    rev = "556529ce3f95de0e033048a502832dbe35bc7c63"
-    version = "0.7.18"
-
-    [deps.IrrationalConstants]
-    dependencies = []
-    repo = "https://github.com/JuliaMath/IrrationalConstants.jl.git"
-    subdir = ""
-    uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
-    rev = "fad4689eed56e58a37b5bc9b9ee27aab6aa0a1e1"
-    version = "0.2.6"
-
     [deps.Graphs]
-    dependencies = ["SharedArrays", "Statistics", "DataStructures", "ArnoldiMethod", "LinearAlgebra", "Random", "SparseArrays", "Inflate", "Distributed", "SimpleTraits"]
     repo = "https://github.com/JuliaGraphs/Graphs.jl.git"
     subdir = ""
     uuid = "86223c79-3864-5bf0-83f7-82e725a168b6"
     rev = "b5da85a19979c355d974f6547dd789edecae9b18"
+    hash = "sha256-pWDAeqVtBdtdBPyBdlRRReWLVlNcdgA395IlN00/Z5o="
     version = "1.13.1"
 
-    [deps.IteratorInterfaceExtensions]
-    dependencies = []
-    repo = "https://github.com/queryverse/IteratorInterfaceExtensions.jl.git"
+    [deps.ConstructionBase]
+    repo = "https://github.com/JuliaObjects/ConstructionBase.jl.git"
     subdir = ""
-    uuid = "82899510-4779-5014-852e-03e436cf321d"
-    rev = "832737f467bdfe08ad80eb9a3cceee522e1c5533"
-    version = "1.0.0"
+    uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+    rev = "51da6157bc705212b39f29ad5e7c66168015fba5"
+    hash = "sha256-tP6tKXncn9byJjh4HkLAFTThIqMbgAXuJs6oDS6u7YE="
+    version = "1.6.0"
 
-    [deps.NPZ]
-    dependencies = ["FileIO", "ZipFile"]
-    repo = "https://github.com/fhs/NPZ.jl.git"
+    [deps.IrrationalConstants]
+    repo = "https://github.com/JuliaMath/IrrationalConstants.jl.git"
     subdir = ""
-    uuid = "15e1cf62-19b3-5cfa-8e77-841668bca605"
-    rev = "b83fddf2d773936b531e5f355d4f3f1d2738a5d6"
-    version = "0.4.3"
+    uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
+    rev = "fad4689eed56e58a37b5bc9b9ee27aab6aa0a1e1"
+    hash = "sha256-X1gTRxZL9mUL3OT0UMQ+LL20jxn9bqJZWPxv9cBgc/M="
+    version = "0.2.6"
 
     [deps.AtomsBase]
-    dependencies = ["Unitful", "StaticArrays", "UnitfulAtomic", "LinearAlgebra", "PeriodicTable", "Preferences", "Printf", "Requires"]
     repo = "https://github.com/JuliaMolSim/AtomsBase.jl.git"
     subdir = ""
     uuid = "a963bdd2-2df7-4f54-a1ee-49d51e6be12a"
     rev = "0d13ed88925a672fb7864b3d4559bed9fb7dcc53"
+    hash = "sha256-xQNwx/EO0yIeLqpc9W6wt8dGLlJ0qXySLXGaQIyXmYU="
     version = "0.5.2"
 
-    [deps.FLoops]
-    dependencies = ["FLoopsBase", "Serialization", "Transducers", "Compat", "InitialValues", "BangBang", "JuliaVariables", "MLStyle", "Setfield"]
-    repo = "https://github.com/JuliaFolds2/FLoops.jl.git"
-    subdir = ""
-    uuid = "cc61a311-1640-44b5-9fba-1b764f453329"
-    rev = "ad2772277ad5c4d33fb9bd11077f022a1e62426a"
-    version = "0.2.2"
-
-    [deps.DataStructures]
-    dependencies = ["Compat", "InteractiveUtils", "OrderedCollections"]
-    repo = "https://github.com/JuliaCollections/DataStructures.jl.git"
-    subdir = ""
-    uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-    rev = "66913732043a4e4a362f65e8af143ab16d7b4e6c"
-    version = "0.18.22"
-
     [deps.ColorVectorSpace]
-    dependencies = ["Statistics", "ColorTypes", "LinearAlgebra", "TensorCore", "Requires", "FixedPointNumbers"]
     repo = "https://github.com/JuliaGraphics/ColorVectorSpace.jl.git"
     subdir = ""
     uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
     rev = "4c829c92aa1ab9185e63d2479fb0deebfb4906cd"
+    hash = "sha256-qf7dYgWklV+0JhhavNpddWA0WJxzrWm3cE/xdDtPnGc="
     version = "0.11.0"
 
-    [deps.Compat]
-    dependencies = ["UUIDs", "TOML"]
-    repo = "https://github.com/JuliaLang/Compat.jl.git"
+    [deps.Future]
+    repo = ""
     subdir = ""
-    uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
-    rev = "f2a3730a5dc49098dfd394ba2cbf4b202467f435"
-    version = "4.18.1"
-
-    [deps.GZip]
-    dependencies = ["Zlib_jll", "Libdl"]
-    repo = "https://github.com/JuliaIO/GZip.jl.git"
-    subdir = ""
-    uuid = "92fee26a-97fe-5a0c-ad85-20a5f3185b63"
-    rev = "b0a9f5e3a64a201f60ae6d903b77edc7d0157517"
-    version = "0.6.2"
-
-    [deps.PeriodicTable]
-    dependencies = ["Unitful", "Base64"]
-    repo = "https://github.com/JuliaPhysics/PeriodicTable.jl.git"
-    subdir = ""
-    uuid = "7b2266bf-644c-5ea3-82d8-af4bbd25a884"
-    rev = "dcc746da194d2521d3564ca22a4aebce08c36394"
-    version = "1.2.1"
-
-    [deps.Glob]
-    dependencies = []
-    repo = "https://github.com/vtjnash/Glob.jl.git"
-    subdir = ""
-    uuid = "c27321d9-0574-5035-807b-f59d2c89b15c"
-    rev = "19e9bb21f629ef13079172bbc1113cde91dc16e9"
-    version = "1.3.1"
-
-    [deps.Atomix]
-    dependencies = ["UnsafeAtomics"]
-    repo = "https://github.com/JuliaConcurrent/Atomix.jl.git"
-    subdir = ""
-    uuid = "a9b6321e-bd34-4604-b9c9-b65b8de01458"
-    rev = "4298b4ea052a01249e70b4f327a98adbbfc91d8d"
-    version = "1.1.2"
-
-    [deps.JLD2]
-    dependencies = ["FileIO", "PrecompileTools", "OrderedCollections", "Mmap", "ScopedValues", "TranscodingStreams", "MacroTools"]
-    repo = "https://github.com/JuliaIO/JLD2.jl.git"
-    subdir = ""
-    uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
-    rev = "760b56513261453a33d6b87dc4e85ddf056fc3fb"
-    version = "0.5.15"
-
-    [deps.DataFrames]
-    dependencies = ["Statistics", "InlineStrings", "Random", "SortingAlgorithms", "PooledArrays", "TableTraits", "PrecompileTools", "InvertedIndices", "LinearAlgebra", "Missings", "IteratorInterfaceExtensions", "DataStructures", "Compat", "Tables", "Unicode", "DataAPI", "Future", "Printf", "Markdown", "PrettyTables", "Reexport", "SentinelArrays"]
-    repo = "https://github.com/JuliaData/DataFrames.jl.git"
-    subdir = ""
-    uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-    rev = "00cd7d0bfbe3f2f496ceee71314d8627b43b2563"
-    version = "1.8.1"
+    uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
 
     [deps.HashArrayMappedTries]
-    dependencies = []
     repo = "https://github.com/vchuravy/HashArrayMappedTries.jl.git"
     subdir = ""
     uuid = "076d061b-32b6-4027-95e0-9a2c6f6d7e74"
     rev = "e3d6629d558fb71aa813dd52a50d71b7cc7a31f2"
+    hash = "sha256-X/5LMY/VmaQRUlnND0dPqZAOVbmHDzqWCft5B9MSypo="
     version = "0.2.0"
 
-    [deps.MLStyle]
-    dependencies = []
-    repo = "https://github.com/thautwarm/MLStyle.jl.git"
-    subdir = ""
-    uuid = "d8e11817-5142-5d16-987a-aa16d5891078"
-    rev = "c582f7151d04b60dd9525fd6dfbdc2091a70cfae"
-    version = "0.4.17"
-
-    [deps.MPItrampoline_jll]
-    dependencies = ["JLLWrappers", "MPIPreferences", "CompilerSupportLibraries_jll", "LazyArtifacts", "Libdl", "TOML", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/MPItrampoline_jll.jl.git"
-    subdir = ""
-    uuid = "f1f71cc9-e9ae-5b93-9b94-4fe0e1ad3748"
-    rev = "351bece307e620d7617af42dd0f56e979f451622"
-    version = "5.5.4+0"
-
-    [deps.Requires]
-    dependencies = ["UUIDs"]
-    repo = "https://github.com/JuliaPackaging/Requires.jl.git"
-    subdir = ""
-    uuid = "ae029012-a4dd-5104-9daa-d747884805df"
-    rev = "491be21d7009c59bd7b1a40337dcc5b7f0b74b64"
-    version = "1.3.1"
-
-    [deps.BitFlags]
-    dependencies = []
-    repo = "https://github.com/jmert/BitFlags.jl.git"
-    subdir = ""
-    uuid = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
-    rev = "b08d1e089da18a89fdf81c3c7bee7b40ab1f52bc"
-    version = "0.1.9"
-
-    [deps.Adapt]
-    dependencies = ["LinearAlgebra", "Requires"]
-    repo = "https://github.com/JuliaGPU/Adapt.jl.git"
-    subdir = ""
-    uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-    rev = "df3f72e9d3e6c83f190bc3360fa3eaf09f97d33f"
-    version = "4.4.0"
-
-    [deps.TranscodingStreams]
-    dependencies = []
-    repo = "https://github.com/JuliaIO/TranscodingStreams.jl.git"
-    subdir = ""
-    uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
-    rev = "b0ff25226df8639944966bddf0bb9a03e62354f1"
-    version = "0.11.3"
-
-    [deps.StringManipulation]
-    dependencies = ["PrecompileTools"]
-    repo = "https://github.com/ronisbr/StringManipulation.jl.git"
-    subdir = ""
-    uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
-    rev = "ffef9e1bc6d62dc6d5aba4e0a9a00a8f9e6bb7da"
-    version = "0.4.2"
-
-    [deps.MLUtils]
-    dependencies = ["Statistics", "Transducers", "Random", "MLCore", "SimpleTraits", "DelimitedFiles", "ShowCases", "FLoops", "StatsBase", "Compat", "Tables", "DataAPI", "ChainRulesCore", "NNlib"]
-    repo = "https://github.com/JuliaML/MLUtils.jl.git"
-    subdir = ""
-    uuid = "f1d291b0-491e-4a28-83b9-f70985020b54"
-    rev = "bde1bbf6c45a87c230a8fbb52d3f41025cf986c9"
-    version = "0.4.8"
-
-    [deps.JSON3]
-    dependencies = ["Dates", "PrecompileTools", "Parsers", "Mmap", "StructTypes", "UUIDs"]
-    repo = "https://github.com/quinnj/JSON3.jl.git"
-    subdir = ""
-    uuid = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
-    rev = "cc047e027fbd148c41d8778bcef98a93bb43cd55"
-    version = "1.14.3"
-
-    [deps.LogExpFunctions]
-    dependencies = ["IrrationalConstants", "LinearAlgebra", "DocStringExtensions"]
-    repo = "https://github.com/JuliaStats/LogExpFunctions.jl.git"
-    subdir = ""
-    uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-    rev = "62b081dad466f3b74f3cf8fb7e51472b1ed7024a"
-    version = "0.3.29"
-
-    [deps.Chemfiles_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/Chemfiles_jll.jl.git"
-    subdir = ""
-    uuid = "78a364fa-1a3c-552a-b4bb-8fa0f9c1fcca"
-    rev = "0bb66a19b296b18ec8aae673fd4cc03dd7ec34a8"
-    version = "0.10.4+0"
-
-    [deps.ScopedValues]
-    dependencies = ["HashArrayMappedTries", "Logging"]
-    repo = "https://github.com/JuliaLang/ScopedValues.jl.git"
-    subdir = ""
-    uuid = "7e506255-f358-4e82-b7e4-beb19740aa63"
-    rev = "f9e856f32713d95a13db08d1e7b58c52ce9f707c"
-    version = "1.5.0"
-
-    [deps.WorkerUtilities]
-    dependencies = []
-    repo = "https://github.com/JuliaServices/WorkerUtilities.jl.git"
-    subdir = ""
-    uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
-    rev = "3068b00d4fc0209b1836381673f625d1a4dda7f2"
-    version = "1.6.1"
-
-    [deps.ZipFile]
-    dependencies = ["Zlib_jll", "Libdl", "Printf"]
-    repo = "https://github.com/fhs/ZipFile.jl.git"
-    subdir = ""
-    uuid = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
-    rev = "6aa7c454b3efea5c5f2e7daf3c46120a9c52a3a3"
-    version = "0.10.1"
-
     [deps.StructTypes]
-    dependencies = ["Dates", "UUIDs"]
     repo = "https://github.com/JuliaData/StructTypes.jl.git"
     subdir = ""
     uuid = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
     rev = "f3dd04929ec5afa15ccd782802af6ed0040d48d2"
+    hash = "sha256-TuzhvfV25VNowGVILkvwoeLEWHe/2h+nfxDQrbVUK1o="
     version = "1.11.0"
 
     [deps.KrylovKit]
-    dependencies = ["VectorInterface", "LinearAlgebra", "PackageExtensionCompat", "Random", "Printf"]
     repo = "https://github.com/Jutho/KrylovKit.jl.git"
     subdir = ""
     uuid = "0b1a1467-8014-51b9-945f-bf0ae24f4b77"
     rev = "a39cc4f88f5f7a0935aae52a60372b1d0825773b"
+    hash = "sha256-BiTmolz5Wymq6FkWMg25yu2WvdSIcyHItFqzYyMOcH4="
     version = "0.9.5"
 
     [deps.PooledArrays]
-    dependencies = ["DataAPI", "Future"]
     repo = "https://github.com/JuliaData/PooledArrays.jl.git"
     subdir = ""
     uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
     rev = "25d6928de934d5cb4f91668bd610a3ac6ae35c08"
+    hash = "sha256-SzPBY37TqB1OiKV8bhvMWlMvcv/rbcmqr6JYYtKSVTQ="
     version = "1.4.3"
 
     [deps.FixedPointNumbers]
-    dependencies = ["Statistics"]
     repo = "https://github.com/JuliaMath/FixedPointNumbers.jl.git"
     subdir = ""
     uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
     rev = "c372941791804d35e45b03615edd1dcb86a09da8"
+    hash = "sha256-xgHTr7kfxB6u3U7OQCPeXswlLq1Crkdff5npzpSAPbI="
     version = "0.8.5"
 
-    [deps.ContextVariablesX]
-    dependencies = ["Compat", "Logging", "UUIDs"]
-    repo = "https://github.com/tkf/ContextVariablesX.jl.git"
-    subdir = ""
-    uuid = "6add18c4-b38d-439d-96f6-d6bc489c04c5"
-    rev = "e7af4b7cd891f0895d27f7b92b598e80063e2d36"
-    version = "0.1.3"
-
     [deps.InternedStrings]
-    dependencies = ["Test", "Random"]
     repo = "https://github.com/JuliaString/InternedStrings.jl.git"
     subdir = ""
     uuid = "7d512f48-7fb1-5a58-b986-67e6dc259f01"
     rev = "50429d1cc7eadf31e40bd977d19814a900fd76c5"
+    hash = "sha256-F/3xUR69qXNhHJDQuHcsTvGMaP6UhevQj2wkNHE5GLg="
     version = "0.7.0"
 
-    [deps.InitialValues]
-    dependencies = []
-    repo = "https://github.com/JuliaFolds/InitialValues.jl.git"
+    [deps.LinearAlgebra]
+    repo = ""
     subdir = ""
-    uuid = "22cec73e-a1b8-11e9-2c92-598750a2cf9c"
-    rev = "a270231a3a85cda7d0c781978ea2f9ae24301e14"
-    version = "0.3.1"
+    uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+    rev = ""
+    hash = ""
+    version = "1.12.0"
 
-    [deps.Missings]
-    dependencies = ["DataAPI"]
-    repo = "https://github.com/JuliaData/Missings.jl.git"
+    [deps.LibGit2]
+    repo = ""
     subdir = ""
-    uuid = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
-    rev = "2a8903ab442c7cfe39db422ca9af2444149b0678"
-    version = "1.2.0"
-
-    [deps.ShowCases]
-    dependencies = []
-    repo = "https://gitlab.com/ExpandingMan/ShowCases.jl.git"
-    subdir = ""
-    uuid = "605ecd9f-84a6-4c9e-81e2-4798472b76a3"
-    rev = "1ea211f349b40165a2b5fbbc80f771d6dcb725ad"
-    version = "0.1.0"
-
-    [deps.LoggingExtras]
-    dependencies = ["Dates", "Logging"]
-    repo = "https://github.com/JuliaLogging/LoggingExtras.jl.git"
-    subdir = ""
-    uuid = "e6f89c97-d47a-5376-807f-9c37f3926c36"
-    rev = "20229ffbbc0de824aa4d1618da0119fc58b1bf8a"
-    version = "1.2.0"
-
-    [deps.JLLWrappers]
-    dependencies = ["Preferences", "Artifacts"]
-    repo = "https://github.com/JuliaPackaging/JLLWrappers.jl.git"
-    subdir = ""
-    uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
-    rev = "b92168d74d2410bc47b04a2695cecb31bf97a1f3"
-    version = "1.7.1"
-
-    [deps.CodecZlib]
-    dependencies = ["Zlib_jll", "TranscodingStreams"]
-    repo = "https://github.com/JuliaIO/CodecZlib.jl.git"
-    subdir = ""
-    uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
-    rev = "da9ec40d696d03334c29f4caefcda2b8f6b3abeb"
-    version = "0.7.8"
-
-    [deps.MAT]
-    dependencies = ["CodecZlib", "HDF5", "SparseArrays", "BufferedStreams"]
-    repo = "https://github.com/JuliaIO/MAT.jl.git"
-    subdir = ""
-    uuid = "23992714-dd62-5051-b70f-ba57cb901cac"
-    rev = "8edd1c424bd20c28367077b61e96b6e323e68237"
-    version = "0.10.7"
-
-    [deps.HDF5]
-    dependencies = ["MPIPreferences", "Compat", "Random", "Mmap", "Libdl", "UUIDs", "Printf", "Preferences", "Requires", "HDF5_jll"]
-    repo = "https://github.com/JuliaIO/HDF5.jl.git"
-    subdir = ""
-    uuid = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
-    rev = "c41a3d250306c3172cc0619e2d0e0704841082a7"
-    version = "0.17.2"
-
-    [deps.ColorTypes]
-    dependencies = ["Random", "FixedPointNumbers"]
-    repo = "https://github.com/JuliaGraphics/ColorTypes.jl.git"
-    subdir = ""
-    uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-    rev = "017bc1a8fe86154295e6d41c89bd1f442eb6ea97"
-    version = "0.12.1"
-
-    [deps.ArnoldiMethod]
-    dependencies = ["StaticArrays", "LinearAlgebra", "Random"]
-    repo = "https://github.com/JuliaLinearAlgebra/ArnoldiMethod.jl.git"
-    subdir = ""
-    uuid = "ec485272-7323-5ecc-a04f-4719b315124d"
-    rev = "b3d70c70ee0d1aff2f98d69e46e1191f768953df"
-    version = "0.4.0"
+    uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
 
     [deps.BufferedStreams]
-    dependencies = []
     repo = "https://github.com/JuliaIO/BufferedStreams.jl.git"
     subdir = ""
     uuid = "e1450e63-4bb3-523b-b2a4-4ffa8c0fd77d"
     rev = "5bf5af5a2622a9742e633846b051e3a9542b5049"
+    hash = "sha256-F7tkhbLVcJUh0owL/PwU0FpeYs8sUKDW1YkM9umUtto="
     version = "1.2.2"
 
-    [deps.ExceptionUnwrapping]
-    dependencies = ["Test"]
-    repo = "https://github.com/JuliaServices/ExceptionUnwrapping.jl.git"
-    subdir = ""
-    uuid = "460bff9d-24e4-43bc-9d9f-a8973cb893f4"
-    rev = "02007f59d24d7e01dadae834fd4683751a23ebe1"
-    version = "0.1.11"
-
-    [deps.MbedTLS]
-    dependencies = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "NetworkOptions", "Random", "Sockets"]
-    repo = "https://github.com/JuliaLang/MbedTLS.jl.git"
-    subdir = ""
-    uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
-    rev = "4c4de151b87778815b34aed53fa211b67dcdce50"
-    version = "1.1.9"
-
     [deps.Baselet]
-    dependencies = []
     repo = "https://github.com/tkf/Baselet.jl.git"
     subdir = ""
     uuid = "9718e550-a3fa-408a-8086-8db961cd8217"
     rev = "276ecd3b25039d84b29a9f4cccee6d0ebfc9a0a4"
+    hash = "sha256-NjnAJPdnioWZwHRhLr2qN1033ClM9qTApxLgFl2Y1GU="
     version = "0.1.1"
 
     [deps.FileIO]
-    dependencies = ["Pkg", "UUIDs", "Requires"]
     repo = "https://github.com/JuliaIO/FileIO.jl.git"
     subdir = ""
     uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
     rev = "ae0c39f491ed823f3ac152b64d0fc6f5d3f077a1"
+    hash = "sha256-GB1XdgzFGMJA101ix7U3jauiRnkKMdf/HkzGQkpZ9ZY="
     version = "1.17.1"
 
     [deps.ImageCore]
-    dependencies = ["OffsetArrays", "PrecompileTools", "ColorVectorSpace", "MosaicViews", "MappedArrays", "Colors", "PaddedViews", "Reexport", "FixedPointNumbers"]
     repo = "https://github.com/JuliaImages/ImageCore.jl.git"
     subdir = ""
     uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
     rev = "e1dddd985dc216132b1ee7d5bfcee007482739b4"
+    hash = "sha256-Aw7PjHn9kK10qM6xMbCVzhG7nkQNe2jC3og15FOBKfI="
     version = "0.10.5"
 
-    [deps.BFloat16s]
-    dependencies = ["LinearAlgebra", "Random", "Printf"]
-    repo = "https://github.com/JuliaMath/BFloat16s.jl.git"
-    subdir = ""
-    uuid = "ab4f0b2a-ad5b-11e8-123f-65d77653426b"
-    rev = "829251b28738bdaaae8599044bd460d7aed109d0"
-    version = "0.5.1"
-
-    [deps.MbedTLS_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/MbedTLS_jll.jl.git"
-    subdir = ""
-    uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-    rev = "54b09e1dfac49118971f7316127dfde7766feb5a"
-    version = "2.28.1010+0"
-
     [deps.SciMLPublic]
-    dependencies = []
     repo = "https://github.com/SciML/SciMLPublic.jl.git"
     subdir = ""
     uuid = "431bcebd-1456-4ced-9d72-93c2757fff0b"
     rev = "c44558a15a2e3c4976eb625fea502c6b687eb5f5"
+    hash = "sha256-9teF0Hda0A44ol/cCnG2iqgsEJjUiwVSniw91NmAqI4="
     version = "1.0.0"
 
     [deps.StackViews]
-    dependencies = ["OffsetArrays"]
     repo = "https://github.com/JuliaArrays/StackViews.jl.git"
     subdir = ""
     uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
     rev = "3412abbe7de124a2250d55d9b7e9603055cc3f9d"
+    hash = "sha256-mNY6zCyEWfToV67JB6f1ootNrqTvU+iFapey0lCXZxE="
     version = "0.1.2"
 
+    [deps.NetworkOptions]
+    repo = ""
+    subdir = ""
+    uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
+    rev = ""
+    hash = ""
+    version = "1.3.0"
+
     [deps.MLDataDevices]
-    dependencies = ["SciMLPublic", "Random", "Preferences", "Adapt", "Functors"]
     repo = "https://github.com/LuxDL/Lux.jl.git"
     subdir = "lib/MLDataDevices"
     uuid = "7e8f7934-dd98-4c1a-8fe8-92b47a384d40"
-    rev = "9029706199f64175038b31220f3bb857dd4a66bf"
+    rev = "3dfbd0b727eb647cff02f7b589bb1bfa6c807300"
+    hash = "sha256-PprYxVZ7tmENYhjTP9feF9spXAHneE6WPcw08nDa7Gc="
     version = "1.15.1"
 
-    [deps.SplittablesBase]
-    dependencies = ["Test", "Setfield"]
-    repo = "https://github.com/JuliaFolds/SplittablesBase.jl.git"
+    [deps.Printf]
+    repo = ""
     subdir = ""
-    uuid = "171d559e-b47b-412a-8079-5efa626c420e"
-    rev = "c3a6e0cc77d75255854630f5074c55727e9ba283"
-    version = "0.1.15"
-
-    [deps.Hwloc_jll]
-    dependencies = ["JLLWrappers", "XML2_jll", "Libdl", "Artifacts", "Xorg_libpciaccess_jll"]
-    repo = "https://github.com/JuliaBinaryWrappers/Hwloc_jll.jl.git"
-    subdir = ""
-    uuid = "e33a78d0-f292-5ffc-b300-72abe9b543c8"
-    rev = "2ebda7cf15709a5bc1e8358462f8e5921ec46207"
-    version = "2.12.2+0"
-
-    [deps.JuliaVariables]
-    dependencies = ["NameResolution", "MLStyle"]
-    repo = "https://github.com/JuliaStaging/JuliaVariables.jl.git"
-    subdir = ""
-    uuid = "b14d175d-62b4-44ba-8fb7-3064adc8c3ec"
-    rev = "1f65b473f5d4307b2da49b9ce20fe7f6905010ec"
-    version = "0.2.4"
-
-    [deps.PrettyTables]
-    dependencies = ["StringManipulation", "PrecompileTools", "REPL", "Tables", "Printf", "Crayons", "LaTeXStrings", "Markdown", "Reexport"]
-    repo = "https://github.com/ronisbr/PrettyTables.jl.git"
-    subdir = ""
-    uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-    rev = "b483fdb2e4b7b4e6b556ebfb0cf5729fae40a8ff"
-    version = "3.1.2"
-
-    [deps.Xorg_libpciaccess_jll]
-    dependencies = ["JLLWrappers", "Zlib_jll", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libpciaccess_jll.jl.git"
-    subdir = ""
-    uuid = "a65dc6b1-eb27-53a1-bb3e-dea574b5389e"
-    rev = "cd1ccfbcb3bc8a077c705991f9f9d8b97d466098"
-    version = "0.18.1+0"
-
-    [deps.MicrosoftMPI_jll]
-    dependencies = ["JLLWrappers", "Pkg", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/MicrosoftMPI_jll.jl.git"
-    subdir = ""
-    uuid = "9237b28f-5490-5468-be7b-bb81f5f5e6cf"
-    rev = "a32b2b659776750009a52da179ad6a2c03647f05"
-    version = "10.1.4+3"
+    uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
 
     [deps.Libiconv_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Libiconv_jll.jl.git"
     subdir = ""
     uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
     rev = "656e11243e06999992da7c3871aa406ce380daa0"
+    hash = "sha256-Z/Cr+VyaSE1+mWB7RenacJUq6EBGroNLDZW89HuhmCI="
     version = "1.18.0+0"
 
-    [deps.CSV]
-    dependencies = ["WorkerUtilities", "InlineStrings", "PooledArrays", "PrecompileTools", "WeakRefStrings", "CodecZlib", "Tables", "Mmap", "Unicode", "Dates", "FilePathsBase", "Parsers", "SentinelArrays"]
-    repo = "https://github.com/JuliaData/CSV.jl.git"
+    [deps.Xorg_libpciaccess_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Xorg_libpciaccess_jll.jl.git"
     subdir = ""
-    uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-    rev = "41a68753140e0742b00d21dc175cb60cde796633"
-    version = "0.10.15"
+    uuid = "a65dc6b1-eb27-53a1-bb3e-dea574b5389e"
+    rev = "cd1ccfbcb3bc8a077c705991f9f9d8b97d466098"
+    hash = "sha256-PPF0dfJC79aAbtAeb0pTC0LEHMFm8qrhw/vHL80IU2M="
+    version = "0.18.1+0"
 
-    [deps.AliasTables]
-    dependencies = ["Random", "PtrArrays"]
-    repo = "https://github.com/LilithHafner/AliasTables.jl.git"
+    [deps.nghttp2_jll]
+    repo = ""
     subdir = ""
-    uuid = "66dad0bd-aa9a-41b7-9441-69ab47430ed8"
-    rev = "851e52cb634419f6a67e1cc19e0cba0bd294ceb5"
-    version = "1.1.3"
-
-    [deps.PackageExtensionCompat]
-    dependencies = []
-    repo = "https://github.com/cjdoris/PackageExtensionCompat.jl.git"
-    subdir = ""
-    uuid = "65ce6f38-6b18-4e1d-a461-8949797d7930"
-    rev = "30b5db48670bf20ec2413362e73ad6bc336047e6"
-    version = "1.0.2"
-
-    [deps.libaec_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/libaec_jll.jl.git"
-    subdir = ""
-    uuid = "477f73a3-ac25-53e9-8cc3-50b2fa2566f0"
-    rev = "271b7421d031d460a68ef06a730e2e839dc37672"
-    version = "1.1.4+0"
-
-    [deps.URIs]
-    dependencies = []
-    repo = "https://github.com/JuliaWeb/URIs.jl.git"
-    subdir = ""
-    uuid = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
-    rev = "0afee82f9a6f46dc26b6ba5d9d864df5e1d3a011"
-    version = "1.6.1"
+    uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
+    rev = ""
+    hash = ""
+    version = "1.64.0+1"
 
     [deps.GNNGraphs]
-    dependencies = ["Statistics", "MLUtils", "Random", "KrylovKit", "NearestNeighbors", "Graphs", "MLDatasets", "LinearAlgebra", "StatsBase", "SparseArrays", "Functors", "MLDataDevices", "ChainRulesCore", "NNlib"]
     repo = "https://github.com/JuliaGraphs/GraphNeuralNetworks.jl.git"
     subdir = "GNNGraphs"
     uuid = "aed8fd31-079b-4b5a-b342-a13352159b8c"
     rev = "4a426fe45e028e02d236e10681fe7251a1012957"
+    hash = "sha256-KR2htiknZ3LAs8UcxPPIk1VIQ7Xryd3i4hnqz+zh4uw="
     version = "1.4.2"
 
-    [deps.Inflate]
-    dependencies = []
-    repo = "https://github.com/GunnarFarneback/Inflate.jl.git"
+    [deps.libblastrampoline_jll]
+    repo = ""
     subdir = ""
-    uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
-    rev = "cc77be73388f4160d187ab0c3fdaa3df13aa7f3b"
-    version = "0.1.5"
-
-    [deps.SimpleTraits]
-    dependencies = ["InteractiveUtils", "MacroTools"]
-    repo = "https://github.com/mauro3/SimpleTraits.jl.git"
-    subdir = ""
-    uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
-    rev = "44b9d4916698152a3619b3cfbb9ebedb9e2a9c42"
-    version = "0.9.5"
-
-    [deps.MLCore]
-    dependencies = ["DataAPI", "Tables", "SimpleTraits"]
-    repo = "https://github.com/JuliaML/MLCore.jl.git"
-    subdir = ""
-    uuid = "c2834f40-e789-41da-a90e-33b280584a8c"
-    rev = "1ad4862d5a301d2e8e9d030c24ef04e42cdff471"
-    version = "1.0.0"
-
-    [deps.SortingAlgorithms]
-    dependencies = ["DataStructures"]
-    repo = "https://github.com/JuliaCollections/SortingAlgorithms.jl.git"
-    subdir = ""
-    uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
-    rev = "bc9140b21560685446288027cca30adfdc4e04e5"
-    version = "1.2.2"
-
-    [deps.FLoopsBase]
-    dependencies = ["ContextVariablesX"]
-    repo = "https://github.com/JuliaFolds/FLoopsBase.jl.git"
-    subdir = ""
-    uuid = "b9860ae5-e623-471e-878b-f6a53c775ea6"
-    rev = "ac3ad595cba332d498a559ceb0f618dfdbccc7bb"
-    version = "0.1.1"
-
-    [deps.ColorSchemes]
-    dependencies = ["PrecompileTools", "ColorTypes", "ColorVectorSpace", "Random", "Colors", "FixedPointNumbers"]
-    repo = "https://github.com/JuliaGraphics/ColorSchemes.jl.git"
-    subdir = ""
-    uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
-    rev = "08ff9a64015699a1042e4d2a817b035529f942e8"
-    version = "3.31.0"
-
-    [deps.PrecompileTools]
-    dependencies = ["Preferences"]
-    repo = "https://github.com/JuliaLang/PrecompileTools.jl.git"
-    subdir = ""
-    uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-    rev = "542d9648d44984bc92491399a5b911eb8def5086"
-    version = "1.3.3"
-
-    [deps.WeakRefStrings]
-    dependencies = ["DataAPI", "InlineStrings", "Parsers"]
-    repo = "https://github.com/JuliaData/WeakRefStrings.jl.git"
-    subdir = ""
-    uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
-    rev = "4114b71a70fc66d4aeb5d7e6a874fa01e7502296"
-    version = "1.4.2"
-
-    [deps.PrettyPrint]
-    dependencies = []
-    repo = "https://github.com/thautwarm/PrettyPrint.jl.git"
-    subdir = ""
-    uuid = "8162dcfd-2161-5ef2-ae6c-7681170c5f98"
-    rev = "71d100ad75caefad00fb50de2bc1e42290891b5c"
-    version = "0.2.0"
-
-    [deps.ImageShow]
-    dependencies = ["FileIO", "ImageCore", "ColorSchemes", "OffsetArrays", "StackViews", "Base64", "ImageBase"]
-    repo = "https://github.com/JuliaImages/ImageShow.jl.git"
-    subdir = ""
-    uuid = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
-    rev = "05ec585f91673f96fdd5d5885a1fad719affb917"
-    version = "0.3.8"
-
-    [deps.HDF5_jll]
-    dependencies = ["MPIPreferences", "Zlib_jll", "libaec_jll", "Libdl", "LazyArtifacts", "JLLWrappers", "MPICH_jll", "Artifacts", "LibCURL_jll", "CompilerSupportLibraries_jll", "OpenSSL_jll", "MPItrampoline_jll", "TOML", "OpenMPI_jll", "MicrosoftMPI_jll"]
-    repo = "https://github.com/JuliaBinaryWrappers/HDF5_jll.jl.git"
-    subdir = ""
-    uuid = "0234f1f7-429e-5d53-9886-15a909be8d59"
-    rev = "6583bc31238fab02b03499db1ba4c2568d02cb94"
-    version = "1.14.6+0"
-
-    [deps.MPICH_jll]
-    dependencies = ["JLLWrappers", "MPIPreferences", "CompilerSupportLibraries_jll", "LazyArtifacts", "Hwloc_jll", "Libdl", "TOML", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/MPICH_jll.jl.git"
-    subdir = ""
-    uuid = "7cb0a576-ebde-5e09-9194-50597f1243b4"
-    rev = "a5ee98be46a505db1d2047a0e656e8a9934958e8"
-    version = "4.3.2+0"
+    uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+    rev = ""
+    hash = ""
+    version = "5.15.0+0"
 
     [deps.StatsBase]
-    dependencies = ["AliasTables", "Statistics", "LogExpFunctions", "Random", "SortingAlgorithms", "LinearAlgebra", "Missings", "DataStructures", "StatsAPI", "SparseArrays", "DataAPI", "Printf"]
     repo = "https://github.com/JuliaStats/StatsBase.jl.git"
     subdir = ""
     uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
     rev = "6fee0aa9059024ac6b8f4f9ef4ffb48e4f93fb0b"
+    hash = "sha256-tztz4/kYi2hWUvbozZWePRCKRkvQdkgCjhcImfbspL8="
     version = "0.34.8"
 
     [deps.ConcurrentUtilities]
-    dependencies = ["Serialization", "Sockets"]
     repo = "https://github.com/JuliaServices/ConcurrentUtilities.jl.git"
     subdir = ""
     uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
     rev = "fde04a11e78469d1ab6b5b4f1e74faf80bb50f3d"
+    hash = "sha256-nHSqy0kmDEdlwRF/yFaTy02SGSB31JfCRtkjVzgDYGQ="
     version = "2.5.0"
 
-    [deps.XML2_jll]
-    dependencies = ["JLLWrappers", "Zlib_jll", "Libdl", "Libiconv_jll", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/XML2_jll.jl.git"
-    subdir = ""
-    uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-    rev = "5c7fd088792004eb8ad2634c27bd1373a2f9b100"
-    version = "2.13.9+0"
-
-    [deps.Distances]
-    dependencies = ["Statistics", "StatsAPI", "LinearAlgebra"]
-    repo = "https://github.com/JuliaStats/Distances.jl.git"
-    subdir = ""
-    uuid = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
-    rev = "35c6d0dfec5b9b93481f006dbf8c1d0496ecf5f6"
-    version = "0.10.12"
-
-    [deps.BangBang]
-    dependencies = ["Accessors", "ConstructionBase", "LinearAlgebra", "InitialValues"]
-    repo = "https://github.com/JuliaFolds2/BangBang.jl.git"
-    subdir = ""
-    uuid = "198e06fe-97b7-11e9-32a5-e1d131e6ad66"
-    rev = "64fa0462eb8c3cb1de0ec1fd3f674f0cf7d7a09a"
-    version = "0.4.6"
-
-    [deps.DocStringExtensions]
-    dependencies = []
-    repo = "https://github.com/JuliaDocs/DocStringExtensions.jl.git"
-    subdir = ""
-    uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
-    rev = "a84ff785d022cac14770a34c722fd67f5111d755"
-    version = "0.9.5"
-
-    [deps.Preferences]
-    dependencies = ["TOML"]
-    repo = "https://github.com/JuliaPackaging/Preferences.jl.git"
-    subdir = ""
-    uuid = "21216c6a-2e73-6563-6e65-726566657250"
-    rev = "5c536fdea268838f2365e8e3b93397d2de752971"
-    version = "1.5.0"
-
-    [deps.OpenSSL]
-    dependencies = ["Dates", "MozillaCACerts_jll", "OpenSSL_jll", "NetworkOptions", "Sockets", "BitFlags"]
-    repo = "https://github.com/JuliaWeb/OpenSSL.jl.git"
-    subdir = ""
-    uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
-    rev = "7582295370acd3bb7466c805860a677df9ac0ba5"
-    version = "1.6.0"
-
-    [deps.Functors]
-    dependencies = ["ConstructionBase", "Compat", "LinearAlgebra", "Random"]
-    repo = "https://github.com/FluxML/Functors.jl.git"
-    subdir = ""
-    uuid = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
-    rev = "3eefb60ca30091f329e8c3e0bf2c04844e0cb9c7"
-    version = "0.5.2"
-
-    [deps.Unitful]
-    dependencies = ["Dates", "LinearAlgebra", "Random"]
-    repo = "https://github.com/JuliaPhysics/Unitful.jl.git"
-    subdir = ""
-    uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-    rev = "b0408700dc763946b940b2664ce8771fe7b110c0"
-    version = "1.25.1"
-
-    [deps.StaticArrays]
-    dependencies = ["PrecompileTools", "StaticArraysCore", "LinearAlgebra", "Random"]
-    repo = "https://github.com/JuliaArrays/StaticArrays.jl.git"
-    subdir = ""
-    uuid = "90137ffa-7385-5640-81b9-e52037218182"
-    rev = "d579b962ebf400352372f53b5501da192c0f1977"
-    version = "1.9.15"
-
-    [deps.DataAPI]
-    dependencies = []
-    repo = "https://github.com/JuliaData/DataAPI.jl.git"
-    subdir = ""
-    uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
-    rev = "d6d1b053c0b82e0722abf3cb1c6e6c21bbe9746d"
-    version = "1.16.0"
-
-    [deps.VectorInterface]
-    dependencies = ["LinearAlgebra"]
-    repo = "https://github.com/Jutho/VectorInterface.jl.git"
-    subdir = ""
-    uuid = "409d34a3-91d5-4945-b6ec-7529ddf182d8"
-    rev = "eceb57584d1bdc4aad58956543c102a1826f2592"
-    version = "0.5.0"
-
-    [deps.TensorCore]
-    dependencies = ["LinearAlgebra"]
-    repo = "https://github.com/JuliaMath/TensorCore.jl.git"
-    subdir = ""
-    uuid = "62fd8b95-f654-4bbd-a8a5-9c27f68ccd50"
-    rev = "2fd2692476468d08b8cb4caf54b4555c3a4b725a"
-    version = "0.1.1"
-
     [deps.Parsers]
-    dependencies = ["Dates", "PrecompileTools", "UUIDs"]
     repo = "https://github.com/JuliaData/Parsers.jl.git"
     subdir = ""
     uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
     rev = "6352c4bbce6f9df8cea268a39a3c43e1ee4944e7"
+    hash = "sha256-rjtVt5lwiBHlHZ+KMw8eAjK94otSQOj2umsIS90ANnM="
     version = "2.8.3"
 
-    [deps.NNlib]
-    dependencies = ["Statistics", "Atomix", "LinearAlgebra", "ChainRulesCore", "Random", "ScopedValues", "GPUArraysCore", "KernelAbstractions", "Adapt"]
-    repo = "https://github.com/FluxML/NNlib.jl.git"
+    [deps.Logging]
+    repo = ""
     subdir = ""
-    uuid = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
-    rev = "9d4a2b4d055408d3724d51194a0e5e73602b6f64"
-    version = "0.9.31"
-
-    [deps.NameResolution]
-    dependencies = ["PrettyPrint"]
-    repo = "https://github.com/JuliaStaging/NameResolution.jl.git"
-    subdir = ""
-    uuid = "71a1bf82-56d0-4bbc-8a3c-48b961074391"
-    rev = "9f895b0aa885d8d38330144ffec07a993350fb46"
-    version = "0.1.5"
-
-    [deps.Reexport]
-    dependencies = []
-    repo = "https://github.com/simonster/Reexport.jl.git"
-    subdir = ""
-    uuid = "189a3867-3050-52da-a836-e630ba90ab69"
-    rev = "f0d5b25255bcdb365b8c0ac289d1059f602cf32b"
-    version = "1.2.2"
+    uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
 
     [deps.SimpleBufferStream]
-    dependencies = []
     repo = "https://github.com/JuliaPackaging/SimpleBufferStream.jl.git"
     subdir = ""
     uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
     rev = "a5fc68425d854da6482e375d764b6e893d416277"
+    hash = "sha256-MgECJLli/+6NozUhQ5ylTOGGakzSCvwF/dmHj3+crY8="
     version = "1.2.0"
 
     [deps.SentinelArrays]
-    dependencies = ["Dates", "Random"]
     repo = "https://github.com/JuliaData/SentinelArrays.jl.git"
     subdir = ""
     uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
     rev = "245d2246a7301426dfd7cc789fb0a77780e277e6"
+    hash = "sha256-1CKxBozKEuam+8GUu8TSx6MKZVduhUCxWZxL+Gmzhqw="
     version = "1.4.8"
 
-    [deps.MPIPreferences]
-    dependencies = ["Libdl", "Preferences"]
-    repo = "https://github.com/JuliaParallel/MPI.jl.git"
-    subdir = "lib/MPIPreferences"
-    uuid = "3da0fdf6-3ccc-4f1b-acd9-58baa6c99267"
-    rev = "170fefa10e243b040a465c984ab7f0ca4da06df8"
-    version = "0.1.11"
-
-    [deps.Statistics]
-    dependencies = ["LinearAlgebra"]
-    repo = "https://github.com/JuliaStats/Statistics.jl.git"
+    [deps.Downloads]
+    repo = ""
     subdir = ""
-    uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-    rev = "68869af06e8cdeb7aba1d5259de602da7328057f"
-    version = "1.11.1"
+    uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+    rev = ""
+    hash = ""
+    version = "1.6.0"
 
-    [deps.Transducers]
-    dependencies = ["Accessors", "DefineSingletons", "Distributed", "ConstructionBase", "InitialValues", "Tables", "BangBang", "CompositionsBase", "Baselet", "SplittablesBase", "ArgCheck", "Logging", "MicroCollections", "Markdown"]
-    repo = "https://github.com/JuliaFolds2/Transducers.jl.git"
+    [deps.Zlib_jll]
+    repo = ""
     subdir = ""
-    uuid = "28d57a85-8fef-5791-bfe6-a80928e7c999"
-    rev = "d1d9747025389956a325e33541dc21b19a8a7df6"
-    version = "0.4.85"
-
-    [deps.StaticArraysCore]
-    dependencies = []
-    repo = "https://github.com/JuliaArrays/StaticArraysCore.jl.git"
-    subdir = ""
-    uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
-    rev = "91effb899a4bb58af38b770a3ce54ef27dbb4969"
-    version = "1.4.4"
-
-    [deps.UnitfulAtomic]
-    dependencies = ["Unitful"]
-    repo = "https://github.com/sostock/UnitfulAtomic.jl.git"
-    subdir = ""
-    uuid = "a7773ee8-282e-5fa2-be4e-bd808c38a91a"
-    rev = "78050711dc8e77c755b00cd2d4ffc7095e678a59"
-    version = "1.0.0"
-
-    [deps.InlineStrings]
-    dependencies = []
-    repo = "https://github.com/JuliaStrings/InlineStrings.jl.git"
-    subdir = ""
-    uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
-    rev = "98907bcf790499938372592379c92db65c6dcfc1"
-    version = "1.4.5"
-
-    [deps.StridedViews]
-    dependencies = ["LinearAlgebra", "PackageExtensionCompat"]
-    repo = "https://github.com/Jutho/StridedViews.jl.git"
-    subdir = ""
-    uuid = "4db3bf67-4bd7-4b4e-b153-31dc3fb37143"
-    rev = "c82d7c8fcca38d1a2a89e5f906c32e20e2da2e00"
-    version = "0.4.1"
+    uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+    rev = ""
+    hash = ""
+    version = "1.3.1+2"
 
     [deps.NearestNeighbors]
-    dependencies = ["StaticArrays", "Distances"]
     repo = "https://github.com/KristofferC/NearestNeighbors.jl.git"
     subdir = ""
     uuid = "b8a86587-4115-5ab1-83bc-aa920d37bbce"
     rev = "fcbdeceeb4c27afceb3356aa7ad87a7ce0820273"
+    hash = "sha256-+dM4p5rp14UFj239Bn6ihgEMYh0RK1ItAg5Ye1s8/uQ="
     version = "0.4.24"
 
-    [deps.DelimitedFiles]
-    dependencies = ["Mmap"]
-    repo = "https://github.com/JuliaData/DelimitedFiles.jl.git"
+    [deps.JuliaSyntaxHighlighting]
+    repo = ""
     subdir = ""
-    uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-    rev = "db79c842f95f55b1f8d8037c0d3363ab21cd3b90"
-    version = "1.9.1"
-
-    [deps.Chemfiles]
-    dependencies = ["Unitful", "UnitfulAtomic", "Chemfiles_jll", "DocStringExtensions", "AtomsBase"]
-    repo = "https://github.com/chemfiles/Chemfiles.jl.git"
-    subdir = ""
-    uuid = "46823bd8-5fb3-5f92-9aa0-96921f3dd015"
-    rev = "54f9bba50bccd598e3368378affb9c2f08342f87"
-    version = "0.10.43"
+    uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+    rev = ""
+    hash = ""
+    version = "1.12.0"
 
     [deps.MosaicViews]
-    dependencies = ["OffsetArrays", "StackViews", "MappedArrays", "PaddedViews"]
     repo = "https://github.com/JuliaArrays/MosaicViews.jl.git"
     subdir = ""
     uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
     rev = "7bb84dfb82532d0322220dff84825a3626700ac5"
+    hash = "sha256-Gv7k+VYkO7kEhh9wjsLsdcmEDewHJxNnHNyQN/AqGi0="
     version = "0.3.4"
 
-    [deps.MappedArrays]
-    dependencies = []
-    repo = "https://github.com/JuliaArrays/MappedArrays.jl.git"
-    subdir = ""
-    uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
-    rev = "9b1842e57ee3d64714561fa10a8cd2433c0c6a77"
-    version = "0.4.2"
-
     [deps.GPUArraysCore]
-    dependencies = ["Adapt"]
     repo = "https://github.com/JuliaGPU/GPUArrays.jl.git"
     subdir = "lib/GPUArraysCore"
     uuid = "46192b85-c4d5-4398-a991-12ede77f4527"
-    rev = "d76ea8837c316825bf11a730b8936aebf2cb0579"
+    rev = "00278486241351c7ee995b4de9fa475aaec40fa2"
+    hash = "sha256-MJYItC9j84II37uT+PM36NqAmFbtGSuKkq5DbTU3MAo="
     version = "0.2.0"
 
     [deps.UnsafeAtomics]
-    dependencies = []
     repo = "https://github.com/JuliaConcurrent/UnsafeAtomics.jl.git"
     subdir = ""
     uuid = "013be700-e6cd-48c3-b4a1-df204f14c38f"
     rev = "0437ba79489eaba02fb8a8fdd92f5f79312b779e"
+    hash = "sha256-rnMy+pcvHGFJ5My+BlqQ06FMxITODkcM72mdGU3W8+s="
     version = "0.3.0"
 
-    [deps.DataValueInterfaces]
-    dependencies = []
-    repo = "https://github.com/queryverse/DataValueInterfaces.jl.git"
-    subdir = ""
-    uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
-    rev = "ff05c26814f1d03c4f6bfac94e347112038f3577"
-    version = "1.0.0"
-
-    [deps.InverseFunctions]
-    dependencies = []
-    repo = "https://github.com/JuliaMath/InverseFunctions.jl.git"
-    subdir = ""
-    uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
-    rev = "beb5746ac73623803e0c023f5978bae46ba1a6c0"
-    version = "0.1.17"
-
-    [deps.StringEncodings]
-    dependencies = ["Libiconv_jll"]
-    repo = "https://github.com/JuliaStrings/StringEncodings.jl.git"
-    subdir = ""
-    uuid = "69024149-9ee7-55f6-a4c4-859efe599b68"
-    rev = "dfd683d260e67d99580df0fd10df12340527e1f7"
-    version = "0.3.7"
-
-    [deps.LaTeXStrings]
-    dependencies = []
-    repo = "https://github.com/JuliaStrings/LaTeXStrings.jl.git"
-    subdir = ""
-    uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
-    rev = "d344f9536391ee76fd14b7b62483b6a4bccf1b4d"
-    version = "1.4.0"
-
-    [deps.Tables]
-    dependencies = ["DataAPI", "OrderedCollections", "IteratorInterfaceExtensions", "DataValueInterfaces", "TableTraits"]
-    repo = "https://github.com/JuliaData/Tables.jl.git"
-    subdir = ""
-    uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
-    rev = "06abc194d0cb0d245859d163258a6d5723898c9d"
-    version = "1.12.1"
-
     [deps.StatsAPI]
-    dependencies = ["LinearAlgebra"]
     repo = "https://github.com/JuliaStats/StatsAPI.jl.git"
     subdir = ""
     uuid = "82ae8749-77ed-4fe6-ae5f-f523153014b0"
     rev = "aa8f3fb8055136d9d8adaa8159a107e67b89a670"
+    hash = "sha256-WlUHw+f+sDUtti8dnfIrvUi8xYbtcAoTva43kqYjI6k="
     version = "1.7.1"
 
-    [deps.Scratch]
-    dependencies = ["Dates"]
-    repo = "https://github.com/JuliaPackaging/Scratch.jl.git"
-    subdir = ""
-    uuid = "6c6a2e73-6563-6170-7368-637461726353"
-    rev = "40ef0d2e51876b985a196472c0dfb7e3dbe08775"
-    version = "1.3.0"
-
     [deps.ImageBase]
-    dependencies = ["ImageCore", "Reexport"]
     repo = "https://github.com/JuliaImages/ImageBase.jl.git"
     subdir = ""
     uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
     rev = "9f080659c1ac76f3e2256b8cb0e87f30a023eb57"
+    hash = "sha256-SE9UQVdp0/z/ST2P9OqzkpbXyqZo2K6w/02lKsbYWYk="
     version = "0.1.7"
 
     [deps.Colors]
-    dependencies = ["ColorTypes", "Reexport", "FixedPointNumbers"]
     repo = "https://github.com/JuliaGraphics/Colors.jl.git"
     subdir = ""
     uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
     rev = "3e362e3494403af4cfb6aaf34d4eab02dc0419e7"
+    hash = "sha256-w7Xjl4/L4vZ58acztpH0fEDxMVSxwfgzg2jsSeitsl4="
     version = "0.13.1"
 
-    [deps.Crayons]
-    dependencies = []
-    repo = "https://github.com/KristofferC/Crayons.jl.git"
-    subdir = ""
-    uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
-    rev = "417e3af6f3c28168553c662f605255b8e1fe1f14"
-    version = "4.1.1"
-
-    [deps.CompositionsBase]
-    dependencies = []
-    repo = "https://github.com/JuliaFunctional/CompositionsBase.jl.git"
-    subdir = ""
-    uuid = "a33af91c-f02d-484b-be07-31d278c5ca2b"
-    rev = "9c80024d40108ca873bf6351a14246c0165665d9"
-    version = "0.1.2"
-
-    [deps.Pickle]
-    dependencies = ["BFloat16s", "InternedStrings", "Serialization", "DataStructures", "SparseArrays", "Mmap", "StridedViews", "ZipFile", "StringEncodings"]
-    repo = "https://github.com/chengchingwen/Pickle.jl.git"
-    subdir = ""
-    uuid = "fbb45041-c46e-462f-888f-7c521cafbc2c"
-    rev = "8137c7d07c45024050ece264babc3c334f9efd1f"
-    version = "0.3.6"
-
     [deps.MacroTools]
-    dependencies = []
     repo = "https://github.com/FluxML/MacroTools.jl.git"
     subdir = ""
     uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
     rev = "87ef1f8a7328174dee5df5fa7cfc5b7bb82f01a7"
+    hash = "sha256-e5viL5cQZ7yTGUi7I0/2CXLGZ0/BT0Vmk/g85P4JVoA="
     version = "0.5.16"
 
+    [deps.InteractiveUtils]
+    repo = ""
+    subdir = ""
+    uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
     [deps.FilePathsBase]
-    dependencies = ["Dates", "Compat"]
     repo = "https://github.com/rofinn/FilePathsBase.jl.git"
     subdir = ""
     uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
     rev = "c06abf3637b716a2a7a7e3178d9c676969ff9238"
+    hash = "sha256-g2w2GvAKnJsjUZmo9wJFQAG3jFazh2kDpqLXVOVIjpw="
     version = "0.9.24"
 
-    [deps.ChainRulesCore]
-    dependencies = ["Compat", "LinearAlgebra"]
-    repo = "https://github.com/JuliaDiff/ChainRulesCore.jl.git"
-    subdir = ""
-    uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    rev = "414b660321fdb4f7e02fdbf696b332f458ad7d21"
-    version = "1.26.0"
-
-    [deps.ArgCheck]
-    dependencies = []
-    repo = "https://github.com/jw3126/ArgCheck.jl.git"
-    subdir = ""
-    uuid = "dce04be8-c92d-5529-be00-80e4d2c0e197"
-    rev = "4733a47d91c6777d3e313677cb8d531a7f8ecbce"
-    version = "2.5.0"
-
     [deps.Setfield]
-    dependencies = ["ConstructionBase", "StaticArraysCore", "Future", "MacroTools"]
     repo = "https://github.com/jw3126/Setfield.jl.git"
     subdir = ""
     uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
     rev = "7e87f1f040f37a64d38cdab5c53b32312d3eb7c3"
+    hash = "sha256-Qj84A0/1j3dl2OeY9ZNfvIovzwZoeMeSYZuTptkhkjM="
     version = "1.1.2"
 
-    [deps.MicroCollections]
-    dependencies = ["Accessors", "InitialValues", "BangBang"]
-    repo = "https://github.com/JuliaFolds2/MicroCollections.jl.git"
+    [deps.Accessors]
+    repo = "https://github.com/JuliaObjects/Accessors.jl.git"
     subdir = ""
-    uuid = "128add7d-3638-4c79-886c-908ea0c25c34"
-    rev = "a79b3fa38a7123ff228036fd50fc6c1e3bac43de"
-    version = "0.2.0"
+    uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+    rev = "bd9151366236a4b012683619d430b81105deb057"
+    hash = "sha256-v0u1qI1/1H0hGbcY5Wgj+Tlz89R44t8j21bt/I1mPEM="
+    version = "0.1.42"
+
+    [deps.PaddedViews]
+    repo = "https://github.com/JuliaArrays/PaddedViews.jl.git"
+    subdir = ""
+    uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
+    rev = "d6df23aef698381758b094811f8a10fff0b65e87"
+    hash = "sha256-FA1FrFQhgn18iCPWWTNusPPf9WmQkiJfUu1XsaaRT84="
+    version = "0.5.12"
+
+    [deps.MLDatasets]
+    repo = "https://github.com/JuliaML/MLDatasets.jl.git"
+    subdir = ""
+    uuid = "eb30cadb-4394-5ae3-aed4-317e484a6458"
+    rev = "556529ce3f95de0e033048a502832dbe35bc7c63"
+    hash = "sha256-fWa1H1uPvOF7c3NHtxtyq9FChQSj0crXDv4pyAa2T88="
+    version = "0.7.18"
+
+    [deps.OrderedCollections]
+    repo = "https://github.com/JuliaCollections/OrderedCollections.jl.git"
+    subdir = ""
+    uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+    rev = "5ec176442763e9b6e5247a47dc6a8e7d1f678201"
+    hash = "sha256-mQlyGlMUf8g0UAzGJw9iU63KuNYrAHLpXnu7u212RCo="
+    version = "1.8.1"
+
+    [deps.DataStructures]
+    repo = "https://github.com/JuliaCollections/DataStructures.jl.git"
+    subdir = ""
+    uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+    rev = "66913732043a4e4a362f65e8af143ab16d7b4e6c"
+    hash = "sha256-VIx9I9FBj96J6iu0LWekLlDp7PDlJAHP6RIWXhpXz78="
+    version = "0.18.22"
+
+    [deps.Compat]
+    repo = "https://github.com/JuliaLang/Compat.jl.git"
+    subdir = ""
+    uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
+    rev = "f2a3730a5dc49098dfd394ba2cbf4b202467f435"
+    hash = "sha256-dpgZIbsZD5Z8bYVh6QBO38fQZluScEHTpE69P37a8lo="
+    version = "4.18.1"
+
+    [deps.Base64]
+    repo = ""
+    subdir = ""
+    uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Sockets]
+    repo = ""
+    subdir = ""
+    uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.MLStyle]
+    repo = "https://github.com/thautwarm/MLStyle.jl.git"
+    subdir = ""
+    uuid = "d8e11817-5142-5d16-987a-aa16d5891078"
+    rev = "c582f7151d04b60dd9525fd6dfbdc2091a70cfae"
+    hash = "sha256-T0ght6GJSmRv7DTjbj4Q0LwlMiZorl5610UP/tUrq4s="
+    version = "0.4.17"
+
+    [deps.Markdown]
+    repo = ""
+    subdir = ""
+    uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Adapt]
+    repo = "https://github.com/JuliaGPU/Adapt.jl.git"
+    subdir = ""
+    uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+    rev = "df3f72e9d3e6c83f190bc3360fa3eaf09f97d33f"
+    hash = "sha256-7mAF+Nn73s8s+pEZ/5Rqjcb5FYWds8zBw1FoxLsIO0A="
+    version = "4.4.0"
+
+    [deps.ScopedValues]
+    repo = "https://github.com/JuliaLang/ScopedValues.jl.git"
+    subdir = ""
+    uuid = "7e506255-f358-4e82-b7e4-beb19740aa63"
+    rev = "f9e856f32713d95a13db08d1e7b58c52ce9f707c"
+    hash = "sha256-vaplMRDrLCXb3DqEBkmSfkm5r2OtPXZmulGw+FpIWMw="
+    version = "1.5.0"
+
+    [deps.ZipFile]
+    repo = "https://github.com/fhs/ZipFile.jl.git"
+    subdir = ""
+    uuid = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
+    rev = "6aa7c454b3efea5c5f2e7daf3c46120a9c52a3a3"
+    hash = "sha256-Vwa/7Nj7pHb+tVDMNzZASsA0wNcWEy/Lo1PRYX+Fklw="
+    version = "0.10.1"
+
+    [deps.SHA]
+    repo = ""
+    subdir = ""
+    uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+    rev = ""
+    hash = ""
+    version = "0.7.0"
+
+    [deps.ShowCases]
+    repo = "https://gitlab.com/ExpandingMan/ShowCases.jl.git"
+    subdir = ""
+    uuid = "605ecd9f-84a6-4c9e-81e2-4798472b76a3"
+    rev = "1ea211f349b40165a2b5fbbc80f771d6dcb725ad"
+    hash = "sha256-Me3Fhvoln6JtcFkl2WxS/yh4EPsxt3WjIX62CryBYL8="
+    version = "0.1.0"
+
+    [deps.LoggingExtras]
+    repo = "https://github.com/JuliaLogging/LoggingExtras.jl.git"
+    subdir = ""
+    uuid = "e6f89c97-d47a-5376-807f-9c37f3926c36"
+    rev = "20229ffbbc0de824aa4d1618da0119fc58b1bf8a"
+    hash = "sha256-WopPkCOK9oivYLjiM+MbGtDrclV003nvLDxGeklIbns="
+    version = "1.2.0"
+
+    [deps.MAT]
+    repo = "https://github.com/JuliaIO/MAT.jl.git"
+    subdir = ""
+    uuid = "23992714-dd62-5051-b70f-ba57cb901cac"
+    rev = "8edd1c424bd20c28367077b61e96b6e323e68237"
+    hash = "sha256-FnI7EQnySGMBZWo20eCma4tA4wyW/1QT0q0cOik/Ctg="
+    version = "0.10.7"
+
+    [deps.ColorTypes]
+    repo = "https://github.com/JuliaGraphics/ColorTypes.jl.git"
+    subdir = ""
+    uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
+    rev = "017bc1a8fe86154295e6d41c89bd1f442eb6ea97"
+    hash = "sha256-tfkP7/18HSoXrU5XNvNS0joFlZRCGhRfS228PbBz3w8="
+    version = "0.12.1"
+
+    [deps.ExceptionUnwrapping]
+    repo = "https://github.com/JuliaServices/ExceptionUnwrapping.jl.git"
+    subdir = ""
+    uuid = "460bff9d-24e4-43bc-9d9f-a8973cb893f4"
+    rev = "02007f59d24d7e01dadae834fd4683751a23ebe1"
+    hash = "sha256-GJow83V4bpwTwWOU9AengidwwHIihBC1WWMy/PFmJaA="
+    version = "0.1.11"
+
+    [deps.MbedTLS_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/MbedTLS_jll.jl.git"
+    subdir = ""
+    uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
+    rev = "54b09e1dfac49118971f7316127dfde7766feb5a"
+    hash = "sha256-+TgdMVUOC9uL/ZpSx9GVcJmcIQ1AVGxkQRmA2yzvghU="
+    version = "2.28.1010+0"
+
+    [deps.OpenSSL_jll]
+    repo = ""
+    subdir = ""
+    uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
+    rev = ""
+    hash = ""
+    version = "3.5.1+0"
+
+    [deps.PackageExtensionCompat]
+    repo = "https://github.com/cjdoris/PackageExtensionCompat.jl.git"
+    subdir = ""
+    uuid = "65ce6f38-6b18-4e1d-a461-8949797d7930"
+    rev = "30b5db48670bf20ec2413362e73ad6bc336047e6"
+    hash = "sha256-7YeumTKjfdaVMm8wfleAWuWO70GfGNPf7Qg3gSUb+j4="
+    version = "1.0.2"
+
+    [deps.libaec_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/libaec_jll.jl.git"
+    subdir = ""
+    uuid = "477f73a3-ac25-53e9-8cc3-50b2fa2566f0"
+    rev = "271b7421d031d460a68ef06a730e2e839dc37672"
+    hash = "sha256-Ud9dmAlVmQMCKjfyCzugBvL8MT4XfSFwmLNTUj5BC/A="
+    version = "1.1.4+0"
+
+    [deps.Random]
+    repo = ""
+    subdir = ""
+    uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.URIs]
+    repo = "https://github.com/JuliaWeb/URIs.jl.git"
+    subdir = ""
+    uuid = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
+    rev = "0afee82f9a6f46dc26b6ba5d9d864df5e1d3a011"
+    hash = "sha256-2r+Pe/RR397LmrOQOQXWBYerRLb+fURt4uljvYC+B1k="
+    version = "1.6.1"
+
+    [deps.Libdl]
+    repo = ""
+    subdir = ""
+    uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Inflate]
+    repo = "https://github.com/GunnarFarneback/Inflate.jl.git"
+    subdir = ""
+    uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
+    rev = "cc77be73388f4160d187ab0c3fdaa3df13aa7f3b"
+    hash = "sha256-5Wlcbx0LhgSgZ/k9PSNZUnqhVD920hCvWc5pZegNzS0="
+    version = "0.1.5"
+
+    [deps.SortingAlgorithms]
+    repo = "https://github.com/JuliaCollections/SortingAlgorithms.jl.git"
+    subdir = ""
+    uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
+    rev = "bc9140b21560685446288027cca30adfdc4e04e5"
+    hash = "sha256-9GtkC7+Dv3eGNnHPQJX0g/qF2BZeqyjKrrXgaHhdOQk="
+    version = "1.2.2"
+
+    [deps.FLoopsBase]
+    repo = "https://github.com/JuliaFolds/FLoopsBase.jl.git"
+    subdir = ""
+    uuid = "b9860ae5-e623-471e-878b-f6a53c775ea6"
+    rev = "ac3ad595cba332d498a559ceb0f618dfdbccc7bb"
+    hash = "sha256-+e0ii0h9rM2JHdhix2rvHtRKU4f0TemNEHDmFhPS66A="
+    version = "0.1.1"
+
+    [deps.PrecompileTools]
+    repo = "https://github.com/JuliaLang/PrecompileTools.jl.git"
+    subdir = ""
+    uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+    rev = "542d9648d44984bc92491399a5b911eb8def5086"
+    hash = "sha256-2CKSRq+Dwh4lq/5+IOriEEnRf8II3NQwjruQawNKUl4="
+    version = "1.3.3"
+
+    [deps.Serialization]
+    repo = ""
+    subdir = ""
+    uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.XML2_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/XML2_jll.jl.git"
+    subdir = ""
+    uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
+    rev = "5c7fd088792004eb8ad2634c27bd1373a2f9b100"
+    hash = "sha256-JX80BmlA0dY/HgGdNHU4/NYIDIZj523Yxr7akZ2QFdc="
+    version = "2.13.9+0"
+
+    [deps.BangBang]
+    repo = "https://github.com/JuliaFolds2/BangBang.jl.git"
+    subdir = ""
+    uuid = "198e06fe-97b7-11e9-32a5-e1d131e6ad66"
+    rev = "64fa0462eb8c3cb1de0ec1fd3f674f0cf7d7a09a"
+    hash = "sha256-kK1Ld0g4AcwC3O3XzVAs2LS3PPqodEDzEKOsqXroVS0="
+    version = "0.4.6"
+
+    [deps.OpenSSL]
+    repo = "https://github.com/JuliaWeb/OpenSSL.jl.git"
+    subdir = ""
+    uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
+    rev = "7582295370acd3bb7466c805860a677df9ac0ba5"
+    hash = "sha256-Qf+gsr7d+iWeBqxrY1UOV6z+6vAyHY5w8UHUIzN7DHc="
+    version = "1.6.0"
+
+    [deps.Unitful]
+    repo = "https://github.com/JuliaPhysics/Unitful.jl.git"
+    subdir = ""
+    uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
+    rev = "b0408700dc763946b940b2664ce8771fe7b110c0"
+    hash = "sha256-WGY6z+pcqH/iSwFAuflpcYiBVt7gcOs82JQj7HQVI2U="
+    version = "1.25.1"
+
+    [deps.VectorInterface]
+    repo = "https://github.com/Jutho/VectorInterface.jl.git"
+    subdir = ""
+    uuid = "409d34a3-91d5-4945-b6ec-7529ddf182d8"
+    rev = "eceb57584d1bdc4aad58956543c102a1826f2592"
+    hash = "sha256-TgTgzjtO0PKX4jYqKbPR1CV+gl/Hm6UZsa3ZN1ahFqo="
+    version = "0.5.0"
+
+    [deps.MPIPreferences]
+    repo = "https://github.com/JuliaParallel/MPI.jl.git"
+    subdir = "lib/MPIPreferences"
+    uuid = "3da0fdf6-3ccc-4f1b-acd9-58baa6c99267"
+    rev = "170fefa10e243b040a465c984ab7f0ca4da06df8"
+    hash = "sha256-Znqswu4ZNx2r4P5efBO/erOfrg/31epOR/DwBbMM4HA="
+    version = "0.1.11"
+
+    [deps.LibSSH2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
+    rev = ""
+    hash = ""
+    version = "1.11.3+1"
+
+    [deps.OpenBLAS_jll]
+    repo = ""
+    subdir = ""
+    uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+    rev = ""
+    hash = ""
+    version = "0.3.29+0"
+
+    [deps.Distributed]
+    repo = ""
+    subdir = ""
+    uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.DelimitedFiles]
+    repo = "https://github.com/JuliaData/DelimitedFiles.jl.git"
+    subdir = ""
+    uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+    rev = "db79c842f95f55b1f8d8037c0d3363ab21cd3b90"
+    hash = "sha256-8UUVMzpdM+aQIWRTUHa8JYXrHjtoNpkhGuR5alJtSd8="
+    version = "1.9.1"
+
+    [deps.Chemfiles]
+    repo = "https://github.com/chemfiles/Chemfiles.jl.git"
+    subdir = ""
+    uuid = "46823bd8-5fb3-5f92-9aa0-96921f3dd015"
+    rev = "54f9bba50bccd598e3368378affb9c2f08342f87"
+    hash = "sha256-yWFeIg1ZcJRqaWO4t/3wPQOY7BDG8pw5OB0b1TMsIBY="
+    version = "0.10.43"
+
+    [deps.FileWatching]
+    repo = ""
+    subdir = ""
+    uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.MappedArrays]
+    repo = "https://github.com/JuliaArrays/MappedArrays.jl.git"
+    subdir = ""
+    uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
+    rev = "9b1842e57ee3d64714561fa10a8cd2433c0c6a77"
+    hash = "sha256-8mPkY2KXkpgqBM6NnrbC3jBrx8Sv9X1QOV3MtrHs+Fg="
+    version = "0.4.2"
+
+    [deps.DataValueInterfaces]
+    repo = "https://github.com/queryverse/DataValueInterfaces.jl.git"
+    subdir = ""
+    uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
+    rev = "ff05c26814f1d03c4f6bfac94e347112038f3577"
+    hash = "sha256-6FE9U6PRIY16wTNkW1kXlLDAT0eznWe6NSVJebCRXDw="
+    version = "1.0.0"
+
+    [deps.SharedArrays]
+    repo = ""
+    subdir = ""
+    uuid = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Pickle]
+    repo = "https://github.com/chengchingwen/Pickle.jl.git"
+    subdir = ""
+    uuid = "fbb45041-c46e-462f-888f-7c521cafbc2c"
+    rev = "8137c7d07c45024050ece264babc3c334f9efd1f"
+    hash = "sha256-CdaWhysZY8hPkNfPppm3I43h1URrn3zKscP0rJ5NNoU="
+    version = "0.3.6"
+
+    [deps.CompositionsBase]
+    repo = "https://github.com/JuliaFunctional/CompositionsBase.jl.git"
+    subdir = ""
+    uuid = "a33af91c-f02d-484b-be07-31d278c5ca2b"
+    rev = "9c80024d40108ca873bf6351a14246c0165665d9"
+    hash = "sha256-X0TB/tFAjmc3gwHd2Vxw9o0WcAOovd4bSX/W1K45uA8="
+    version = "0.1.2"
 
     [deps.DataDeps]
-    dependencies = ["HTTP", "SHA", "Scratch", "p7zip_jll", "Libdl", "Reexport"]
     repo = "https://github.com/oxinabox/DataDeps.jl.git"
     subdir = ""
     uuid = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
     rev = "8fdc7ce424377f246f1b5900277def7256bfaada"
+    hash = "sha256-2dhbrc9jGqBYfBBn0aXQqPkpW6HFpIYNSOFFfaNut1Q="
     version = "0.7.13"
 
-    [deps.OpenMPI_jll]
-    dependencies = ["JLLWrappers", "MPIPreferences", "CompilerSupportLibraries_jll", "LazyArtifacts", "Zlib_jll", "Hwloc_jll", "Libdl", "TOML", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/OpenMPI_jll.jl.git"
-    subdir = ""
-    uuid = "fe0851c0-eecd-5654-98d4-656369965a5c"
-    rev = "45302a28c87df10ab93c05192d258630b9b932b5"
-    version = "5.0.9+0"
-
     [deps.KernelAbstractions]
-    dependencies = ["StaticArrays", "PrecompileTools", "Atomix", "InteractiveUtils", "UUIDs", "Requires", "Adapt", "MacroTools"]
     repo = "https://github.com/JuliaGPU/KernelAbstractions.jl.git"
     subdir = ""
     uuid = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
     rev = "1f84b17414bc325fce199d51e97f75a408aa1e63"
+    hash = "sha256-ZhXu6QB6ORG4GkI3xf3XHzuBnxXmLMzjFJeu3etwn/M="
     version = "0.9.39"
 
+    [deps.InvertedIndices]
+    repo = "https://github.com/JuliaData/InvertedIndices.jl.git"
+    subdir = ""
+    uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+    rev = "1253c4465cdc5bdca01b8166d65ae3fc663cf2f6"
+    hash = "sha256-cuC3Ms6H2eN9/2BYYFNwZl+1gwGCZonhANIXduIeMCg="
+    version = "1.3.1"
+
+    [deps.IteratorInterfaceExtensions]
+    repo = "https://github.com/queryverse/IteratorInterfaceExtensions.jl.git"
+    subdir = ""
+    uuid = "82899510-4779-5014-852e-03e436cf321d"
+    rev = "832737f467bdfe08ad80eb9a3cceee522e1c5533"
+    hash = "sha256-Cah708wvvD0Vxm63YZK1k7399B3rfONfckhJ2IJXl+o="
+    version = "1.0.0"
+
+    [deps.NPZ]
+    repo = "https://github.com/fhs/NPZ.jl.git"
+    subdir = ""
+    uuid = "15e1cf62-19b3-5cfa-8e77-841668bca605"
+    rev = "b83fddf2d773936b531e5f355d4f3f1d2738a5d6"
+    hash = "sha256-ZtNViI9Vti4hs+Amu/JIO4CdmQ7XjY1xcU1ARO5lgOA="
+    version = "0.4.3"
+
+    [deps.FLoops]
+    repo = "https://github.com/JuliaFolds2/FLoops.jl.git"
+    subdir = ""
+    uuid = "cc61a311-1640-44b5-9fba-1b764f453329"
+    rev = "ad2772277ad5c4d33fb9bd11077f022a1e62426a"
+    hash = "sha256-b/APcWAvT5gvGMEt288aJMBG/4OkQo0jKJnlxGu+lBY="
+    version = "0.2.2"
+
+    [deps.PeriodicTable]
+    repo = "https://github.com/JuliaPhysics/PeriodicTable.jl.git"
+    subdir = ""
+    uuid = "7b2266bf-644c-5ea3-82d8-af4bbd25a884"
+    rev = "dcc746da194d2521d3564ca22a4aebce08c36394"
+    hash = "sha256-rVYWiZu3gPEWWg1rwiD0yFgBBFs1sMLj+bZmhZcKNQE="
+    version = "1.2.1"
+
+    [deps.Glob]
+    repo = "https://github.com/vtjnash/Glob.jl.git"
+    subdir = ""
+    uuid = "c27321d9-0574-5035-807b-f59d2c89b15c"
+    rev = "19e9bb21f629ef13079172bbc1113cde91dc16e9"
+    hash = "sha256-XQJ5aeXm0xFHYlIzpU43qyx4g7laeAj0iu4OP9Q61xc="
+    version = "1.3.1"
+
+    [deps.Atomix]
+    repo = "https://github.com/JuliaConcurrent/Atomix.jl.git"
+    subdir = ""
+    uuid = "a9b6321e-bd34-4604-b9c9-b65b8de01458"
+    rev = "4298b4ea052a01249e70b4f327a98adbbfc91d8d"
+    hash = "sha256-e4w5YiOzTys2MJxYjZtTGZIZP/B8yU3Q8ESDxAsSIhE="
+    version = "1.1.2"
+
+    [deps.DataFrames]
+    repo = "https://github.com/JuliaData/DataFrames.jl.git"
+    subdir = ""
+    uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+    rev = "00cd7d0bfbe3f2f496ceee71314d8627b43b2563"
+    hash = "sha256-ONPIADAWTMHfqL1mzDnSGbdqKDdGJsoDf3CGsvmWBI4="
+    version = "1.8.1"
+
+    [deps.Requires]
+    repo = "https://github.com/JuliaPackaging/Requires.jl.git"
+    subdir = ""
+    uuid = "ae029012-a4dd-5104-9daa-d747884805df"
+    rev = "491be21d7009c59bd7b1a40337dcc5b7f0b74b64"
+    hash = "sha256-ggekieQmTMTgB56PWfawcHZMzIMfT6orqP6LJpyPHbY="
+    version = "1.3.1"
+
+    [deps.StringManipulation]
+    repo = "https://github.com/ronisbr/StringManipulation.jl.git"
+    subdir = ""
+    uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
+    rev = "ffef9e1bc6d62dc6d5aba4e0a9a00a8f9e6bb7da"
+    hash = "sha256-/u20sp6dDTJ7TTmbj6J6/bLHXoaEZ3yFug7qWqA+jc0="
+    version = "0.4.2"
+
+    [deps.LogExpFunctions]
+    repo = "https://github.com/JuliaStats/LogExpFunctions.jl.git"
+    subdir = ""
+    uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
+    rev = "62b081dad466f3b74f3cf8fb7e51472b1ed7024a"
+    hash = "sha256-et3C+PUUB8xA5wdbsQqV2HwwI1UFRVdeyua+hoKZekI="
+    version = "0.3.29"
+
+    [deps.ContextVariablesX]
+    repo = "https://github.com/tkf/ContextVariablesX.jl.git"
+    subdir = ""
+    uuid = "6add18c4-b38d-439d-96f6-d6bc489c04c5"
+    rev = "e7af4b7cd891f0895d27f7b92b598e80063e2d36"
+    hash = "sha256-yef2Lqhy84lQmlcbU3fT9BB8ik+PPKWk6cBje20NkP4="
+    version = "0.1.3"
+
+    [deps.StyledStrings]
+    repo = ""
+    subdir = ""
+    uuid = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Missings]
+    repo = "https://github.com/JuliaData/Missings.jl.git"
+    subdir = ""
+    uuid = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
+    rev = "2a8903ab442c7cfe39db422ca9af2444149b0678"
+    hash = "sha256-ctEqQShrjYZFSJuRziSsObgAGNjmDXPw6YX0Fzmpu0M="
+    version = "1.2.0"
+
+    [deps.ArgTools]
+    repo = ""
+    subdir = ""
+    uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+    rev = ""
+    hash = ""
+    version = "1.1.2"
+
+    [deps.Dates]
+    repo = ""
+    subdir = ""
+    uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Hwloc_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Hwloc_jll.jl.git"
+    subdir = ""
+    uuid = "e33a78d0-f292-5ffc-b300-72abe9b543c8"
+    rev = "2ebda7cf15709a5bc1e8358462f8e5921ec46207"
+    hash = "sha256-VEteO+yC/vtNSfd55Kl/Hbsq6lsBl9LlfIOcJbAwUx0="
+    version = "2.12.2+0"
+
+    [deps.REPL]
+    repo = ""
+    subdir = ""
+    uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.ImageShow]
+    repo = "https://github.com/JuliaImages/ImageShow.jl.git"
+    subdir = ""
+    uuid = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
+    rev = "05ec585f91673f96fdd5d5885a1fad719affb917"
+    hash = "sha256-YtR1+B2Zt+opSNxyRyKYduZrcN7qACPC2A/H2D+bZVQ="
+    version = "0.3.8"
+
+    [deps.HDF5_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/HDF5_jll.jl.git"
+    subdir = ""
+    uuid = "0234f1f7-429e-5d53-9886-15a909be8d59"
+    rev = "6583bc31238fab02b03499db1ba4c2568d02cb94"
+    hash = "sha256-90BWCgnCmysEQ7aXbM1zN7/m7a5H1XpiaVW5BRfW+tc="
+    version = "1.14.6+0"
+
+    [deps.MozillaCACerts_jll]
+    repo = ""
+    subdir = ""
+    uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
+    rev = ""
+    hash = ""
+    version = "2025.5.20"
+
+    [deps.DocStringExtensions]
+    repo = "https://github.com/JuliaDocs/DocStringExtensions.jl.git"
+    subdir = ""
+    uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+    rev = "a84ff785d022cac14770a34c722fd67f5111d755"
+    hash = "sha256-aXKWD4FYJddNk9TB3gNjquHxw2ByU1r417AYmZPavkk="
+    version = "0.9.5"
+
+    [deps.Functors]
+    repo = "https://github.com/FluxML/Functors.jl.git"
+    subdir = ""
+    uuid = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
+    rev = "3eefb60ca30091f329e8c3e0bf2c04844e0cb9c7"
+    hash = "sha256-Hj58ouKBMoEVUH/koajomWnAMgNKyBZom9gueBi+SdE="
+    version = "0.5.2"
+
+    [deps.StaticArrays]
+    repo = "https://github.com/JuliaArrays/StaticArrays.jl.git"
+    subdir = ""
+    uuid = "90137ffa-7385-5640-81b9-e52037218182"
+    rev = "d579b962ebf400352372f53b5501da192c0f1977"
+    hash = "sha256-K4cHNB9x1fF5LEwwG0qaBe5hFKkSbaX2aczTaIsa0dE="
+    version = "1.9.15"
+
+    [deps.TensorCore]
+    repo = "https://github.com/JuliaMath/TensorCore.jl.git"
+    subdir = ""
+    uuid = "62fd8b95-f654-4bbd-a8a5-9c27f68ccd50"
+    rev = "2fd2692476468d08b8cb4caf54b4555c3a4b725a"
+    hash = "sha256-XuJ1eZvwrwmiLiOeDL0+ak8r3q+pMjC3oIPmoIiNw+s="
+    version = "0.1.1"
+
+    [deps.NameResolution]
+    repo = "https://github.com/JuliaStaging/NameResolution.jl.git"
+    subdir = ""
+    uuid = "71a1bf82-56d0-4bbc-8a3c-48b961074391"
+    rev = "9f895b0aa885d8d38330144ffec07a993350fb46"
+    hash = "sha256-xivovFh5K7Z/5UE7LCRMQyAl6rPvU49SX4/DASmvR70="
+    version = "0.1.5"
+
+    [deps.UnitfulAtomic]
+    repo = "https://github.com/sostock/UnitfulAtomic.jl.git"
+    subdir = ""
+    uuid = "a7773ee8-282e-5fa2-be4e-bd808c38a91a"
+    rev = "78050711dc8e77c755b00cd2d4ffc7095e678a59"
+    hash = "sha256-vu6c0gpu5q4Ru4l9+V3+hJXbi+E6Na0JyAUxnBYXcYQ="
+    version = "1.0.0"
+
+    [deps.InlineStrings]
+    repo = "https://github.com/JuliaStrings/InlineStrings.jl.git"
+    subdir = ""
+    uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
+    rev = "98907bcf790499938372592379c92db65c6dcfc1"
+    hash = "sha256-QWuK1RL1RYH06B2wI9Xw0cexhMwqO0UqJ45aYl/0UPA="
+    version = "1.4.5"
+
+    [deps.StridedViews]
+    repo = "https://github.com/Jutho/StridedViews.jl.git"
+    subdir = ""
+    uuid = "4db3bf67-4bd7-4b4e-b153-31dc3fb37143"
+    rev = "c82d7c8fcca38d1a2a89e5f906c32e20e2da2e00"
+    hash = "sha256-AS6M0f/cLeo1j6zWQYYgcd6bS3A3BZhkCT8TkoNd5YI="
+    version = "0.4.1"
+
+    [deps.LibGit2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
+    rev = ""
+    hash = ""
+    version = "1.9.0+0"
+
+    [deps.StringEncodings]
+    repo = "https://github.com/JuliaStrings/StringEncodings.jl.git"
+    subdir = ""
+    uuid = "69024149-9ee7-55f6-a4c4-859efe599b68"
+    rev = "dfd683d260e67d99580df0fd10df12340527e1f7"
+    hash = "sha256-aE1wVaBgzmrAzMG8wcIg4fTdJMEIHgRhisOOxWKd5Gs="
+    version = "0.3.7"
+
+    [deps.InverseFunctions]
+    repo = "https://github.com/JuliaMath/InverseFunctions.jl.git"
+    subdir = ""
+    uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
+    rev = "beb5746ac73623803e0c023f5978bae46ba1a6c0"
+    hash = "sha256-RPK5nHDxQC1BPo/wEWQ7lp3hw1OgC5kXt7zR9GFwZho="
+    version = "0.1.17"
+
+    [deps.LaTeXStrings]
+    repo = "https://github.com/JuliaStrings/LaTeXStrings.jl.git"
+    subdir = ""
+    uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
+    rev = "d344f9536391ee76fd14b7b62483b6a4bccf1b4d"
+    hash = "sha256-uox0WbiC3cdLhh+kCp06uNrNLc2Xd1mn+T/5xOKLeq4="
+    version = "1.4.0"
+
+    [deps.LibCURL]
+    repo = ""
+    subdir = ""
+    uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
+    rev = ""
+    hash = ""
+    version = "0.6.4"
+
+    [deps.ChainRulesCore]
+    repo = "https://github.com/JuliaDiff/ChainRulesCore.jl.git"
+    subdir = ""
+    uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    rev = "414b660321fdb4f7e02fdbf696b332f458ad7d21"
+    hash = "sha256-H5xIqwygUm//q94M4B6zq1AKssL6VlUeOEC62UUUJlc="
+    version = "1.26.0"
+
+    [deps.p7zip_jll]
+    repo = ""
+    subdir = ""
+    uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
+    rev = ""
+    hash = ""
+    version = "17.5.0+2"
+
+    [deps.Pkg]
+    repo = ""
+    subdir = ""
+    uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+    rev = ""
+    hash = ""
+    version = "1.12.0"
+
+    [deps.OffsetArrays]
+    repo = "https://github.com/JuliaArrays/OffsetArrays.jl.git"
+    subdir = ""
+    uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
+    rev = "fad142db4eaaf42d5680b85613be6178acd2c9e2"
+    hash = "sha256-vwrMTyd9i4wYVYrvo/q0RQr9Bzv6fVPsEsJpyor/p74="
+    version = "1.17.0"
+
+    [deps.HTTP]
+    repo = "https://github.com/JuliaWeb/HTTP.jl.git"
+    subdir = ""
+    uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+    rev = "e7feb99bf1d4165c7e3e28171eefeb7652ec2773"
+    hash = "sha256-bkd9bkTV1skCpe+wr6CuK8YLH2kfmqChfnh4/d+hxhc="
+    version = "1.10.19"
+
+    [deps.GZip]
+    repo = "https://github.com/JuliaIO/GZip.jl.git"
+    subdir = ""
+    uuid = "92fee26a-97fe-5a0c-ad85-20a5f3185b63"
+    rev = "b0a9f5e3a64a201f60ae6d903b77edc7d0157517"
+    hash = "sha256-0t2i9yoQs9KUFB96ppXuymSi/1/u+WHLhoTylb1qWEA="
+    version = "0.6.2"
+
+    [deps.CompilerSupportLibraries_jll]
+    repo = ""
+    subdir = ""
+    uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+    rev = ""
+    hash = ""
+    version = "1.3.0+1"
+
+    [deps.JLD2]
+    repo = "https://github.com/JuliaIO/JLD2.jl.git"
+    subdir = ""
+    uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+    rev = "760b56513261453a33d6b87dc4e85ddf056fc3fb"
+    hash = "sha256-4FfgHVofLN8GjOvv7DOpjhdBL17wz/Z00velqh8O02A="
+    version = "0.5.15"
+
+    [deps.MPItrampoline_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/MPItrampoline_jll.jl.git"
+    subdir = ""
+    uuid = "f1f71cc9-e9ae-5b93-9b94-4fe0e1ad3748"
+    rev = "351bece307e620d7617af42dd0f56e979f451622"
+    hash = "sha256-DFWp2SDN1Mcz/ZS5NGDh43MFay1/7sZK9P4eHC3Sq3M="
+    version = "5.5.4+0"
+
+    [deps.BitFlags]
+    repo = "https://github.com/jmert/BitFlags.jl.git"
+    subdir = ""
+    uuid = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
+    rev = "b08d1e089da18a89fdf81c3c7bee7b40ab1f52bc"
+    hash = "sha256-xz0kkaaigDZB8JuYubZafOEp9kP1SvyvYX+v0mPkbEI="
+    version = "0.1.9"
+
+    [deps.TranscodingStreams]
+    repo = "https://github.com/JuliaIO/TranscodingStreams.jl.git"
+    subdir = ""
+    uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
+    rev = "b0ff25226df8639944966bddf0bb9a03e62354f1"
+    hash = "sha256-N/Zj4/yxqz8Ho4BWE9RJp5PxWXUMgN3CtDW2Sj+zejk="
+    version = "0.11.3"
+
+    [deps.Tar]
+    repo = ""
+    subdir = ""
+    uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+    rev = ""
+    hash = ""
+    version = "1.10.0"
+
+    [deps.MLUtils]
+    repo = "https://github.com/JuliaML/MLUtils.jl.git"
+    subdir = ""
+    uuid = "f1d291b0-491e-4a28-83b9-f70985020b54"
+    rev = "bde1bbf6c45a87c230a8fbb52d3f41025cf986c9"
+    hash = "sha256-tpaBblfepuLnmrjaMNO0AP9zMT0Pjrn+XkrY45GOoYs="
+    version = "0.4.8"
+
+    [deps.JSON3]
+    repo = "https://github.com/quinnj/JSON3.jl.git"
+    subdir = ""
+    uuid = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+    rev = "cc047e027fbd148c41d8778bcef98a93bb43cd55"
+    hash = "sha256-f//rxhMe2i9PA9YmmclgS9Qocvd1wVIyfjGoFG2rt9I="
+    version = "1.14.3"
+
+    [deps.Chemfiles_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Chemfiles_jll.jl.git"
+    subdir = ""
+    uuid = "78a364fa-1a3c-552a-b4bb-8fa0f9c1fcca"
+    rev = "0bb66a19b296b18ec8aae673fd4cc03dd7ec34a8"
+    hash = "sha256-TspuLGQfEenaWGx42oMAiEKf2f6KM0n+XTp4Wi/W/MQ="
+    version = "0.10.4+0"
+
+    [deps.WorkerUtilities]
+    repo = "https://github.com/JuliaServices/WorkerUtilities.jl.git"
+    subdir = ""
+    uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
+    rev = "3068b00d4fc0209b1836381673f625d1a4dda7f2"
+    hash = "sha256-8CzUBkby9QNIeGGfW/XWawiJ/3LHJToRhyOPsuofmSs="
+    version = "1.6.1"
+
+    [deps.UUIDs]
+    repo = ""
+    subdir = ""
+    uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.LazyArtifacts]
+    repo = ""
+    subdir = ""
+    uuid = "4af54fe1-eca0-43a8-85a7-787d91b784e3"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.InitialValues]
+    repo = "https://github.com/JuliaFolds/InitialValues.jl.git"
+    subdir = ""
+    uuid = "22cec73e-a1b8-11e9-2c92-598750a2cf9c"
+    rev = "a270231a3a85cda7d0c781978ea2f9ae24301e14"
+    hash = "sha256-xgKBrpwtoxclIsp7HOQgvtZv8jbgbVNv7nswIpCF8Y0="
+    version = "0.3.1"
+
+    [deps.JLLWrappers]
+    repo = "https://github.com/JuliaPackaging/JLLWrappers.jl.git"
+    subdir = ""
+    uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
+    rev = "b92168d74d2410bc47b04a2695cecb31bf97a1f3"
+    hash = "sha256-+QFTL+xz+kyMa3v6WXr6GLdv3yDG5/q/d8rCo1lehTg="
+    version = "1.7.1"
+
+    [deps.CodecZlib]
+    repo = "https://github.com/JuliaIO/CodecZlib.jl.git"
+    subdir = ""
+    uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
+    rev = "da9ec40d696d03334c29f4caefcda2b8f6b3abeb"
+    hash = "sha256-Fo1HbtsPlrobT7VviCgrQQ53Zq9X6x23EuPH6sX8ViI="
+    version = "0.7.8"
+
+    [deps.HDF5]
+    repo = "https://github.com/JuliaIO/HDF5.jl.git"
+    subdir = ""
+    uuid = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
+    rev = "c41a3d250306c3172cc0619e2d0e0704841082a7"
+    hash = "sha256-JY0lqdqokz7BgR8fxkXacci0Mwdv00aipay9PdVZlk0="
+    version = "0.17.2"
+
+    [deps.ArnoldiMethod]
+    repo = "https://github.com/JuliaLinearAlgebra/ArnoldiMethod.jl.git"
+    subdir = ""
+    uuid = "ec485272-7323-5ecc-a04f-4719b315124d"
+    rev = "b3d70c70ee0d1aff2f98d69e46e1191f768953df"
+    hash = "sha256-67DN5mKb+bqcQt4XNbLR6OM8cqd8z6SRPPexpHmczwc="
+    version = "0.4.0"
+
+    [deps.MbedTLS]
+    repo = "https://github.com/JuliaLang/MbedTLS.jl.git"
+    subdir = ""
+    uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
+    rev = "4c4de151b87778815b34aed53fa211b67dcdce50"
+    hash = "sha256-MVxo/HmiMiUJMKU1YnjqWEC1H5zZkpUXeH3kpAP9kBE="
+    version = "1.1.9"
+
+    [deps.Artifacts]
+    repo = ""
+    subdir = ""
+    uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.BFloat16s]
+    repo = "https://github.com/JuliaMath/BFloat16s.jl.git"
+    subdir = ""
+    uuid = "ab4f0b2a-ad5b-11e8-123f-65d77653426b"
+    rev = "829251b28738bdaaae8599044bd460d7aed109d0"
+    hash = "sha256-DUMid5E8FccMUsmpWTrZOw9HHA9MroHBZRNEEtn7dhE="
+    version = "0.5.1"
+
+    [deps.SplittablesBase]
+    repo = "https://github.com/JuliaFolds/SplittablesBase.jl.git"
+    subdir = ""
+    uuid = "171d559e-b47b-412a-8079-5efa626c420e"
+    rev = "c3a6e0cc77d75255854630f5074c55727e9ba283"
+    hash = "sha256-8tCKIhfw1XdaD1GGzj6KPx1bUkPoOZ2ec5wnKzNJUBA="
+    version = "0.1.15"
+
+    [deps.JuliaVariables]
+    repo = "https://github.com/JuliaStaging/JuliaVariables.jl.git"
+    subdir = ""
+    uuid = "b14d175d-62b4-44ba-8fb7-3064adc8c3ec"
+    rev = "1f65b473f5d4307b2da49b9ce20fe7f6905010ec"
+    hash = "sha256-DIzUX99l2EDCbjOwcX6xEfC2phygCrwdM2TFpFqk+rU="
+    version = "0.2.4"
+
+    [deps.PrettyTables]
+    repo = "https://github.com/ronisbr/PrettyTables.jl.git"
+    subdir = ""
+    uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+    rev = "b483fdb2e4b7b4e6b556ebfb0cf5729fae40a8ff"
+    hash = "sha256-g431EiOK3S2iuMRjPqLpSi8Fa0SLMGJSJU6UXyjn3Q4="
+    version = "3.1.2"
+
+    [deps.MicrosoftMPI_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/MicrosoftMPI_jll.jl.git"
+    subdir = ""
+    uuid = "9237b28f-5490-5468-be7b-bb81f5f5e6cf"
+    rev = "a32b2b659776750009a52da179ad6a2c03647f05"
+    hash = "sha256-5A4YUiQ6ppxj+8BQI2/BLx4f8YtmvYMhjgNLwfw5/Fo="
+    version = "10.1.4+3"
+
+    [deps.CSV]
+    repo = "https://github.com/JuliaData/CSV.jl.git"
+    subdir = ""
+    uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+    rev = "41a68753140e0742b00d21dc175cb60cde796633"
+    hash = "sha256-tTVnz8u73gBQDBtNMNM8ulQqtW033v1BMFrV0qV+vqg="
+    version = "0.10.15"
+
+    [deps.AliasTables]
+    repo = "https://github.com/LilithHafner/AliasTables.jl.git"
+    subdir = ""
+    uuid = "66dad0bd-aa9a-41b7-9441-69ab47430ed8"
+    rev = "851e52cb634419f6a67e1cc19e0cba0bd294ceb5"
+    hash = "sha256-qMn1yBR/QMKStUKEXPhtgzPCFliazQZ1CiyHyi6gv6I="
+    version = "1.1.3"
+
+    [deps.Test]
+    repo = ""
+    subdir = ""
+    uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.MLCore]
+    repo = "https://github.com/JuliaML/MLCore.jl.git"
+    subdir = ""
+    uuid = "c2834f40-e789-41da-a90e-33b280584a8c"
+    rev = "1ad4862d5a301d2e8e9d030c24ef04e42cdff471"
+    hash = "sha256-EcJgEHrBuelOi2EwhhdEPNtcokdZTS5IaB/1n4WIW+w="
+    version = "1.0.0"
+
+    [deps.SimpleTraits]
+    repo = "https://github.com/mauro3/SimpleTraits.jl.git"
+    subdir = ""
+    uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
+    rev = "44b9d4916698152a3619b3cfbb9ebedb9e2a9c42"
+    hash = "sha256-SBEuvdMVkUWklTT/nqcsVPeyXoOaAINlzSk04V1okfI="
+    version = "0.9.5"
+
+    [deps.ColorSchemes]
+    repo = "https://github.com/JuliaGraphics/ColorSchemes.jl.git"
+    subdir = ""
+    uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
+    rev = "08ff9a64015699a1042e4d2a817b035529f942e8"
+    hash = "sha256-fedS306kIs/uCcCz50CazjZSOB3u13jRL04cyg5Q3yQ="
+    version = "3.31.0"
+
+    [deps.WeakRefStrings]
+    repo = "https://github.com/JuliaData/WeakRefStrings.jl.git"
+    subdir = ""
+    uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
+    rev = "4114b71a70fc66d4aeb5d7e6a874fa01e7502296"
+    hash = "sha256-wDOY+g3qlyyuFm2J+hniKTxsVUIfTffkXWa2633AE9E="
+    version = "1.4.2"
+
+    [deps.PrettyPrint]
+    repo = "https://github.com/thautwarm/PrettyPrint.jl.git"
+    subdir = ""
+    uuid = "8162dcfd-2161-5ef2-ae6c-7681170c5f98"
+    rev = "71d100ad75caefad00fb50de2bc1e42290891b5c"
+    hash = "sha256-/EVfmYozAl0MIOe0jSNdtqr9TGAx4nhdqt+SigQk9OQ="
+    version = "0.2.0"
+
+    [deps.SuiteSparse_jll]
+    repo = ""
+    subdir = ""
+    uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
+    rev = ""
+    hash = ""
+    version = "7.8.3+2"
+
+    [deps.MPICH_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/MPICH_jll.jl.git"
+    subdir = ""
+    uuid = "7cb0a576-ebde-5e09-9194-50597f1243b4"
+    rev = "a5ee98be46a505db1d2047a0e656e8a9934958e8"
+    hash = "sha256-VqnHLpwG8gzfckwLNu2xHRbp0eWcdfkt1b1PONgN5RM="
+    version = "4.3.2+0"
+
+    [deps.Distances]
+    repo = "https://github.com/JuliaStats/Distances.jl.git"
+    subdir = ""
+    uuid = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+    rev = "35c6d0dfec5b9b93481f006dbf8c1d0496ecf5f6"
+    hash = "sha256-Fb3fdekuy+oKfBn7gctsRf938xSTIsqU4KOYNJPfSTg="
+    version = "0.10.12"
+
+    [deps.Mmap]
+    repo = ""
+    subdir = ""
+    uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Preferences]
+    repo = "https://github.com/JuliaPackaging/Preferences.jl.git"
+    subdir = ""
+    uuid = "21216c6a-2e73-6563-6e65-726566657250"
+    rev = "5c536fdea268838f2365e8e3b93397d2de752971"
+    hash = "sha256-/iv2KamPbrweYpkWQQ9kX6qG3qlIMLZLj+kcG2dnIiE="
+    version = "1.5.0"
+
+    [deps.LibCURL_jll]
+    repo = ""
+    subdir = ""
+    uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
+    rev = ""
+    hash = ""
+    version = "8.11.1+1"
+
+    [deps.DataAPI]
+    repo = "https://github.com/JuliaData/DataAPI.jl.git"
+    subdir = ""
+    uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
+    rev = "d6d1b053c0b82e0722abf3cb1c6e6c21bbe9746d"
+    hash = "sha256-fy3qtZH0lIVbsbmZLQiOy4OYagkTqfWeLSWpU6Uqcdg="
+    version = "1.16.0"
+
+    [deps.NNlib]
+    repo = "https://github.com/FluxML/NNlib.jl.git"
+    subdir = ""
+    uuid = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
+    rev = "9d4a2b4d055408d3724d51194a0e5e73602b6f64"
+    hash = "sha256-KAYQSgFUYO2HsKILRSirhLsIxjTks2rCG2Fd6EjSSe8="
+    version = "0.9.31"
+
+    [deps.TOML]
+    repo = ""
+    subdir = ""
+    uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+    rev = ""
+    hash = ""
+    version = "1.0.3"
+
+    [deps.Reexport]
+    repo = "https://github.com/simonster/Reexport.jl.git"
+    subdir = ""
+    uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+    rev = "f0d5b25255bcdb365b8c0ac289d1059f602cf32b"
+    hash = "sha256-jle1YBDjUkczbAjSbp49wmgo9ucVVV5YacwG4AwuzkY="
+    version = "1.2.2"
+
+    [deps.Statistics]
+    repo = "https://github.com/JuliaStats/Statistics.jl.git"
+    subdir = ""
+    uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+    rev = "68869af06e8cdeb7aba1d5259de602da7328057f"
+    hash = "sha256-LtpYnAwfbgIAtXPxgt01Vyih1yx0Zxw+tok99x48BrI="
+    version = "1.11.1"
+
+    [deps.Transducers]
+    repo = "https://github.com/JuliaFolds2/Transducers.jl.git"
+    subdir = ""
+    uuid = "28d57a85-8fef-5791-bfe6-a80928e7c999"
+    rev = "d1d9747025389956a325e33541dc21b19a8a7df6"
+    hash = "sha256-8F7CuIbf9QURQM9D+9cQkZUz2/NYowz++7vhOfQ3gmE="
+    version = "0.4.85"
+
+    [deps.StaticArraysCore]
+    repo = "https://github.com/JuliaArrays/StaticArraysCore.jl.git"
+    subdir = ""
+    uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+    rev = "91effb899a4bb58af38b770a3ce54ef27dbb4969"
+    hash = "sha256-fWRI3JkUs9CZxA6msCW08kfvfDMcNqvmzogyet82rek="
+    version = "1.4.4"
+
+    [deps.Tables]
+    repo = "https://github.com/JuliaData/Tables.jl.git"
+    subdir = ""
+    uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+    rev = "06abc194d0cb0d245859d163258a6d5723898c9d"
+    hash = "sha256-Q+oyIsu4UQKopOaJvMD184dz7ouY+ONBVnEFUG65tlw="
+    version = "1.12.1"
+
+    [deps.Scratch]
+    repo = "https://github.com/JuliaPackaging/Scratch.jl.git"
+    subdir = ""
+    uuid = "6c6a2e73-6563-6170-7368-637461726353"
+    rev = "40ef0d2e51876b985a196472c0dfb7e3dbe08775"
+    hash = "sha256-vaIdp3tapq3eBtyanBGOVUz+Z+llh2sfLVDIwjWmZJw="
+    version = "1.3.0"
+
+    [deps.SparseArrays]
+    repo = ""
+    subdir = ""
+    uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+    rev = ""
+    hash = ""
+    version = "1.12.0"
+
+    [deps.Unicode]
+    repo = ""
+    subdir = ""
+    uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Crayons]
+    repo = "https://github.com/KristofferC/Crayons.jl.git"
+    subdir = ""
+    uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+    rev = "417e3af6f3c28168553c662f605255b8e1fe1f14"
+    hash = "sha256-7fZ3X+fB9nBf+Ly45nlRb5ZEFEoZ5kPZXZRTdgVYy20="
+    version = "4.1.1"
+
+    [deps.ArgCheck]
+    repo = "https://github.com/jw3126/ArgCheck.jl.git"
+    subdir = ""
+    uuid = "dce04be8-c92d-5529-be00-80e4d2c0e197"
+    rev = "4733a47d91c6777d3e313677cb8d531a7f8ecbce"
+    hash = "sha256-Sep1Npjg/Ix2X/k48yMn0iyfT2YTpcOTr/s7bQZP85I="
+    version = "2.5.0"
+
+    [deps.MicroCollections]
+    repo = "https://github.com/JuliaFolds2/MicroCollections.jl.git"
+    subdir = ""
+    uuid = "128add7d-3638-4c79-886c-908ea0c25c34"
+    rev = "a79b3fa38a7123ff228036fd50fc6c1e3bac43de"
+    hash = "sha256-C3PE2FFoScATfoGVDlBPY6OOv9YqTsrqmKKi+/i6+nU="
+    version = "0.2.0"
+
+    [deps.LazyModules]
+    repo = "https://github.com/johnnychen94/LazyModules.jl.git"
+    subdir = ""
+    uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
+    rev = "942c339998e58d2b8b29cc984207c433009daff9"
+    hash = "sha256-89JTwTcprfPTi8VP/bF1KNUHXT15OJnUvGgMXrgCv4c="
+    version = "0.3.1"
+
+    [deps.OpenMPI_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/OpenMPI_jll.jl.git"
+    subdir = ""
+    uuid = "fe0851c0-eecd-5654-98d4-656369965a5c"
+    rev = "45302a28c87df10ab93c05192d258630b9b932b5"
+    hash = "sha256-1dErPphPsmgSLnmIS9o4T6vmwzf227RDH0kk5q78eJE="
+    version = "5.0.9+0"
+
     [deps.PtrArrays]
-    dependencies = []
     repo = "https://github.com/LilithHafner/PtrArrays.jl.git"
     subdir = ""
     uuid = "43287f4e-b6f4-7ad1-bb20-aadabca52c3d"
     rev = "ef99c9f337d8b5c8d35f23571ab1a7d8f1c6f0fd"
+    hash = "sha256-IVSrznDYy9fcO1ps6g4oEyk9gneMHlS3/U4UENWA708="
     version = "1.3.0"

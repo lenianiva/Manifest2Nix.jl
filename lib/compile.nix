@@ -7,6 +7,7 @@
   runCommand,
   symlinkJoin,
   cacert,
+  fetchgit,
   fetchurl,
   zstd,
   writeText,
@@ -189,17 +190,16 @@ in rec {
       inherit name;
       inherit src;
       phases = ["unpackPhase" "installPhase"];
-      installPhase =
-        if (lib.pathExists "${src}/Project.toml") || (lib.pathExists "${src}/JuliaProject.toml")
-        then ''
+      installPhase = ''
+        if [ -f Project.toml ] || [ -f JuliaProject.toml ]; then
           mkdir -p $out
           ln -s ${src} $out/${name}
-        ''
-        else ''
+        else
           mkdir -p $out/${name}
           ln -s ${src}/* $out/${name}/
           ln -s ${project-toml} $out/${name}/Project.toml
-        '';
+        fi
+      '';
     };
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
@@ -266,19 +266,34 @@ in rec {
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
     manifest = builtins.fromTOML (builtins.readFile manifestFile);
 
+    # NOTE: Julia manifest uses arrays of tables [[...]], but each key only has
+    # one value.
+    manifestDeps = builtins.mapAttrs (_k: v: builtins.head v) manifest.deps;
+
+    isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
+    convertWeakDeps = v:
+      if builtins.isAttrs v
+      then builtins.attrNames v
+      else v;
+
     # Flatten the dependency tree
     flatDeps =
       lib.mapAttrs (
-        key: {dependencies, ...}:
-          lib.lists.unique (dependencies
-            ++ (builtins.concatMap (k:
-              if builtins.hasAttr k flatDeps
-              then builtins.getAttr k flatDeps
-              else [])
-            dependencies))
+        key: {
+          deps ? [],
+          weakdeps ? [],
+          ...
+        }: let
+          d = deps ++ (convertWeakDeps weakdeps);
+        in
+          lib.lists.unique (d
+            ++ (builtins.concatMap (
+                k: flatDeps.${k} or []
+              )
+              d))
       )
-      lock.deps;
-    # FIXME: Trim a parent manifest to contain only relevant parts in a dependency list
+      manifestDeps;
+
     trimManifest = {
       name,
       depsNames,
@@ -286,25 +301,23 @@ in rec {
     }:
       pkgs.writers.writeTOML "Manifest.toml"
       (
-        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: true) manifest.deps)
-        #lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
+        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
       );
 
     depToPackage = name: {
       version,
       repo,
       rev,
+      hash,
       uuid,
       subdir ? "",
-      dependencies,
       src ? null, # Optionally override the source path to ignore repo and rev
       ...
     }: let
       depsNames = builtins.getAttr name flatDeps;
-      fetched = builtins.fetchGit {
+      fetched = pkgs.fetchgit {
         url = repo;
-        inherit rev;
-        shallow = true;
+        inherit rev hash;
       };
     in
       buildJuliaPackage {
@@ -313,11 +326,14 @@ in rec {
           if builtins.isNull src
           then "${fetched}/${subdir}"
           else src;
-        deps = builtins.concatMap (dep:
-          if builtins.hasAttr dep allDeps
-          then [allDeps.${dep}]
-          else [])
-        depsNames;
+        deps =
+          builtins.concatMap (
+            dep:
+              lib.optional
+              (builtins.hasAttr dep allDeps)
+              allDeps.${dep}
+          )
+          depsNames;
         root-manifest = trimManifest {inherit name depsNames manifest;};
         pre-exec =
           if (name == project.name)
@@ -326,17 +342,19 @@ in rec {
         inherit nativeBuildInputs;
       };
 
-    allDeps = builtins.mapAttrs (name: info:
-      if builtins.hasAttr name override
-      then
-        (let
-          o = builtins.getAttr name override;
-        in
-          if builtins.isAttrs o
-          then o
-          else depToPackage name (info // {src = o;}))
-      else depToPackage name info)
-    lock.deps;
+    allDeps =
+      builtins.mapAttrs (name: info:
+        if builtins.hasAttr name override
+        then
+          (let
+            o = builtins.getAttr name override;
+          in
+            if builtins.isAttrs o
+            then o
+            else depToPackage name (info // {src = o;}))
+        else depToPackage name info)
+      # Filter out stdlib repos, since they do not need to be built
+      (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
   in
     buildJuliaPackage {
       inherit src nativeBuildInputs;

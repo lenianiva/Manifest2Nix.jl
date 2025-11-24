@@ -17,12 +17,13 @@ function create_build_paths(context::Context, uuids::Set{UUID})
         else
             entry = Pkg.Types.manifest_info(context.env.manifest, uuid)
             if entry === nothing
-                @error "could not find entry with uuid $uuid in manifest $(context.env.manifest_file)"
+                @warn "Could not find entry with uuid $uuid in manifest $(context.env.manifest_file)"
+                continue
             end
             name = entry.name
             path = Pkg.Operations.source_path(context.env.manifest_file, entry)
             if path === nothing
-                @error "Failed to find path for package $name"
+                @error "Could not find source path for package $name"
             end
             @info "Creating path: $path"
             Base.Filesystem.mkpath(path)
@@ -62,6 +63,6 @@ if abspath(PROGRAM_FILE) == @__FILE__
     @info "Building ..."
     uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
     create_build_paths(context, uuids)
-    Pkg.API.build(context, pkgs; verbose = true)
+    #Pkg.API.build(context, pkgs; verbose = true)
     #Pkg.Operations.build_versions(context, uuids; verbose = true)
 end

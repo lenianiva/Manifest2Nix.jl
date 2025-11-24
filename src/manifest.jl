@@ -1,7 +1,7 @@
 module Manifest
 
 import Pkg
-import TOML
+import TOML, JSON
 using Git: git
 using Pkg.API: PackageInfo
 using Pkg.Types: Context
@@ -10,10 +10,10 @@ using Base: UUID, SHA1, Filesystem, @kwdef
 @kwdef struct PinnedPackage
     uuid::UUID
     version::VersionNumber
-    dependencies::Vector{String}
     repo::Union{Nothing,String}
     rev::Union{Nothing,String}
     subdir::Union{Nothing,String}
+    hash::Union{Nothing,String}
 end
 
 function pin_package(
@@ -23,9 +23,11 @@ function pin_package(
     temp_dir::String,
 )::Union{PinnedPackage,Nothing}
     subdir = nothing
+    hash = nothing
     if Pkg.Types.is_stdlib(uuid, VERSION)
-        @info "Skipping stdlib package $(info.name) [$uuid]"
-        return nothing
+        @info "stdlib package $(info.name) [$uuid]"
+        repo = nothing
+        rev = nothing
     elseif info.is_tracking_path
         repo = info.git_source
         rev = info.git_revision
@@ -85,13 +87,20 @@ function pin_package(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
         )
     end
+    if !isnothing(repo)
+        prefetch = readchomp(
+            `nix flake prefetch --extra-experimental-features 'nix-command flakes' --json git+$repo\?allRefs=1\&ref=$rev`,
+        )
+        prefetch = JSON.parse(prefetch)
+        hash = prefetch["hash"]
+    end
     return PinnedPackage(
         uuid = uuid,
         version = info.version,
-        dependencies = collect(keys(info.dependencies)),
         repo = repo,
         rev = rev,
         subdir = subdir,
+        hash = hash,
     )
 end
 
@@ -99,10 +108,10 @@ format(nothing) = ""
 format(x::PinnedPackage) = Dict(
     "uuid" => x.uuid,
     "version" => x.version,
-    "dependencies" => x.dependencies,
     "repo" => x.repo,
     "rev" => x.rev,
     "subdir" => x.subdir,
+    "hash" => x.hash,
 )
 format(u::UUID) = string(u)
 format(other::VersionNumber) = string(other)

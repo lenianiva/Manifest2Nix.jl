@@ -2,16 +2,42 @@ name = "simple"
 uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
 
 [deps]
+    [deps.SHA]
+    repo = ""
+    subdir = ""
+    uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+    rev = ""
+    hash = ""
+    version = "0.7.0"
+
+    [deps.Random]
+    repo = ""
+    subdir = ""
+    uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Logging]
+    repo = ""
+    subdir = ""
+    uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
     [deps.TextWrap]
-    dependencies = []
     repo = "https://github.com/carlobaldassi/TextWrap.jl.git"
+    subdir = ""
     uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
-    rev = "6f26906125f8c651fb6d77bb1f83639daf74cffd"
+    rev = "b1d27c6af76f9babe19a9da9513eb872fef5abce"
+    hash = "sha256-d36Jv0qmwD+JMzF+6yjdVPMt0mNzv/az2S13jtMKLQU="
     version = "1.0.2"
 
     [deps.ArgParse]
-    dependencies = ["Logging", "TextWrap"]
     repo = "https://github.com/carlobaldassi/ArgParse.jl.git"
+    subdir = ""
     uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
-    rev = "725ce952e834ecd8c515dc3d07b9d80f56f38182"
+    rev = "3becf322d33a233c329d0cf8af7e277fcc81d8f0"
+    hash = "sha256-TKbmcIpUJJg6xnTMcScm50V0lrb/tb1i7rfYn8JIPd0="
     version = "1.2.0"

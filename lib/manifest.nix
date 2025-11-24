@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  nix,
   julia,
   stdenv,
   symlinkJoin,
@@ -28,7 +29,7 @@
 in {
   manifest2nix = pkgs.writeShellApplication {
     name = "manifest2nix";
-    runtimeInputs = [julia];
+    runtimeInputs = [julia nix];
     runtimeEnv = lib-compile.createEnv {package = self;};
     text = ''
       ${julia}/bin/julia -e "using Manifest2Nix; main()" -- "$@"
