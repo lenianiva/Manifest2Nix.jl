@@ -7,6 +7,7 @@
   runCommand,
   symlinkJoin,
   cacert,
+  fetchgit,
   fetchurl,
   zstd,
   writeText,
@@ -189,17 +190,16 @@ in rec {
       inherit name;
       inherit src;
       phases = ["unpackPhase" "installPhase"];
-      installPhase =
-        if (lib.pathExists "${src}/Project.toml") || (lib.pathExists "${src}/JuliaProject.toml")
-        then ''
+      installPhase = ''
+        if [ -f Project.toml ] || [ -f JuliaProject.toml ]; then
           mkdir -p $out
           ln -s ${src} $out/${name}
-        ''
-        else ''
+        else
           mkdir -p $out/${name}
           ln -s ${src}/* $out/${name}/
           ln -s ${project-toml} $out/${name}/Project.toml
-        '';
+        fi
+      '';
     };
     compiled = stdenv.mkDerivation ({
         inherit (args) src;
@@ -308,16 +308,16 @@ in rec {
       version,
       repo,
       rev,
+      hash,
       uuid,
       subdir ? "",
       src ? null, # Optionally override the source path to ignore repo and rev
       ...
     }: let
       depsNames = builtins.getAttr name flatDeps;
-      fetched = builtins.fetchGit {
+      fetched = pkgs.fetchgit {
         url = repo;
-        inherit rev;
-        shallow = true;
+        inherit rev hash;
       };
     in
       buildJuliaPackage {

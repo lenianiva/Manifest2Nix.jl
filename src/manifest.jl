@@ -1,7 +1,7 @@
 module Manifest
 
 import Pkg
-import TOML
+import TOML, JSON
 using Git: git
 using Pkg.API: PackageInfo
 using Pkg.Types: Context
@@ -13,6 +13,7 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     repo::Union{Nothing,String}
     rev::Union{Nothing,String}
     subdir::Union{Nothing,String}
+    hash::Union{Nothing,String}
 end
 
 function pin_package(
@@ -22,6 +23,7 @@ function pin_package(
     temp_dir::String,
 )::Union{PinnedPackage,Nothing}
     subdir = nothing
+    hash = nothing
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "stdlib package $(info.name) [$uuid]"
         repo = nothing
@@ -85,12 +87,20 @@ function pin_package(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
         )
     end
+    if !isnothing(repo)
+        prefetch = readchomp(
+            `nix flake prefetch --extra-experimental-features 'nix-command flakes' --json git+$repo\?allRefs=1\&ref=$rev`,
+        )
+        prefetch = JSON.parse(prefetch)
+        hash = prefetch["hash"]
+    end
     return PinnedPackage(
         uuid = uuid,
         version = info.version,
         repo = repo,
         rev = rev,
         subdir = subdir,
+        hash = hash,
     )
 end
 
@@ -101,6 +111,7 @@ format(x::PinnedPackage) = Dict(
     "repo" => x.repo,
     "rev" => x.rev,
     "subdir" => x.subdir,
+    "hash" => x.hash,
 )
 format(u::UUID) = string(u)
 format(other::VersionNumber) = string(other)
