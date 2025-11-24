@@ -2,79 +2,354 @@ name = "Manifest2Nix"
 uuid = "55c00322-6feb-41de-aa1f-e2512edad3af"
 
 [deps]
+    [deps.Pkg]
+    repo = ""
+    subdir = ""
+    uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
     [deps.TextWrap]
-    dependencies = []
     repo = "https://github.com/carlobaldassi/TextWrap.jl.git"
+    subdir = ""
     uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
-    rev = "6f26906125f8c651fb6d77bb1f83639daf74cffd"
+    rev = "b1d27c6af76f9babe19a9da9513eb872fef5abce"
+    hash = "sha256-d36Jv0qmwD+JMzF+6yjdVPMt0mNzv/az2S13jtMKLQU="
     version = "1.0.2"
 
-    [deps.Git_jll]
-    dependencies = ["JLLWrappers", "LibCURL_jll", "OpenSSL_jll", "Zlib_jll", "PCRE2_jll", "Libdl", "Expat_jll", "Artifacts", "Libiconv_jll"]
-    repo = "https://github.com/JuliaBinaryWrappers/Git_jll.jl.git"
-    uuid = "f8c6e375-362e-5223-8a59-34ff63f689eb"
-    rev = "ef1929709b2e473d1846087019430d91c3df422d"
-    version = "2.51.1+0"
+    [deps.Base64]
+    repo = ""
+    subdir = ""
+    uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Markdown]
+    repo = ""
+    subdir = ""
+    uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Expat_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Expat_jll.jl.git"
+    subdir = ""
+    uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
+    rev = "68e9ac3502b18f40e32f3d1a0c77eb130ec86e22"
+    hash = "sha256-2eat1UafAJQ/aJE/N3zLeFRJlSvLV3Z51erz8LVtu2s="
+    version = "2.7.3+0"
+
+    [deps.ArgParse]
+    repo = "https://github.com/carlobaldassi/ArgParse.jl.git"
+    subdir = ""
+    uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+    rev = "3becf322d33a233c329d0cf8af7e277fcc81d8f0"
+    hash = "sha256-TKbmcIpUJJg6xnTMcScm50V0lrb/tb1i7rfYn8JIPd0="
+    version = "1.2.0"
+
+    [deps.Tar]
+    repo = ""
+    subdir = ""
+    uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+    rev = ""
+    hash = ""
+    version = "1.10.0"
+
+    [deps.UUIDs]
+    repo = ""
+    subdir = ""
+    uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.SHA]
+    repo = ""
+    subdir = ""
+    uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+    rev = ""
+    hash = ""
+    version = "0.7.0"
+
+    [deps.ArgTools]
+    repo = ""
+    subdir = ""
+    uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+    rev = ""
+    hash = ""
+    version = "1.1.2"
 
     [deps.JLLWrappers]
-    dependencies = ["Preferences", "Artifacts"]
     repo = "https://github.com/JuliaPackaging/JLLWrappers.jl.git"
+    subdir = ""
     uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
-    rev = "d02f37311935f85374ba11759f79c143eb8c87c4"
+    rev = "b92168d74d2410bc47b04a2695cecb31bf97a1f3"
+    hash = "sha256-+QFTL+xz+kyMa3v6WXr6GLdv3yDG5/q/d8rCo1lehTg="
     version = "1.7.1"
 
+    [deps.LibGit2]
+    repo = ""
+    subdir = ""
+    uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Artifacts]
+    repo = ""
+    subdir = ""
+    uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Dates]
+    repo = ""
+    subdir = ""
+    uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.MbedTLS_jll]
+    repo = ""
+    subdir = ""
+    uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
+    rev = ""
+    hash = ""
+    version = "2.28.6+0"
+
+    [deps.OpenSSL_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/OpenSSL_jll.jl.git"
+    subdir = ""
+    uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
+    rev = "77f9fe73e8ff8ae2f1f5e8e0f629cda5255a54a4"
+    hash = "sha256-6Jw3U+S8CDNbSBhvTlahVmsHZ/f7lAKv4963AYTvl0w="
+    version = "3.5.4+0"
+
+    [deps.NetworkOptions]
+    repo = ""
+    subdir = ""
+    uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
+    rev = ""
+    hash = ""
+    version = "1.2.0"
+
+    [deps.Printf]
+    repo = ""
+    subdir = ""
+    uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Libiconv_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Libiconv_jll.jl.git"
+    subdir = ""
+    uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
+    rev = "656e11243e06999992da7c3871aa406ce380daa0"
+    hash = "sha256-Z/Cr+VyaSE1+mWB7RenacJUq6EBGroNLDZW89HuhmCI="
+    version = "1.18.0+0"
+
+    [deps.nghttp2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
+    rev = ""
+    hash = ""
+    version = "1.59.0+0"
+
+    [deps.Random]
+    repo = ""
+    subdir = ""
+    uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Libdl]
+    repo = ""
+    subdir = ""
+    uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.PrecompileTools]
+    repo = "https://github.com/JuliaLang/PrecompileTools.jl.git"
+    subdir = ""
+    uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+    rev = "a99446373f9a4a46d62a2889b7efb242b4ad7471"
+    hash = "sha256-PsILgqfFdTMZuNogqlFl9jk9dvUtvUQN0v0P/epLZh0="
+    version = "1.2.1"
+
+    [deps.StructUtils]
+    repo = "https://github.com/JuliaServices/StructUtils.jl.git"
+    subdir = ""
+    uuid = "ec057cc2-7a8d-4b58-b3b3-92acb9f63b42"
+    rev = "a99a04f6b2e63181d04a29203be3023535c1d93d"
+    hash = "sha256-ZxaT7yHpRsNbKBPl/+OathLQTZhJ7IoPUIAFllSjj0E="
+    version = "2.6.0"
+
+    [deps.MozillaCACerts_jll]
+    repo = ""
+    subdir = ""
+    uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
+    rev = ""
+    hash = ""
+    version = "2023.12.12"
+
+    [deps.JSON]
+    repo = "https://github.com/JuliaIO/JSON.jl.git"
+    subdir = ""
+    uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+    rev = "0c9b9009fabd59405a97847cca0abec7e84f3aab"
+    hash = "sha256-2hG67dIcWJEORhPMu94fkCLFaDO0952xg1Oq3wmGJs0="
+    version = "1.3.0"
+
     [deps.Preferences]
-    dependencies = ["TOML"]
     repo = "https://github.com/JuliaPackaging/Preferences.jl.git"
+    subdir = ""
     uuid = "21216c6a-2e73-6563-6e65-726566657250"
-    rev = "bbd37f7bc9984d4794d0f4cd1f8bcadbefe274e5"
+    rev = "5c536fdea268838f2365e8e3b93397d2de752971"
+    hash = "sha256-/iv2KamPbrweYpkWQQ9kX6qG3qlIMLZLj+kcG2dnIiE="
     version = "1.5.0"
 
+    [deps.LibCURL_jll]
+    repo = ""
+    subdir = ""
+    uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
+    rev = ""
+    hash = ""
+    version = "8.6.0+0"
+
+    [deps.Parsers]
+    repo = "https://github.com/JuliaData/Parsers.jl.git"
+    subdir = ""
+    uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+    rev = "6352c4bbce6f9df8cea268a39a3c43e1ee4944e7"
+    hash = "sha256-rjtVt5lwiBHlHZ+KMw8eAjK94otSQOj2umsIS90ANnM="
+    version = "2.8.3"
+
+    [deps.Logging]
+    repo = ""
+    subdir = ""
+    uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.TOML]
+    repo = ""
+    subdir = ""
+    uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+    rev = ""
+    hash = ""
+    version = "1.0.3"
+
+    [deps.Downloads]
+    repo = ""
+    subdir = ""
+    uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+    rev = ""
+    hash = ""
+    version = "1.6.0"
+
+    [deps.LibSSH2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
+    rev = ""
+    hash = ""
+    version = "1.11.0+1"
+
+    [deps.Zlib_jll]
+    repo = ""
+    subdir = ""
+    uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+    rev = ""
+    hash = ""
+    version = "1.2.13+1"
+
+    [deps.LibGit2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
+    rev = ""
+    hash = ""
+    version = "1.7.2+0"
+
+    [deps.FileWatching]
+    repo = ""
+    subdir = ""
+    uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
+    [deps.Git_jll]
+    repo = "https://github.com/JuliaBinaryWrappers/Git_jll.jl.git"
+    subdir = ""
+    uuid = "f8c6e375-362e-5223-8a59-34ff63f689eb"
+    rev = "130eec140c9a6222118963f18554025ba1958107"
+    hash = "sha256-efeRwuvC7rISn9XSzsY2qVt/jOFzzKBPqJCH1cxkFgM="
+    version = "2.51.3+0"
+
+    [deps.LibCURL]
+    repo = ""
+    subdir = ""
+    uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
+    rev = ""
+    hash = ""
+    version = "0.6.4"
+
+    [deps.Unicode]
+    repo = ""
+    subdir = ""
+    uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+    rev = ""
+    hash = ""
+    version = "1.11.0"
+
     [deps.OpenSSH_jll]
-    dependencies = ["JLLWrappers", "OpenSSL_jll", "Zlib_jll", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/OpenSSH_jll.jl.git"
+    subdir = ""
     uuid = "9bd350c2-7e96-507f-8002-3f2e150b4e1b"
-    rev = "8ab6af525ab1d48dee8fccd4dc771af865db9036"
-    version = "10.0.1+0"
+    rev = "0708fd52d21331378653fed2b3934905c060bcbd"
+    hash = "sha256-nRFLF2P/pFOCpWiP44EPE7We1GEmLUK70Xv9bD5bTFY="
+    version = "10.2.1+0"
 
     [deps.Git_LFS_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
     repo = "https://github.com/JuliaBinaryWrappers/Git_LFS_jll.jl.git"
+    subdir = ""
     uuid = "020c3dae-16b3-5ae5-87b3-4cb189e250b2"
     rev = "8222985f15812c324413507817ca550f08d6c3b6"
+    hash = "sha256-s7WB67BfyT775il4RGctp7x2p0ZUcCnIbIpLbczMjpE="
     version = "3.7.0+0"
 
     [deps.Git]
-    dependencies = ["JLLWrappers", "Git_LFS_jll", "Git_jll", "OpenSSH_jll"]
     repo = "https://github.com/JuliaVersionControl/Git.jl.git"
+    subdir = ""
     uuid = "d7ba0133-e1db-5d97-8f8c-041e4b3a1eb2"
     rev = "eb038049fdc4fc7da8410d3e8d5af5bfbe235248"
+    hash = "sha256-gHJ9QCBV9/p0kac1V+QkLn+Jox96eNn8Zha+Zf3DWic="
     version = "1.5.0"
 
-    [deps.OpenSSL_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/OpenSSL_jll.jl.git"
-    uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-    rev = "b66071f63d7872ae178d45e8e0950c8fb3172ffd"
-    version = "3.5.2+0"
+    [deps.PCRE2_jll]
+    repo = ""
+    subdir = ""
+    uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
+    rev = ""
+    hash = ""
+    version = "10.42.0+1"
 
-    [deps.Libiconv_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/Libiconv_jll.jl.git"
-    uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
-    rev = "656e11243e06999992da7c3871aa406ce380daa0"
-    version = "1.18.0+0"
-
-    [deps.Expat_jll]
-    dependencies = ["JLLWrappers", "Libdl", "Artifacts"]
-    repo = "https://github.com/JuliaBinaryWrappers/Expat_jll.jl.git"
-    uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-    rev = "2e57e5e2ac1fb341ef24ec567e29234f1a6f8985"
-    version = "2.7.1+0"
-
-    [deps.ArgParse]
-    dependencies = ["Logging", "TextWrap"]
-    repo = "https://github.com/carlobaldassi/ArgParse.jl.git"
-    uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
-    rev = "725ce952e834ecd8c515dc3d07b9d80f56f38182"
-    version = "1.2.0"
+    [deps.p7zip_jll]
+    repo = ""
+    subdir = ""
+    uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
+    rev = ""
+    hash = ""
+    version = "17.4.0+2"
