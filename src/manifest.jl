@@ -9,7 +9,7 @@ using Base: UUID, SHA1, Filesystem, @kwdef
 
 @kwdef struct PinnedPackage
     uuid::UUID
-    version::VersionNumber
+    version::Union{Nothing,VersionNumber}
     repo::Union{Nothing,String}
     rev::Union{Nothing,String}
     subdir::Union{Nothing,String}
