@@ -188,12 +188,10 @@ in rec {
           deps);
       };
   in {
-    inherit name version uuid;
-    inherit src deps artifacts input-depots;
+    inherit name version uuid src deps artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
-      inherit name;
-      inherit src;
+      inherit name src;
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
         if [ -f Project.toml ] || [ -f JuliaProject.toml ]; then
@@ -308,6 +306,11 @@ in rec {
       (
         lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
       );
+    trimEnv = {
+      name,
+      depsNames,
+    }:
+      lib.attrsets.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ depsNames));
 
     depToPackage = name: {
       version,
@@ -326,7 +329,7 @@ in rec {
       };
     in
       buildJuliaPackage {
-        inherit name uuid version env;
+        inherit name uuid version;
         src =
           if builtins.isNull src
           then "${fetched}/${subdir}"
@@ -344,7 +347,6 @@ in rec {
           if (name == project.name)
           then pre-exec
           else "";
-        inherit nativeBuildInputs;
       };
 
     allDeps =
@@ -362,7 +364,7 @@ in rec {
       (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
   in
     buildJuliaPackage {
-      inherit src nativeBuildInputs;
+      inherit src nativeBuildInputs env;
       deps = builtins.attrValues allDeps;
       root-manifest = manifestFile;
     };
