@@ -181,9 +181,14 @@ in rec {
       pkgs.writers.writeTOML "Project.toml"
       {
         inherit name version uuid;
+        deps = builtins.listToAttrs (builtins.map (dep: {
+            inherit (dep) name;
+            value = dep.uuid;
+          })
+          deps);
       };
   in {
-    inherit name version;
+    inherit name version uuid;
     inherit src deps artifacts input-depots;
     # A special derivation for creating load paths
     load-path = stdenv.mkDerivation rec {
