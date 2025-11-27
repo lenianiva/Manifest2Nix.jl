@@ -14,6 +14,7 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     rev::Union{Nothing,String}
     subdir::Union{Nothing,String}
     hash::Union{Nothing,String}
+    tree_hash::Union{Nothing,String}
 end
 
 function pin_package(
@@ -21,9 +22,11 @@ function pin_package(
     uuid::UUID,
     info::PackageInfo;
     temp_dir::String,
+    existing::Union{PinnedPackage,Nothing},
 )::Union{PinnedPackage,Nothing}
     subdir = nothing
     hash = nothing
+    tree_hash = nothing
     if Pkg.Types.is_stdlib(uuid, VERSION)
         @info "stdlib package $(info.name) [$uuid]"
         repo = nothing
@@ -33,6 +36,11 @@ function pin_package(
         rev = info.git_revision
         @warn "A package $(info.name) [$uuid] is tracking a path. Please supply the package explicitly with a derivation."
     elseif info.is_tracking_registry
+        if !isnothing(existing) && info.tree_hash == existing.tree_hash
+            @info "Package $(info.name) [$uuid] not updated"
+            return existing
+        end
+        tree_hash = info.tree_hash
         pkg_entry = get(context.registries[1], uuid, nothing)
         if isnothing(pkg_entry)
             error("Package $(info.name) [$uuid] is not present in any registry")
@@ -78,6 +86,10 @@ function pin_package(
     elseif info.is_tracking_repo
         repo = info.git_source
         rev = info.git_revision
+        if !isnothing(existing) && rev == existing.rev
+            @info "Package $(info.name) [$uuid] not updated"
+            return existing
+        end
         if rev == ""
             error("Package $(info.name) [$uuid] (tracking repo) has an empty revision")
         end
@@ -101,10 +113,13 @@ function pin_package(
         rev = rev,
         subdir = subdir,
         hash = hash,
+        tree_hash = tree_hash,
     )
 end
 
 format(nothing) = ""
+format(u::UUID) = string(u)
+format(other::VersionNumber) = string(other)
 format(x::PinnedPackage) = Dict(
     "uuid" => x.uuid,
     "version" => x.version,
@@ -112,22 +127,47 @@ format(x::PinnedPackage) = Dict(
     "rev" => x.rev,
     "subdir" => x.subdir,
     "hash" => x.hash,
+    "tree_hash" => x.tree_hash,
 )
-format(u::UUID) = string(u)
-format(other::VersionNumber) = string(other)
 
 function load_dependencies(
     context;
     path_project::String,
-    path_output::Union{String,Nothing} = nothing,
+    path_lock::Union{String,Nothing} = nothing,
 )
+    if isnothing(path_lock)
+        path_lock = "$path_project/Lock.toml"
+    end
+    existing_deps = Dict{String,PinnedPackage}()
+    if isfile(path_lock)
+        existing_deps = Dict{String,PinnedPackage}(
+            name => PinnedPackage(
+                uuid = UUID(kwargs["uuid"]),
+                version = kwargs["version"] == "" ? nothing :
+                          VersionNumber(kwargs["version"]),
+                repo = kwargs["repo"] == "" ? nothing : kwargs["repo"],
+                rev = kwargs["rev"] == "" ? nothing : kwargs["rev"],
+                subdir = kwargs["subdir"] == "" ? nothing : kwargs["subdir"],
+                hash = kwargs["hash"] == "" ? nothing : kwargs["hash"],
+                tree_hash = get(kwargs, "tree_hash", "") == "" ? nothing :
+                            kwargs["tree_hash"],
+            ) for (name, kwargs) in TOML.parsefile(path_lock)["deps"]
+        )
+    end
+
     @assert length(context.registries) == 1
     dependencies = Pkg.dependencies(context.env)
     @info "Pinning $(length(dependencies)) dependencies"
     temp_dir = Filesystem.mktempdir()
     pinned_dependencies = Dict()
     for (uuid, info) in dependencies
-        pinned = pin_package(context, uuid, info; temp_dir)
+        pinned = pin_package(
+            context,
+            uuid,
+            info;
+            temp_dir = temp_dir,
+            existing = get(existing_deps, info.name, nothing),
+        )
         if isnothing(pinned)
             continue
         end
@@ -143,14 +183,11 @@ function load_dependencies(
 
     @info "Generating Lock File"
     writer = io::IO -> TOML.print(format, io, result)
-    if isnothing(path_output)
-        path_output = "$path_project/Lock.toml"
-    end
 
-    if path_output == "-"
+    if path_lock == "-"
         writer(stdout)
     else
-        open(writer, path_output, "w")
+        open(writer, path_lock, "w")
     end
 end
 
@@ -169,7 +206,7 @@ function main(args::Dict{String,Any})
         Manifest.load_dependencies(
             context;
             path_project = path_project,
-            path_output = get(args, "output", nothing),
+            path_lock = get(args, "output", nothing),
         )
     end
 end

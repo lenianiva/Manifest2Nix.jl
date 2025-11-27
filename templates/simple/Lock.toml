@@ -8,6 +8,7 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
     rev = ""
     hash = ""
+    tree_hash = ""
     version = "0.7.0"
 
     [deps.Random]
@@ -16,6 +17,7 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
     rev = ""
     hash = ""
+    tree_hash = ""
     version = "1.11.0"
 
     [deps.Logging]
@@ -24,6 +26,7 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
     rev = ""
     hash = ""
+    tree_hash = ""
     version = "1.11.0"
 
     [deps.TextWrap]
@@ -32,6 +35,7 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
     rev = "b1d27c6af76f9babe19a9da9513eb872fef5abce"
     hash = "sha256-d36Jv0qmwD+JMzF+6yjdVPMt0mNzv/az2S13jtMKLQU="
+    tree_hash = "43044b737fa70bc12f6105061d3da38f881a3e3c"
     version = "1.0.2"
 
     [deps.ArgParse]
@@ -40,4 +44,5 @@ uuid = "4ef67b23-529d-46c7-aad8-271324168c9c"
     uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
     rev = "3becf322d33a233c329d0cf8af7e277fcc81d8f0"
     hash = "sha256-TKbmcIpUJJg6xnTMcScm50V0lrb/tb1i7rfYn8JIPd0="
+    tree_hash = "22cf435ac22956a7b45b0168abbc871176e7eecc"
     version = "1.2.0"
