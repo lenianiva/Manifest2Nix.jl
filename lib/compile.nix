@@ -305,7 +305,7 @@ in rec {
     }:
       pkgs.writers.writeTOML "Manifest.toml"
       (
-        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
+        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps)
       );
     trimEnv = {
       name,
