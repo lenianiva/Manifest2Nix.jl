@@ -48,7 +48,7 @@ in rec {
       name = "${name}-deps";
       src = symlinkJoin {
         name = "${name}-compiled";
-        paths = builtins.map (dep: lib.addErrorContext "While compiling ${dep.name}" dep.compiled) deps;
+        paths = builtins.map (dep: lib.addErrorContext "While compiling ${dep.name}" dep.compiled) (builtins.filter (dep: dep.compiled != null) deps);
       };
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
@@ -136,6 +136,7 @@ in rec {
     pre-exec ? "",
     nativeBuildInputs ? [],
     env ? {},
+    precompile ? true,
   }: let
     name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
     version = args.version or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).version;
@@ -205,36 +206,40 @@ in rec {
         fi
       '';
     };
-    compiled = stdenv.mkDerivation ({
-        inherit (args) src;
-        inherit name version;
-        dontInstall = true;
-        nativeBuildInputs = [julia] ++ nativeBuildInputs;
-        JULIA_LOAD_PATH = "${load-path}:";
-        JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
-        inherit JULIA_SSL_CA_ROOTS_PATH;
-        buildPhase = ''
-          mkdir -p .julia
+    compiled =
+      if precompile
+      then
+        stdenv.mkDerivation ({
+            inherit (args) src;
+            inherit name version;
+            dontInstall = true;
+            nativeBuildInputs = [julia] ++ nativeBuildInputs;
+            JULIA_LOAD_PATH = "${load-path}:";
+            JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
+            inherit JULIA_SSL_CA_ROOTS_PATH;
+            buildPhase = ''
+              mkdir -p .julia
 
-          echo "Load Path: $JULIA_LOAD_PATH"
-          echo "Depot Path: $JULIA_DEPOT_PATH"
+              echo "Load Path: $JULIA_LOAD_PATH"
+              echo "Depot Path: $JULIA_DEPOT_PATH"
 
-          if [ ! -f Manifest.toml ]; then
-            ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
-            cat Manifest.toml
-          fi
+              if [ ! -f Manifest.toml ]; then
+                ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
+                cat Manifest.toml
+              fi
 
-          mkdir -p $out
+              mkdir -p $out
 
-          if [ -f Project.toml ]; then
-            julia --project ${../src/compile.jl}
-            ${pre-exec-command}
+              if [ -f Project.toml ]; then
+                julia --project ${../src/compile.jl}
+                ${pre-exec-command}
 
-            mv .julia/compiled/v${abridged-version}/* $out/
-          fi
-        '';
-      }
-      // env);
+                mv .julia/compiled/v${abridged-version}/* $out/
+              fi
+            '';
+          }
+          // env)
+      else null;
   };
   # Given a built Julia package, create an environment for running code
   createEnv = {
@@ -266,6 +271,8 @@ in rec {
     override ? {},
     # Per package environment override
     env ? {},
+    # If set to false, skip dependency precompilation
+    precompileDeps ? true,
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -372,6 +379,7 @@ in rec {
           then pre-exec
           else "";
         env = combinedEnvOf name;
+        precompile = precompileDeps;
       };
 
     allDeps =
@@ -393,5 +401,6 @@ in rec {
       inherit src nativeBuildInputs;
       deps = builtins.attrValues allDeps;
       manifest = manifestFile;
+      precompile = true;
     };
 }
