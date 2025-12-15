@@ -262,6 +262,7 @@ in rec {
     pre-exec ? "",
     nativeBuildInputs ? [],
     override ? {},
+    # Per package environment override
     env ? {},
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
@@ -298,20 +299,40 @@ in rec {
       )
       manifestDeps;
 
+    combinedEnvOf = name: lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}));
+
     trimManifest = {
       name,
       depsNames,
       manifest,
-    }:
+    }: let
+      # Filter weakdeps
+      perDep = dep: let
+        weakdeps =
+          if builtins.isAttrs (dep.weakdeps or [])
+          then lib.filterAttrs (depName: _depUUID: builtins.elem depName depsNames) (dep.weakdeps or [])
+          else builtins.filter (depName: builtins.elem depName depsNames) (dep.weakdeps or []);
+        extensions =
+          lib.filterAttrs (_ext: depName: builtins.elem depName depsNames) (dep.extensions or {});
+      in
+        (
+          lib.optionalAttrs (weakdeps != [] && weakdeps != {}) {
+            inherit weakdeps;
+          }
+        )
+        // (
+          lib.optionalAttrs (extensions != {}) {
+            inherit extensions;
+          }
+        )
+        // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
+      deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+      #deps = lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps;
+    in
       pkgs.writers.writeTOML "Manifest.toml"
       (
-        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps)
+        lib.setAttr manifest "deps" deps
       );
-    trimEnv = {
-      name,
-      depsNames,
-    }:
-      lib.attrsets.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ depsNames));
 
     depToPackage = name: {
       version,
@@ -348,6 +369,7 @@ in rec {
           if (name == project.name)
           then pre-exec
           else "";
+        env = combinedEnvOf name;
       };
 
     allDeps =
@@ -355,7 +377,7 @@ in rec {
         if builtins.hasAttr name override
         then
           (let
-            o = builtins.getAttr name override;
+            o = override.${name};
           in
             if builtins.isAttrs o
             then o
@@ -365,7 +387,8 @@ in rec {
       (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
   in
     buildJuliaPackage {
-      inherit src nativeBuildInputs env;
+      env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
+      inherit src nativeBuildInputs;
       deps = builtins.attrValues allDeps;
       manifest = manifestFile;
     };

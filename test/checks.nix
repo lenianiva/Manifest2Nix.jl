@@ -9,12 +9,12 @@
   override-jl-direct = lib-compile.buildJuliaPackageWithDeps {
     src = ./override;
     override = {Artefact = artefact-jl;};
-    env = {OVERRIDE_MYSTERY = "mystery2";};
+    env = {Override = {OVERRIDE_MYSTERY = "mystery2";};};
   };
   override-jl-src = lib-compile.buildJuliaPackageWithDeps {
     src = ./override;
     override = {Artefact = ./artefact;};
-    env = {OVERRIDE_MYSTERY = "mystery2";};
+    env = {Override = {OVERRIDE_MYSTERY = "mystery2";};};
   };
   # Integration tests
   version-dir = ../version + "/${pkgs.lib.versions.major julia.version}.${pkgs.lib.versions.minor julia.version}";
