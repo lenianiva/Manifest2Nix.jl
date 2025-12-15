@@ -131,7 +131,7 @@ in rec {
     depots ? [stdlib-depot],
     deps ? [],
     # Parent manifest file
-    root-manifest ? null,
+    manifest ? null,
     pre-exec ? "",
     nativeBuildInputs ? [],
     env ? {},
@@ -218,7 +218,8 @@ in rec {
           echo "Load Path: $JULIA_LOAD_PATH"
 
           if [ ! -f Manifest.toml ]; then
-            ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
+            ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
+            cat Manifest.toml
           fi
 
           mkdir -p $out
@@ -342,7 +343,7 @@ in rec {
               allDeps.${dep}
           )
           depsNames;
-        root-manifest = trimManifest {inherit name depsNames manifest;};
+        manifest = trimManifest {inherit name depsNames manifest;};
         pre-exec =
           if (name == project.name)
           then pre-exec
@@ -366,6 +367,6 @@ in rec {
     buildJuliaPackage {
       inherit src nativeBuildInputs env;
       deps = builtins.attrValues allDeps;
-      root-manifest = manifestFile;
+      manifest = manifestFile;
     };
 }
