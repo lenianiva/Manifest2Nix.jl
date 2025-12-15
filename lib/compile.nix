@@ -33,7 +33,7 @@ in rec {
     deps,
   }: let
     # Collect all requisite artifacts
-    artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
+    artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts or {}) deps);
     artifacts-join =
       if artifacts != {}
       then
