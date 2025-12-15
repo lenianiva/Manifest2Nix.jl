@@ -328,8 +328,8 @@ in rec {
           }
         )
         // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
-      deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
-      #deps = lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps;
+      #deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+      deps = lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps;
     in
       pkgs.writers.writeTOML "Manifest.toml"
       (
