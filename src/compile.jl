@@ -62,9 +62,9 @@ if abspath(PROGRAM_FILE) == @__FILE__
     targets = compile_deps ? pkgs : [context.env.pkg]
     Pkg.API.precompile(context, targets; already_instantiated = true)
 
-    @info "Building ..."
-    uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
-    create_build_paths(context, uuids)
+    #@info "Building ..."
+    #uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
+    #create_build_paths(context, uuids)
     #Pkg.API.build(context, pkgs; verbose = true)
     #Pkg.Operations.build_versions(context, uuids; verbose = true)
 end
