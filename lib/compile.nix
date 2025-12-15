@@ -336,7 +336,18 @@ in rec {
         )
         // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
       #deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
-      deps = lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps;
+      mapDep = depName:
+        builtins.map (dep:
+          if builtins.hasAttr depName override
+          then
+            lib.setAttr dep "path"
+            "${
+              if builtins.isAttrs override.${depName}
+              then override.${depName}.src
+              else override.${depName}
+            }"
+          else dep);
+      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
     in
       pkgs.writers.writeTOML "Manifest.toml"
       (
@@ -400,7 +411,11 @@ in rec {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
       inherit src nativeBuildInputs;
       deps = builtins.attrValues allDeps;
-      manifest = manifestFile;
+      manifest = trimManifest {
+        inherit (project) name;
+        depsNames = builtins.attrNames manifestDeps;
+        inherit manifest;
+      };
       precompile = true;
     };
 }
