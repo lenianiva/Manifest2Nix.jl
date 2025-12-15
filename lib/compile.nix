@@ -131,11 +131,12 @@ in rec {
     src,
     depots ? [stdlib-depot],
     deps ? [],
-    # Parent manifest file
+    # Override the manifest file
     manifest ? null,
     pre-exec ? "",
     nativeBuildInputs ? [],
     env ? {},
+    # If set to false, skip precompilation. `.compile` will be `null`
     precompile ? true,
   }: let
     name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
@@ -223,10 +224,15 @@ in rec {
               echo "Load Path: $JULIA_LOAD_PATH"
               echo "Depot Path: $JULIA_DEPOT_PATH"
 
-              if [ ! -f Manifest.toml ]; then
-                ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
-                cat Manifest.toml
-              fi
+              ${
+                if manifest != null
+                then ''
+                  rm -f Manifest.toml
+                  ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
+                  cat Manifest.toml
+                ''
+                else ""
+              }
 
               mkdir -p $out
 
