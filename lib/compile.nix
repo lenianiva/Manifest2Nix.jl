@@ -292,9 +292,11 @@ in rec {
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
     convertWeakDeps = v:
-      if builtins.isAttrs v
-      then builtins.attrNames v
-      else v;
+      builtins.filter (name: (builtins.hasAttr name manifestDeps) && (isStdLib manifestDeps.${name})) (
+        if builtins.isAttrs v
+        then builtins.attrNames v
+        else v
+      );
 
     # Flatten the dependency tree
     flatDeps =
@@ -304,7 +306,7 @@ in rec {
           weakdeps ? [],
           ...
         }: let
-          d = deps;
+          d = deps ++ (convertWeakDeps weakdeps);
         in
           lib.lists.remove key (lib.lists.unique (d
             ++ (builtins.concatMap (
