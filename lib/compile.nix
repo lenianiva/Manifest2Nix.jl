@@ -48,7 +48,7 @@ in rec {
       name = "${name}-deps";
       src = symlinkJoin {
         name = "${name}-compiled";
-        paths = builtins.map (dep: dep.compiled) deps;
+        paths = builtins.map (dep: lib.addErrorContext "While compiling ${dep.name}" dep.compiled) deps;
       };
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
@@ -287,13 +287,13 @@ in rec {
           weakdeps ? [],
           ...
         }: let
-          d = deps ++ (convertWeakDeps weakdeps);
+          d = deps;
         in
-          lib.lists.unique (d
+          lib.lists.remove key (lib.lists.unique (d
             ++ (builtins.concatMap (
                 k: flatDeps.${k} or []
               )
-              d))
+              d)))
       )
       manifestDeps;
 
