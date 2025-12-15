@@ -216,6 +216,7 @@ in rec {
           mkdir -p .julia
 
           echo "Load Path: $JULIA_LOAD_PATH"
+          echo "Depot Path: $JULIA_DEPOT_PATH"
 
           if [ ! -f Manifest.toml ]; then
             ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
