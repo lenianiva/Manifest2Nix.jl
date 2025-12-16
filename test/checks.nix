@@ -32,7 +32,7 @@
 in {
   inherit (pkgs) julia;
   julia-version = pkgs.testers.testVersion {package = julia;};
-  inherit (lib-compile) stdlib-depot;
+  inherit (lib-compile) stdlibDepot;
 
   # Ensure all the templates can build
   minimal-jl = minimal-jl.compiled;
