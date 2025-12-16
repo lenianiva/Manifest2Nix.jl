@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   julia,
   stdenv,
   runCommand,
@@ -10,6 +9,7 @@
   fetchgit,
   fetchurl,
   zstd,
+  writers,
   writeText,
   ...
 }: let
@@ -17,7 +17,7 @@
   JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 in rec {
   # This depot contains a cached version of stdlib
-  stdlib-depot =
+  stdlibDepot =
     runCommand "julia-stdlib" {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
@@ -129,9 +129,10 @@ in rec {
     version ? null,
     uuid ? "",
     src,
-    depots ? [stdlib-depot],
+    depots ? [stdlibDepot],
     deps ? [],
-    # Override the manifest file
+    # Override the manifest file. This is necessary if the project doesn't come
+    # with its own manifest.
     manifest ? null,
     pre-exec ? "",
     nativeBuildInputs ? [],
@@ -145,11 +146,15 @@ in rec {
       name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) deps;
     };
-    artifact-path = "${src}/Artifacts.toml";
     artifacts =
-      if lib.pathExists artifact-path
-      then collectArtifacts artifact-path
-      else {};
+      if lib.pathExists "${src}/Artifacts.toml"
+      then collectArtifacts "${src}/Artifacts.toml"
+      else
+        (
+          if lib.pathExists "${src}/JuliaArtifacts.toml"
+          then collectArtifacts "${src}/JuliaArtifacts.toml"
+          else {}
+        );
     artifacts-depot =
       if artifacts != {}
       then [
@@ -181,7 +186,7 @@ in rec {
       else "";
     # A compatibility shim for Julia packages without a `Project.toml` file.
     project-toml =
-      pkgs.writers.writeTOML "Project.toml"
+      writers.writeTOML "Project.toml"
       {
         inherit name version uuid;
         deps = builtins.listToAttrs (builtins.map (dep: {
@@ -218,25 +223,22 @@ in rec {
             JULIA_LOAD_PATH = "${load-path}:";
             JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
             inherit JULIA_SSL_CA_ROOTS_PATH;
+            configurePhase =
+              if manifest != null
+              then ''
+                rm -f Manifest.toml JuliaManifest.toml
+                ln -s ${manifest} Manifest.toml
+                cat Manifest.toml
+              ''
+              else null;
             buildPhase = ''
-              mkdir -p .julia
+              mkdir -p $out
 
               echo "Load Path: $JULIA_LOAD_PATH"
               echo "Depot Path: $JULIA_DEPOT_PATH"
 
-              ${
-                if manifest != null
-                then ''
-                  rm -f Manifest.toml
-                  ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
-                  cat Manifest.toml
-                ''
-                else ""
-              }
-
-              mkdir -p $out
-
-              if [ -f Project.toml ]; then
+              if [ -f Project.toml ] || [ -f JuliaProject.toml ]; then
+                mkdir -p .julia
                 julia --project ${../src/compile.jl}
                 ${pre-exec-command}
 
@@ -264,12 +266,13 @@ in rec {
     JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
       inherit name;
       deps = packages;
-    }}:${stdlib-depot}";
+    }}:${stdlibDepot}";
     inherit JULIA_SSL_CA_ROOTS_PATH;
   };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = {
     src,
+    name ? null,
     lockFile ? "${src}/Lock.toml",
     manifestFile ? "${src}/Manifest.toml",
     pre-exec ? "",
@@ -282,12 +285,11 @@ in rec {
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
-    # FIXME: Handle different parent manifest paths
     project = builtins.fromTOML (builtins.readFile "${src}/Project.toml");
     manifest = builtins.fromTOML (builtins.readFile manifestFile);
 
-    # NOTE: Julia manifest uses arrays of tables [[...]], but each key only has
-    # one value.
+    # NOTE: Julia manifest's `deps` attribute uses arrays of tables [[...]], but
+    # each key only has one value.
     manifestDeps = builtins.mapAttrs (_k: v: builtins.head v) manifest.deps;
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
@@ -324,26 +326,6 @@ in rec {
       manifest,
     }: let
       # Filter weakdeps
-      perDep = dep: let
-        weakdeps =
-          if builtins.isAttrs (dep.weakdeps or [])
-          then lib.filterAttrs (depName: _depUUID: builtins.elem depName depsNames) (dep.weakdeps or [])
-          else builtins.filter (depName: builtins.elem depName depsNames) (dep.weakdeps or []);
-        extensions =
-          lib.filterAttrs (_ext: depName: builtins.elem depName depsNames) (dep.extensions or {});
-      in
-        (
-          lib.optionalAttrs (weakdeps != [] && weakdeps != {}) {
-            inherit weakdeps;
-          }
-        )
-        // (
-          lib.optionalAttrs (extensions != {}) {
-            inherit extensions;
-          }
-        )
-        // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
-      #deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
       mapDep = depName:
         builtins.map (dep:
           if builtins.hasAttr depName override
@@ -357,7 +339,7 @@ in rec {
           else dep);
       deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
     in
-      pkgs.writers.writeTOML "Manifest.toml"
+      writers.writeTOML "Manifest.toml"
       (
         lib.setAttr manifest "deps" deps
       );
@@ -373,7 +355,7 @@ in rec {
       ...
     }: let
       depsNames = builtins.getAttr name flatDeps;
-      fetched = pkgs.fetchgit {
+      fetched = fetchgit {
         url = repo;
         inherit rev hash;
       };
@@ -393,10 +375,6 @@ in rec {
           )
           depsNames;
         manifest = trimManifest {inherit name depsNames manifest;};
-        pre-exec =
-          if (name == project.name)
-          then pre-exec
-          else "";
         env = combinedEnvOf name;
         precompile = precompileDeps;
       };
@@ -417,10 +395,13 @@ in rec {
   in
     buildJuliaPackage {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
-      inherit src nativeBuildInputs;
+      inherit src nativeBuildInputs pre-exec;
       deps = builtins.attrValues allDeps;
       manifest = trimManifest {
-        inherit (project) name;
+        name =
+          if name == null
+          then project.name
+          else name;
         depsNames = builtins.attrNames manifestDeps;
         inherit manifest;
       };
