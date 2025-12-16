@@ -35,6 +35,24 @@
       hash = "sha256-S6C7Fzsnts3MwTJi3j60Yy5NUBPDupCL9VuZb+z8tCQ=";
     };
   };
+  "1.11.8" = {
+    aarch64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.8-linux-aarch64.tar.gz";
+      hash = "sha256-WVr2NQlSvaGnBiR+ri8cjWybqZXs5laciT9ufmB97hU=";
+    };
+    x86_64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.8-linux-x86_64.tar.gz";
+      hash = "sha256-02geOtHIJnpzZmt9sN4C+o8xmCcW6Imn5od8XdVNcm0=";
+    };
+    x86_64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.8-mac64.tar.gz";
+      hash = "sha256-LzTDht9XxEgIZnga2P+K/MINSX3Hr8etY3ILTO9qj/k=";
+    };
+    aarch64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.8-macaarch64.tar.gz";
+      hash = "sha256-MJRL8pTV2YurLymCAtdJN+u+FQW20lBDb6BBfy6DS9w=";
+    };
+  };
   "1.12.0" = {
     aarch64-linux = {
       url = "https://julialang-s3.julialang.org/bin/linux/aarch64/1.12/julia-1.12.0-linux-aarch64.tar.gz";
@@ -87,6 +105,24 @@
     aarch64-darwin = {
       url = "https://julialang-s3.julialang.org/bin/mac/aarch64/1.12/julia-1.12.2-macaarch64.tar.gz";
       hash = "sha256-n52skGVKxp32Y5+YdIJSbCMXl40S6iasJyONO9KI4KM=";
+    };
+  };
+  "1.12.3" = {
+    aarch64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/aarch64/1.12/julia-1.12.3-linux-aarch64.tar.gz";
+      hash = "sha256-rLnXCZBzCdwP4XPfKKwXVLm+Zud0BAXlH0Ki43gz/3U=";
+    };
+    x86_64-linux = {
+      url = "https://julialang-s3.julialang.org/bin/linux/x64/1.12/julia-1.12.3-linux-x86_64.tar.gz";
+      hash = "sha256-Y2xJW0RpiUr7Lj97EAR0gcO2WbZPxPXIj3DDxTh8Gxo=";
+    };
+    x86_64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/x64/1.12/julia-1.12.3-mac64.tar.gz";
+      hash = "sha256-2AMvdV9UI6GVCiruu53CfpkS/9pkRPFb+EUYIgR2MXE=";
+    };
+    aarch64-darwin = {
+      url = "https://julialang-s3.julialang.org/bin/mac/aarch64/1.12/julia-1.12.3-macaarch64.tar.gz";
+      hash = "sha256-QEkXkEYeCbC3zowJ/0QF+14o9iKkE1+lUNm7utVZ47A=";
     };
   };
 }
