@@ -33,7 +33,7 @@ in rec {
     deps,
   }: let
     # Collect all requisite artifacts
-    artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts) deps);
+    artifacts = lib.mergeAttrsList (builtins.map (dep: dep.artifacts or {}) deps);
     artifacts-join =
       if artifacts != {}
       then
@@ -48,7 +48,7 @@ in rec {
       name = "${name}-deps";
       src = symlinkJoin {
         name = "${name}-compiled";
-        paths = builtins.map (dep: dep.compiled) deps;
+        paths = builtins.map (dep: lib.addErrorContext "While compiling ${dep.name}" dep.compiled) (builtins.filter (dep: dep.compiled != null) deps);
       };
       phases = ["unpackPhase" "installPhase"];
       installPhase = ''
@@ -75,6 +75,7 @@ in rec {
       else "linux";
     inherit (p) libc;
     cxxstring_abi = "cxx11";
+    llvm_version = "18";
     libgfortran_version = "5.0.0";
   };
   filterPlatformDependentArtifact = artifact:
@@ -130,11 +131,13 @@ in rec {
     src,
     depots ? [stdlib-depot],
     deps ? [],
-    # Parent manifest file
-    root-manifest ? null,
+    # Override the manifest file
+    manifest ? null,
     pre-exec ? "",
     nativeBuildInputs ? [],
     env ? {},
+    # If set to false, skip precompilation. `.compile` will be `null`
+    precompile ? true,
   }: let
     name = args.name or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).name;
     version = args.version or (builtins.fromTOML (builtins.readFile "${src}/Project.toml")).version;
@@ -204,34 +207,45 @@ in rec {
         fi
       '';
     };
-    compiled = stdenv.mkDerivation ({
-        inherit (args) src;
-        inherit name version;
-        dontInstall = true;
-        nativeBuildInputs = [julia] ++ nativeBuildInputs;
-        JULIA_LOAD_PATH = "${load-path}:";
-        JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
-        inherit JULIA_SSL_CA_ROOTS_PATH;
-        buildPhase = ''
-          mkdir -p .julia
+    compiled =
+      if precompile
+      then
+        stdenv.mkDerivation ({
+            inherit (args) src;
+            inherit name version;
+            dontInstall = true;
+            nativeBuildInputs = [julia] ++ nativeBuildInputs;
+            JULIA_LOAD_PATH = "${load-path}:";
+            JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
+            inherit JULIA_SSL_CA_ROOTS_PATH;
+            buildPhase = ''
+              mkdir -p .julia
 
-          echo "Load Path: $JULIA_LOAD_PATH"
+              echo "Load Path: $JULIA_LOAD_PATH"
+              echo "Depot Path: $JULIA_DEPOT_PATH"
 
-          if [ ! -f Manifest.toml ]; then
-            ln -s ${lib.defaultTo "no-root-manifest" root-manifest} Manifest.toml
-          fi
+              ${
+                if manifest != null
+                then ''
+                  rm -f Manifest.toml
+                  ln -s ${lib.defaultTo "no-root-manifest" manifest} Manifest.toml
+                  cat Manifest.toml
+                ''
+                else ""
+              }
 
-          mkdir -p $out
+              mkdir -p $out
 
-          if [ -f Project.toml ]; then
-            julia --project ${../src/compile.jl}
-            ${pre-exec-command}
+              if [ -f Project.toml ]; then
+                julia --project ${../src/compile.jl}
+                ${pre-exec-command}
 
-            mv .julia/compiled/v${abridged-version}/* $out/
-          fi
-        '';
-      }
-      // env);
+                mv .julia/compiled/v${abridged-version}/* $out/
+              fi
+            '';
+          }
+          // env)
+      else null;
   };
   # Given a built Julia package, create an environment for running code
   createEnv = {
@@ -261,7 +275,10 @@ in rec {
     pre-exec ? "",
     nativeBuildInputs ? [],
     override ? {},
+    # Per package environment override
     env ? {},
+    # If set to false, skip dependency precompilation
+    precompileDeps ? true,
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -275,9 +292,11 @@ in rec {
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
     convertWeakDeps = v:
-      if builtins.isAttrs v
-      then builtins.attrNames v
-      else v;
+      builtins.filter (name: builtins.hasAttr name manifestDeps) (
+        if builtins.isAttrs v
+        then builtins.attrNames v
+        else v
+      );
 
     # Flatten the dependency tree
     flatDeps =
@@ -289,28 +308,59 @@ in rec {
         }: let
           d = deps ++ (convertWeakDeps weakdeps);
         in
-          lib.lists.unique (d
+          lib.lists.remove key (lib.lists.unique (d
             ++ (builtins.concatMap (
                 k: flatDeps.${k} or []
               )
-              d))
+              d)))
       )
       manifestDeps;
+
+    combinedEnvOf = name: lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}));
 
     trimManifest = {
       name,
       depsNames,
       manifest,
-    }:
+    }: let
+      # Filter weakdeps
+      perDep = dep: let
+        weakdeps =
+          if builtins.isAttrs (dep.weakdeps or [])
+          then lib.filterAttrs (depName: _depUUID: builtins.elem depName depsNames) (dep.weakdeps or [])
+          else builtins.filter (depName: builtins.elem depName depsNames) (dep.weakdeps or []);
+        extensions =
+          lib.filterAttrs (_ext: depName: builtins.elem depName depsNames) (dep.extensions or {});
+      in
+        (
+          lib.optionalAttrs (weakdeps != [] && weakdeps != {}) {
+            inherit weakdeps;
+          }
+        )
+        // (
+          lib.optionalAttrs (extensions != {}) {
+            inherit extensions;
+          }
+        )
+        // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
+      #deps = builtins.mapAttrs (_depName: builtins.map perDep) (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+      mapDep = depName:
+        builtins.map (dep:
+          if builtins.hasAttr depName override
+          then
+            lib.setAttr dep "path"
+            "${
+              if builtins.isAttrs override.${depName}
+              then override.${depName}.src
+              else override.${depName}
+            }"
+          else dep);
+      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+    in
       pkgs.writers.writeTOML "Manifest.toml"
       (
-        lib.setAttr manifest "deps" (lib.filterAttrs (key: _v: name == key || lib.lists.elem key depsNames) manifest.deps)
+        lib.setAttr manifest "deps" deps
       );
-    trimEnv = {
-      name,
-      depsNames,
-    }:
-      lib.attrsets.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ depsNames));
 
     depToPackage = name: {
       version,
@@ -342,11 +392,13 @@ in rec {
               allDeps.${dep}
           )
           depsNames;
-        root-manifest = trimManifest {inherit name depsNames manifest;};
+        manifest = trimManifest {inherit name depsNames manifest;};
         pre-exec =
           if (name == project.name)
           then pre-exec
           else "";
+        env = combinedEnvOf name;
+        precompile = precompileDeps;
       };
 
     allDeps =
@@ -354,7 +406,7 @@ in rec {
         if builtins.hasAttr name override
         then
           (let
-            o = builtins.getAttr name override;
+            o = override.${name};
           in
             if builtins.isAttrs o
             then o
@@ -364,8 +416,14 @@ in rec {
       (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
   in
     buildJuliaPackage {
-      inherit src nativeBuildInputs env;
+      env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
+      inherit src nativeBuildInputs;
       deps = builtins.attrValues allDeps;
-      root-manifest = manifestFile;
+      manifest = trimManifest {
+        inherit (project) name;
+        depsNames = builtins.attrNames manifestDeps;
+        inherit manifest;
+      };
+      precompile = true;
     };
 }

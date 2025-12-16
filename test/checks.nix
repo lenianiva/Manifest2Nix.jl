@@ -5,16 +5,20 @@
   inherit (pkgs) julia;
   minimal-jl = lib-compile.buildJuliaPackage {src = ../templates/minimal;};
   simple-jl = lib-compile.buildJuliaPackageWithDeps {src = ../templates/simple;};
+  simple-direct-jl = lib-compile.buildJuliaPackageWithDeps {
+    src = ../templates/simple;
+    precompileDeps = false;
+  };
   artefact-jl = lib-compile.buildJuliaPackageWithDeps {src = ./artefact;};
   override-jl-direct = lib-compile.buildJuliaPackageWithDeps {
     src = ./override;
     override = {Artefact = artefact-jl;};
-    env = {OVERRIDE_MYSTERY = "mystery2";};
+    env = {Override = {OVERRIDE_MYSTERY = "mystery2";};};
   };
   override-jl-src = lib-compile.buildJuliaPackageWithDeps {
     src = ./override;
     override = {Artefact = ./artefact;};
-    env = {OVERRIDE_MYSTERY = "mystery2";};
+    env = {Override = {OVERRIDE_MYSTERY = "mystery2";};};
   };
   # Integration tests
   version-dir = ../version + "/${pkgs.lib.versions.major julia.version}.${pkgs.lib.versions.minor julia.version}";
@@ -51,6 +55,7 @@ in {
     deps = [minimal-jl];
   };
   simple-jl = simple-jl.compiled;
+  simple-direct-jl = simple-jl.compiled;
   simple-jl-script = let
     script = builtins.path {
       path = ../templates/simple/script/normal.jl;

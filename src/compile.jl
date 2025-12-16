@@ -33,6 +33,7 @@ end
 
 if abspath(PROGRAM_FILE) == @__FILE__
     context = Context()
+    compile_deps = isnothing(context.env.pkg)
     @info "Building $(context.env.pkg) ..."
 
     if !isfile(context.env.manifest_file)
@@ -58,11 +59,12 @@ if abspath(PROGRAM_FILE) == @__FILE__
 
     pkgs = [pkg for pkg in pkgs if !Pkg.Types.is_stdlib(pkg.uuid, VERSION)]
 
-    Pkg.API.precompile(context, [context.env.pkg]; already_instantiated = true)
+    targets = compile_deps ? pkgs : [context.env.pkg]
+    Pkg.API.precompile(context, targets; already_instantiated = true)
 
-    @info "Building ..."
-    uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
-    create_build_paths(context, uuids)
+    #@info "Building ..."
+    #uuids = Set{UUID}(pkg.uuid for pkg in pkgs)
+    #create_build_paths(context, uuids)
     #Pkg.API.build(context, pkgs; verbose = true)
     #Pkg.Operations.build_versions(context, uuids; verbose = true)
 end
