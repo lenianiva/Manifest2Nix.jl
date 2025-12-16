@@ -292,7 +292,7 @@ in rec {
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
     convertWeakDeps = v:
-      builtins.filter (name: (builtins.hasAttr name manifestDeps) && (isStdLib manifestDeps.${name})) (
+      builtins.filter (name: builtins.hasAttr name manifestDeps) (
         if builtins.isAttrs v
         then builtins.attrNames v
         else v
