@@ -17,7 +17,7 @@
   JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 in rec {
   # This depot contains a cached version of stdlib
-  stdlib-depot =
+  stdlibDepot =
     runCommand "julia-stdlib" {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
@@ -129,7 +129,7 @@ in rec {
     version ? null,
     uuid ? "",
     src,
-    depots ? [stdlib-depot],
+    depots ? [stdlibDepot],
     deps ? [],
     # Override the manifest file
     manifest ? null,
@@ -264,7 +264,7 @@ in rec {
     JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
       inherit name;
       deps = packages;
-    }}:${stdlib-depot}";
+    }}:${stdlibDepot}";
     inherit JULIA_SSL_CA_ROOTS_PATH;
   };
   # Create a Julia package from a dependency file
