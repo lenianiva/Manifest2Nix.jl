@@ -379,7 +379,7 @@ in rec {
         precompile = precompileDeps;
       };
 
-    allDeps =
+    allDeps = builtins.seq flatDeps (
       builtins.mapAttrs (name: info:
         if builtins.hasAttr name override
         then
@@ -391,7 +391,8 @@ in rec {
             else depToPackage name (info // {src = o;}))
         else depToPackage name info)
       # Filter out stdlib repos, since they do not need to be built
-      (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
+      (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps)
+    );
   in
     buildJuliaPackage {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
