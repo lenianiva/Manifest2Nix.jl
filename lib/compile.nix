@@ -308,7 +308,7 @@ in rec {
           weakdeps ? [],
           ...
         }: let
-          d = deps ++ (convertWeakDeps weakdeps);
+          d = lib.addErrorContext "While processing dependencies of ${key}" (deps ++ (convertWeakDeps weakdeps));
         in
           lib.lists.remove key (lib.lists.unique (d
             ++ (builtins.concatMap (
