@@ -303,18 +303,12 @@ in rec {
     # Flatten the dependency tree
     flatDeps =
       lib.mapAttrs (
-        key: {
-          deps ? [],
-          weakdeps ? [],
-          ...
-        }: let
-          d = lib.addErrorContext "While processing dependencies of ${key}" (deps ++ (convertWeakDeps weakdeps));
-        in
-          lib.lists.remove key (lib.lists.unique (d
+        key: {deps ? [], ...}:
+          lib.lists.remove key (lib.lists.unique (deps
             ++ (builtins.concatMap (
                 k: flatDeps.${k} or []
               )
-              d)))
+              deps)))
       )
       manifestDeps;
 
@@ -325,19 +319,41 @@ in rec {
       depsNames,
       manifest,
     }: let
+      inDep = x: builtins.elem x depsNames;
       # Filter weakdeps
+      filterWeaks = dep: let
+        weakdeps =
+          if builtins.isAttrs (dep.weakdeps or [])
+          then lib.filterAttrs (depName: _depUUID: inDep depName) (dep.weakdeps or [])
+          else builtins.filter inDep (dep.weakdeps or []);
+        extensions = lib.filterAttrs (_ext: d:
+          if builtins.isList d
+          then builtins.all inDep d
+          else inDep d) (dep.extensions or {});
+      in
+        (
+          lib.optionalAttrs (weakdeps != [] && weakdeps != {}) {
+            inherit weakdeps;
+          }
+        )
+        // (
+          lib.optionalAttrs (extensions != {}) {
+            inherit extensions;
+          }
+        )
+        // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
       mapDep = depName:
         builtins.map (dep:
           if builtins.hasAttr depName override
           then
-            lib.setAttr dep "path"
+            lib.setAttr (filterWeaks dep) "path"
             "${
               if builtins.isAttrs override.${depName}
               then override.${depName}.src
               else override.${depName}
             }"
-          else dep);
-      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+          else filterWeaks dep);
+      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: inDep key) manifest.deps);
     in
       writers.writeTOML "Manifest.toml"
       (
@@ -394,7 +410,7 @@ in rec {
       (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps)
     );
   in
-    buildJuliaPackage {
+    builtins.seq flatDeps (buildJuliaPackage {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
       inherit src nativeBuildInputs pre-exec;
       deps = builtins.attrValues allDeps;
@@ -407,5 +423,5 @@ in rec {
         inherit manifest;
       };
       precompile = true;
-    };
+    });
 }
