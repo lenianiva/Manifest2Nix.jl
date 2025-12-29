@@ -293,14 +293,8 @@ in rec {
     manifestDeps = builtins.mapAttrs (_k: v: builtins.head v) manifest.deps;
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
-    convertWeakDeps = v:
-      builtins.filter (name: builtins.hasAttr name manifestDeps) (
-        if builtins.isAttrs v
-        then builtins.attrNames v
-        else v
-      );
 
-    # Flatten the dependency tree
+    # Flat dependency tree
     flatDeps =
       lib.mapAttrs (
         key: {deps ? [], ...}:
@@ -314,12 +308,13 @@ in rec {
 
     combinedEnvOf = name: lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}));
 
+    # Generates a shortened manifest which contains all dependencies of a particular package
     trimManifest = {
       name,
       depsNames,
       manifest,
     }: let
-      inDep = x: builtins.elem x depsNames;
+      inDep = x: (builtins.elem x depsNames) || (builtins.hasAttr x manifestDeps && isStdLib manifestDeps.${x});
       # Filter weakdeps
       filterWeaks = dep: let
         weakdeps =
@@ -360,6 +355,7 @@ in rec {
         lib.setAttr manifest "deps" deps
       );
 
+    # Convert one dependency in the lock file to a Julia package
     depToPackage = name: {
       version,
       repo,
@@ -410,7 +406,7 @@ in rec {
       (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps)
     );
   in
-    builtins.seq flatDeps (buildJuliaPackage {
+    buildJuliaPackage {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
       inherit src nativeBuildInputs pre-exec;
       deps = builtins.attrValues allDeps;
@@ -423,5 +419,5 @@ in rec {
         inherit manifest;
       };
       precompile = true;
-    });
+    };
 }
