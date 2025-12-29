@@ -293,57 +293,69 @@ in rec {
     manifestDeps = builtins.mapAttrs (_k: v: builtins.head v) manifest.deps;
 
     isStdLib = attrset: (!builtins.hasAttr "path" attrset) && (!builtins.hasAttr "git-tree-sha1" attrset);
-    convertWeakDeps = v:
-      builtins.filter (name: builtins.hasAttr name manifestDeps) (
-        if builtins.isAttrs v
-        then builtins.attrNames v
-        else v
-      );
 
-    # Flatten the dependency tree
+    # Flat dependency tree
     flatDeps =
       lib.mapAttrs (
-        key: {
-          deps ? [],
-          weakdeps ? [],
-          ...
-        }: let
-          d = deps ++ (convertWeakDeps weakdeps);
-        in
-          lib.lists.remove key (lib.lists.unique (d
+        key: {deps ? [], ...}:
+          lib.lists.remove key (lib.lists.unique (deps
             ++ (builtins.concatMap (
                 k: flatDeps.${k} or []
               )
-              d)))
+              deps)))
       )
       manifestDeps;
 
     combinedEnvOf = name: lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}));
 
+    # Generates a shortened manifest which contains all dependencies of a particular package
     trimManifest = {
       name,
       depsNames,
       manifest,
     }: let
+      inDep = x: (builtins.elem x depsNames) || (builtins.hasAttr x manifestDeps && isStdLib manifestDeps.${x});
       # Filter weakdeps
+      filterWeaks = dep: let
+        weakdeps =
+          if builtins.isAttrs (dep.weakdeps or [])
+          then lib.filterAttrs (depName: _depUUID: inDep depName) (dep.weakdeps or [])
+          else builtins.filter inDep (dep.weakdeps or []);
+        extensions = lib.filterAttrs (_ext: d:
+          if builtins.isList d
+          then builtins.all inDep d
+          else inDep d) (dep.extensions or {});
+      in
+        (
+          lib.optionalAttrs (weakdeps != [] && weakdeps != {}) {
+            inherit weakdeps;
+          }
+        )
+        // (
+          lib.optionalAttrs (extensions != {}) {
+            inherit extensions;
+          }
+        )
+        // (builtins.removeAttrs dep ["weakdeps" "extensions"]);
       mapDep = depName:
         builtins.map (dep:
           if builtins.hasAttr depName override
           then
-            lib.setAttr dep "path"
+            lib.setAttr (filterWeaks dep) "path"
             "${
               if builtins.isAttrs override.${depName}
               then override.${depName}.src
               else override.${depName}
             }"
-          else dep);
-      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: lib.lists.elem key depsNames) manifest.deps);
+          else filterWeaks dep);
+      deps = builtins.mapAttrs mapDep (lib.filterAttrs (key: _v: inDep key) manifest.deps);
     in
       writers.writeTOML "Manifest.toml"
       (
         lib.setAttr manifest "deps" deps
       );
 
+    # Convert one dependency in the lock file to a Julia package
     depToPackage = name: {
       version,
       repo,
@@ -379,7 +391,7 @@ in rec {
         precompile = precompileDeps;
       };
 
-    allDeps =
+    allDeps = builtins.seq flatDeps (
       builtins.mapAttrs (name: info:
         if builtins.hasAttr name override
         then
@@ -391,7 +403,8 @@ in rec {
             else depToPackage name (info // {src = o;}))
         else depToPackage name info)
       # Filter out stdlib repos, since they do not need to be built
-      (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps);
+      (lib.filterAttrs (k: _v: !(isStdLib manifestDeps.${k})) lock.deps)
+    );
   in
     buildJuliaPackage {
       env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
