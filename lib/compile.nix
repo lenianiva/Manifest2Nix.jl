@@ -278,6 +278,7 @@ in rec {
     pre-exec ? "",
     nativeBuildInputs ? [],
     override ? {},
+    cpuTarget ? null,
     # Per package environment override
     env ? {},
     # If set to false, skip dependency precompilation
@@ -306,7 +307,8 @@ in rec {
       )
       manifestDeps;
 
-    combinedEnvOf = name: lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}));
+    commonEnv = {JULIA_CPU_TARGET = cpuTarget;};
+    combinedEnvOf = name: (lib.mergeAttrsList (builtins.map (name: env.${name} or {}) ([name] ++ flatDeps.${name}))) // commonEnv;
 
     # Generates a shortened manifest which contains all dependencies of a particular package
     trimManifest = {
@@ -407,7 +409,7 @@ in rec {
     );
   in
     buildJuliaPackage {
-      env = lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps));
+      env = (lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps))) // commonEnv;
       inherit src nativeBuildInputs pre-exec;
       deps = builtins.attrValues allDeps;
       manifest = trimManifest {
