@@ -26,6 +26,7 @@
     src = ../.;
     manifestFile = "${version-dir}/Manifest.toml";
     lockFile = "${version-dir}/Lock.toml";
+    cpuTarget = "generic";
   };
   images-jl = lib-compile.buildJuliaPackageWithDeps {src = ./images;};
   graphnn-jl = lib-compile.buildJuliaPackageWithDeps {src = ./graphnn;};
