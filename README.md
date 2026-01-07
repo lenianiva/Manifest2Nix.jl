@@ -56,13 +56,15 @@ manifest2nix lock [--up] --project .
   derivation.
 
 - `buildJuliaPackageWithDeps { src, lockFile ? "${src}/Lock.toml", pre-exec ?
-  "", override ? {}, env ? {}, precompileDeps ? true }`: Build a Julia package
-  along with dependencies.  If there are any path-tracking dependencies, they
-  must be fed in as overrides.  e.g. `override = { Artefact = ./artefact; }`.
-  The targets of overrides can be either paths to sources or built Julia
-  packages. Set `env` to provide environment variables.
+  "", override ? {}, env ? {}, precompileDeps ? true, cpuTarget ? null }`: Build
+  a Julia package along with dependencies.  If there are any path-tracking
+  dependencies, they must be fed in as overrides.  e.g. `override = { Artefact =
+  ./artefact; }`.  The targets of overrides can be either paths to sources or
+  built Julia packages. Set `env` to provide environment variables.
 
   If `precompileDeps` is set to `false`, skip dependency precompilations.
+
+  Set `cpuTarget` to set the `JULIA_CPU_TARGET` option for all packages.
 - `stdlibDepot`: A Julia depot containing a precompiled version of Julia
   standard libraries.
 - `mkDepsDepot { name, deps }`: Given a list of Julia packages, create a depot
