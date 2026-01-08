@@ -12,10 +12,9 @@
   writers,
   writeText,
   ...
-}: let
+}: rec {
   abridged-version = "${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
   JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
-in rec {
   # This depot contains a cached version of stdlib
   stdlibDepot =
     runCommand "julia-stdlib" {
