@@ -286,6 +286,7 @@
     env ? {},
     # If set to false, skip dependency precompilation
     precompileDeps ? true,
+    # Whether to precompile the library
     precompile ? true,
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
