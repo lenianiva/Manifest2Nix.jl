@@ -37,6 +37,10 @@ function tree_hash_to_commit_hash(
         )
         commit_hash = split(rev_tag, " "; limit = 2)[2]
     else
+        if rev != "HEAD"
+            run(Cmd(`$git fetch origin $rev`, dir = repo_dir))
+            run(Cmd(`$git checkout $rev`, dir = repo_dir))
+        end
         all_commits = split(readchomp(Cmd(`$git rev-list $rev`, dir = repo_dir)), "\n")
         # Find commit with hash
         for commit in all_commits
@@ -93,14 +97,21 @@ function pin_package(
 
         rev = tree_hash_to_commit_hash(repo, subdir, info, temp_dir)
     elseif info.is_tracking_repo
-        repo = info.git_source
-        rev = info.git_revision
-        if !isnothing(existing) && rev == existing.rev
+        entry = context.env.manifest.deps[uuid]
+        if !isnothing(existing) && entry.repo.rev == existing.rev
             @info "Package $(info.name) [$uuid] not updated"
             return existing
         end
-        entry = context.env.manifest.deps[uuid]
-        rev = tree_hash_to_commit_hash(repo, entry.repo.subdir, info, temp_dir; rev = rev)
+        @info "Processing repository-tracking package $(entry.repo.source)?rev=$(entry.repo.rev)"
+        repo = entry.repo.source
+        subdir = entry.repo.subdir
+        rev = tree_hash_to_commit_hash(
+            entry.repo.source,
+            entry.repo.subdir,
+            info,
+            temp_dir;
+            rev = entry.repo.rev,
+        )
         if rev == ""
             error("Package $(info.name) [$uuid] (tracking repo) has an empty revision")
         end
