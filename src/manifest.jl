@@ -17,6 +17,47 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     tree_hash::Union{Nothing,String}
 end
 
+function tree_hash_to_commit_hash(
+    repo::String,
+    subdir::Union{Nothing,String},
+    info::PackageInfo,
+    temp_dir::String;
+    rev::String = "HEAD",
+)::String
+    repo_dir = "$temp_dir/$(info.name)"
+    run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
+    commit_hash = ""
+    if isnothing(subdir)
+        rev_tag = readchomp(
+            pipeline(
+                Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
+                `grep -B 1 $(info.tree_hash)`,
+                `head -1`,
+            ),
+        )
+        commit_hash = split(rev_tag, " "; limit = 2)[2]
+    else
+        if rev != "HEAD"
+            run(Cmd(`$git fetch origin $rev`, dir = repo_dir))
+            run(Cmd(`$git checkout $rev`, dir = repo_dir))
+        end
+        all_commits = split(readchomp(Cmd(`$git rev-list $rev`, dir = repo_dir)), "\n")
+        # Find commit with hash
+        for commit in all_commits
+            hash = readchomp(Cmd(`$git rev-parse $commit:$subdir`, dir = repo_dir))
+            if hash == info.tree_hash
+                commit_hash = commit
+                break
+            end
+        end
+    end
+
+    if commit_hash == ""
+        error("Could not determine revision using either tag or tree hash $(info.version)")
+    end
+    return commit_hash
+end
+
 function pin_package(
     context::Context,
     uuid::UUID,
@@ -48,52 +89,32 @@ function pin_package(
         Pkg.Registry.init_package_info!(pkg_entry)
         repo = pkg_entry.info.repo
         subdir = pkg_entry.info.subdir
+        @info "Source: $(info.source)"
         @info "Processing package $(info.name) [$uuid] (tracking registry repo $repo)"
         if info.tree_hash == ""
             error("Package does not have a tree hash")
         end
 
-        # Calculate revision from tree hash
-
-        repo_dir = "$temp_dir/$(info.name)"
-        run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
-        if isnothing(subdir)
-            rev_tag = readchomp(
-                pipeline(
-                    Cmd(`$git log --pretty=raw --all`, dir = repo_dir),
-                    `grep -B 1 $(info.tree_hash)`,
-                    `head -1`,
-                ),
-            )
-            rev = split(rev_tag, " "; limit = 2)[2]
-        else
-            all_commits = split(readchomp(Cmd(`$git rev-list HEAD`, dir = repo_dir)), "\n")
-            # Find commit with hash
-            for commit_hash in all_commits
-                hash = readchomp(Cmd(`$git rev-parse $commit_hash:$subdir`, dir = repo_dir))
-                if hash == info.tree_hash
-                    rev = commit_hash
-                    break
-                end
-            end
-        end
-
-        if rev == ""
-            error(
-                "Could not determine revision using either tag or tree hash $(info.version)",
-            )
-        end
+        rev = tree_hash_to_commit_hash(repo, subdir, info, temp_dir)
     elseif info.is_tracking_repo
-        repo = info.git_source
-        rev = info.git_revision
-        if !isnothing(existing) && rev == existing.rev
+        entry = context.env.manifest.deps[uuid]
+        if !isnothing(existing) && entry.repo.rev == existing.rev
             @info "Package $(info.name) [$uuid] not updated"
             return existing
         end
+        @info "Processing repository-tracking package $(entry.repo.source)?rev=$(entry.repo.rev)"
+        repo = entry.repo.source
+        subdir = entry.repo.subdir
+        rev = tree_hash_to_commit_hash(
+            entry.repo.source,
+            entry.repo.subdir,
+            info,
+            temp_dir;
+            rev = entry.repo.rev,
+        )
         if rev == ""
             error("Package $(info.name) [$uuid] (tracking repo) has an empty revision")
         end
-        @assert rev isa string
     else
         error(
             "Package $(info.name) [$uuid] is not tracking a registry and not tracking a repo",
