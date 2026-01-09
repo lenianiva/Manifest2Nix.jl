@@ -17,15 +17,16 @@ using Base: UUID, SHA1, Filesystem, @kwdef
     tree_hash::Union{Nothing,String}
 end
 
-function tree_hash_to_rev(
+function tree_hash_to_commit_hash(
     repo::String,
     subdir::Union{Nothing,String},
     info::PackageInfo,
-    temp_dir::String,
+    temp_dir::String;
+    rev::String = "HEAD",
 )::String
-    rev = ""
     repo_dir = "$temp_dir/$(info.name)"
     run(`$git clone --quiet --filter=blob:none --no-checkout $repo $repo_dir`)
+    commit_hash = ""
     if isnothing(subdir)
         rev_tag = readchomp(
             pipeline(
@@ -34,23 +35,23 @@ function tree_hash_to_rev(
                 `head -1`,
             ),
         )
-        rev = split(rev_tag, " "; limit = 2)[2]
+        commit_hash = split(rev_tag, " "; limit = 2)[2]
     else
-        all_commits = split(readchomp(Cmd(`$git rev-list HEAD`, dir = repo_dir)), "\n")
+        all_commits = split(readchomp(Cmd(`$git rev-list $rev`, dir = repo_dir)), "\n")
         # Find commit with hash
-        for commit_hash in all_commits
-            hash = readchomp(Cmd(`$git rev-parse $commit_hash:$subdir`, dir = repo_dir))
+        for commit in all_commits
+            hash = readchomp(Cmd(`$git rev-parse $commit:$subdir`, dir = repo_dir))
             if hash == info.tree_hash
-                rev = commit_hash
+                commit_hash = commit
                 break
             end
         end
     end
 
-    if rev == ""
+    if commit_hash == ""
         error("Could not determine revision using either tag or tree hash $(info.version)")
     end
-    return rev
+    return commit_hash
 end
 
 function pin_package(
@@ -90,7 +91,7 @@ function pin_package(
             error("Package does not have a tree hash")
         end
 
-        rev = tree_hash_to_rev(repo, subdir, info, temp_dir)
+        rev = tree_hash_to_commit_hash(repo, subdir, info, temp_dir)
     elseif info.is_tracking_repo
         repo = info.git_source
         rev = info.git_revision
@@ -99,7 +100,7 @@ function pin_package(
             return existing
         end
         entry = context.env.manifest.deps[uuid]
-        rev = tree_hash_to_rev(repo, entry.repo.subdir, info, temp_dir)
+        rev = tree_hash_to_commit_hash(repo, entry.repo.subdir, info, temp_dir; rev = rev)
         if rev == ""
             error("Package $(info.name) [$uuid] (tracking repo) has an empty revision")
         end
