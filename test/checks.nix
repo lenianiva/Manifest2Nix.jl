@@ -49,6 +49,9 @@ in {
       })
       ''
         ${julia}/bin/julia -e "import Minimal; Minimal.mystery();" > $out
+        if [ -d .julia/compiled/v${lib-compile.abridged-version}/REPL ]; then
+          exit 1
+        fi
       '';
   };
   minimal-jl-depot = lib-compile.mkDepsDepot {

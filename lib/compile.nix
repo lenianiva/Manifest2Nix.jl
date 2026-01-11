@@ -12,10 +12,9 @@
   writers,
   writeText,
   ...
-}: let
+}: rec {
   abridged-version = "${lib.versions.major julia.version}.${lib.versions.minor julia.version}";
   JULIA_SSL_CA_ROOTS_PATH = "${cacert}/etc/ssl/certs/ca-bundle.crt";
-in rec {
   # This depot contains a cached version of stdlib
   stdlibDepot =
     runCommand "julia-stdlib" {
@@ -254,6 +253,7 @@ in rec {
     name ? null,
     package,
     workingDepot ? "",
+    withDepot ? true,
   }: let
     inherit (package) deps name;
     packages = [package] ++ deps;
@@ -261,14 +261,17 @@ in rec {
       name = "${name}-load-path";
       paths = builtins.map (dep: dep.load-path) packages;
     };
-  in {
-    JULIA_LOAD_PATH = "${load-path}:";
-    JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
-      inherit name;
-      deps = packages;
-    }}:${stdlibDepot}";
-    inherit JULIA_SSL_CA_ROOTS_PATH;
-  };
+  in
+    {
+      JULIA_LOAD_PATH = "${load-path}:";
+      inherit JULIA_SSL_CA_ROOTS_PATH;
+    }
+    // lib.attrsets.optionalAttrs withDepot {
+      JULIA_DEPOT_PATH = "${workingDepot}:${mkDepsDepot {
+        inherit name;
+        deps = packages;
+      }}:${stdlibDepot}";
+    };
   # Create a Julia package from a dependency file
   buildJuliaPackageWithDeps = {
     src,
@@ -283,6 +286,8 @@ in rec {
     env ? {},
     # If set to false, skip dependency precompilation
     precompileDeps ? true,
+    # Whether to precompile the library
+    precompile ? true,
   }: let
     lock = builtins.fromTOML (builtins.readFile lockFile);
 
@@ -410,7 +415,7 @@ in rec {
   in
     buildJuliaPackage {
       env = (lib.mergeAttrsList (builtins.map (name: env.${name} or {}) (builtins.attrNames manifestDeps))) // commonEnv;
-      inherit src nativeBuildInputs pre-exec;
+      inherit src nativeBuildInputs pre-exec precompile;
       deps = builtins.attrValues allDeps;
       manifest = trimManifest {
         name =
@@ -420,6 +425,5 @@ in rec {
         depsNames = builtins.attrNames manifestDeps;
         inherit manifest;
       };
-      precompile = true;
     };
 }
