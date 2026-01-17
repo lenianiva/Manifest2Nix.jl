@@ -20,6 +20,7 @@
     runCommand "julia-stdlib" {
       JULIA_PKG_OFFLINE = "true";
       JULIA_PKG_SERVER = "";
+      JULIA_PKG_UNPACK_REGISTRY = "false";
       inherit JULIA_SSL_CA_ROOTS_PATH;
       nativeBuildInputs = [julia];
     } ''

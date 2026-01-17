@@ -29,7 +29,7 @@
       }: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [(self.fromVersion "1.12.1")];
+          overlays = [(self.fromVersion "1.12.4")];
           #overlays = [self.fromJuliaBin];
         };
         lib-manifest = pkgs.callPackage lib/manifest.nix {};

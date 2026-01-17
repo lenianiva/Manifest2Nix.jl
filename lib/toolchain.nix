@@ -4,6 +4,7 @@
   system,
   pkgs,
   fetchzip,
+  p7zip,
   stdenv,
   fixDarwinDylibNames,
   autoPatchelfHook,
@@ -36,8 +37,12 @@
       src = tarball;
       dontFixup = stdenv.isDarwin;
       installPhase = ''
+        runHook preInstall
         mkdir -p $out/
         mv ./* $out/
+        rm -f $out/libexec/julia/7z
+        ln -s ${p7zip}/bin/7z $out/libexec/julia/7z
+        runHook postInstall
       '';
     };
 }
