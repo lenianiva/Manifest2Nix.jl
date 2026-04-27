@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  system,
   pkgs,
   fetchzip,
   p7zip,
@@ -9,7 +8,9 @@
   fixDarwinDylibNames,
   autoPatchelfHook,
   ...
-}: {
+}: let
+  inherit (stdenv.hostPlatform) system;
+in {
   toolchain-fetch = pkgs.writeShellApplication {
     name = "toolchain-fetch";
     runtimeInputs = with pkgs; [jq coreutils nix];
