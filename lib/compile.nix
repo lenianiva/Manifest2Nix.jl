@@ -113,6 +113,7 @@
             # Set this to prevent nix from guessing the source root
             sourceRoot = ".";
             nativeBuildInputs = [zstd];
+            noDumpEnvVars = true;
             installPhase = ''
               mkdir -p $out/${key}/
               mv ./* $out/${key}/
