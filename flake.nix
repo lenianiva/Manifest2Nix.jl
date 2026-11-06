@@ -45,7 +45,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             julia
-            pre-commit
+            prek
           ];
         };
         checks = ((import test/checks.nix) {inherit pkgs lib-compile;}) // ((import test/version.nix) {inherit nixpkgs system;});

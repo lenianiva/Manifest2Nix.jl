@@ -2,6 +2,7 @@
   config,
   lib,
   julia,
+  llvmPackages,
   stdenv,
   runCommand,
   symlinkJoin,
@@ -220,7 +221,7 @@
             inherit (args) src;
             inherit name version;
             dontInstall = true;
-            nativeBuildInputs = [julia] ++ nativeBuildInputs;
+            nativeBuildInputs = [julia llvmPackages.llvm] ++ nativeBuildInputs;
             JULIA_LOAD_PATH = "${load-path}:";
             JULIA_DEPOT_PATH = ".julia:${input-depots-paths}";
             inherit JULIA_SSL_CA_ROOTS_PATH;
