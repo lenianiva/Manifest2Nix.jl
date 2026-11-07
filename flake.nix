@@ -29,7 +29,7 @@
       }: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [(self.fromVersion "1.12.4")];
+          overlays = [(self.fromVersion "1.13.3")];
           #overlays = [self.fromJuliaBin];
         };
         lib-manifest = pkgs.callPackage lib/manifest.nix {};
@@ -45,7 +45,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             julia
-            pre-commit
+            prek
           ];
         };
         checks = ((import test/checks.nix) {inherit pkgs lib-compile;}) // ((import test/version.nix) {inherit nixpkgs system;});

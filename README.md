@@ -111,3 +111,9 @@ pre-commit install --install-hooks
 When there is a new Julia version, execute `nix run .#toolchain-fetch $VERSION`
 to generate Nix attributes. Add these attributes to `sources.nix`. For minor
 version updates, add a new Manifest/Lock pair to `version/`.
+
+``` sh
+julia --project -e "using Manifest2Nix; main()" -- lock -p .
+cp Lock.toml version/1.13
+cp Manifest.toml version/1.13
+```

@@ -69,7 +69,7 @@ in {
   in
     pkgs.testers.testEqualContents {
       assertion = "Execute script";
-      expected = pkgs.writeText "expected" "1.0480426577669817";
+      expected = pkgs.writeText "expected" "1.048042657766982";
       actual =
         pkgs.runCommand "actual"
         (lib-compile.createEnv {
