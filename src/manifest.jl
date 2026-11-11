@@ -86,8 +86,11 @@ function pin_package(
         if isnothing(pkg_entry)
             error("Package $(info.name) [$uuid] is not present in any registry")
         end
-        #Pkg.Registry.init_package_info!(pkg_entry) # < 1.12 version
-        Pkg.Registry.init_package_info!(context.registries[1], pkg_entry)
+        if VERSION < v"1.13.0"
+            Pkg.Registry.init_package_info!(pkg_entry)
+        else
+            Pkg.Registry.init_package_info!(context.registries[1], pkg_entry)
+        end
         repo = pkg_entry.info.repo
         subdir = pkg_entry.info.subdir
         @info "Source: $(info.source)"
